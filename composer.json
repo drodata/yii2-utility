@@ -1,0 +1,30 @@
+{
+    "name": "drodata/yii2-utility",
+
+    "type": "yii2-extension",
+
+    "description": "This extension includes some utilities that I used frequently.",
+    "keywords": ["yii2", "helper"],
+    "license": "BSD-3-Clause",
+    "support": {
+        "issues": "https://github.com/drodata/yii2-utility/issues",
+        "source": "https://github.com/drodata/yii2-utility"
+    },
+    "authors": [
+        {
+            "name": "drodata",
+            "email": "drodata@foxmail.com"
+        }
+    ],
+
+    "require": {
+        "yiisoft/yii2": "*",
+		"bower-asset/bootstrap": "3.3.* | 3.2.* | 3.1.*"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "drodata\\utility\\": ""
+        }
+    }
+}
