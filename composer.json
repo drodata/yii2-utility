@@ -18,12 +18,19 @@
     ],
 
     "require": {
-        "yiisoft/yii2": "*"
+        "yiisoft/yii2": "*",
+		"bower-asset/bootstrap": "3.3.* | 3.2.* | 3.1.*"
     },
 
     "autoload": {
         "psr-4": {
             "drodata\\utility\\": ""
+        }
+    },
+	"extra": {
+        "asset-installer-paths": {
+            "npm-asset-library": "vendor/npm",
+            "bower-asset-library": "vendor/bower"
         }
     }
 }
