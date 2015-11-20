@@ -14,8 +14,8 @@ echo "<?php\n";
 
 use yii\bootstrap\BaseHtml;
 use <?= $generator->indexWidgetType === 'grid' ? "yii\\grid\\GridView" : "yii\\widgets\\ListView" ?>;
-use common\widgets\Panel;
-use common\models\Lookup;
+use drodata\utility\Panel;
+use drodata\utility\models\Lookup;
 
 /* @var $this yii\web\View */
 <?= !empty($generator->searchModelClass) ? "/* @var \$searchModel " . ltrim($generator->searchModelClass, '\\') . " */\n" : '' ?>

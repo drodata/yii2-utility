@@ -20,7 +20,7 @@ namespace <?= $generator->ns ?>;
 
 use Yii;
 use yii\helpers\ArrayHelper;
-use common\behaviors\UserIdBehavior;
+use drodata\utility\behaviors\UserIdBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
 

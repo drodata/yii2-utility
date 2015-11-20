@@ -11,7 +11,7 @@ echo "<?php\n";
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use common\widgets\Panel;
+use drodata\utility\Panel;
 
 /* @var $this yii\web\View */
 /* @var $model <?= $generator->modelClass ?> */
