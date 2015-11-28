@@ -22,6 +22,7 @@ use yii\bootstrap\ActiveForm;
     <?= "<?php " ?>$form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
+		'layout' => 'inline',
     ]); ?>
 
 <?php

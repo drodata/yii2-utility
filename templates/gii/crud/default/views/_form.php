@@ -32,6 +32,12 @@ use drodata\utility\models\Lookup;
 		echo "	<?= " . $generator->generateActiveField($attribute) . " ?>\n";
 	}
 } ?>
+	<?= $form->field($model, 'type')->dropDownList(Lookup::items('SourceType')) ?>
+
+	<?= "<?php\n " ?>
+	//$form->field($model, 'type')->dropDownList(Lookup::items('SourceType'))
+	<?= "\n?>" ?>
+
 	<div class="form-group">
 		<?= "<?= " ?>BaseHtml::submitButton($model->isNewRecord ? <?= $generator->generateString('Create') ?> : <?= $generator->generateString('Update') ?>, ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 	</div>

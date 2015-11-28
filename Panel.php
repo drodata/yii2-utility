@@ -28,7 +28,8 @@ class Panel extends \yii\bootstrap\Widget
 		$class .= is_null($this->offset) ? '' : ' col-'.$this->size.'-offset-'.$this->offset;
 		$opt  = Html::beginTag('div', ['class' => $class]);
 		$opt .= '<div class="panel panel-'.$this->style.'">';
-  		$opt .= '<div class="panel-heading">'.$this->title.'</div>';
+        if ($this->title !== false)
+  		    $opt .= '<div class="panel-heading">'.$this->title.'</div>';
   		$opt .= '<div class="panel-body">';
 
 		echo $opt;

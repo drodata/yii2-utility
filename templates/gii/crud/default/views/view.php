@@ -2,7 +2,8 @@
 
 use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
-use common\models\Lookup;
+use drodata\utility\Panel;
+use drodata\utility\models\Lookup;
 
 /* @var $this yii\web\View */
 /* @var $generator yii\gii\generators\crud\Generator */
@@ -32,9 +33,7 @@ $this->params['breadcrumbs'] = [
 	]) ?>' ?>
 
     	<p>
-			<?= "<?= " ?>BaseHtml::a(Yii::t('app.crud', 'Return'), Yii::$app->request->referrer, [
-				'class' => 'btn btn-default',
-			]) ?>
+			<?= "<?= " ?>BaseHtml::a('返回', Yii::$app->request->referrer, ['class' => 'btn btn-default']) ?>
 			<?= "<?= " ?>BaseHtml::a(<?= $generator->generateString('Update') ?>, ['update', <?= $urlParams ?>], ['class' => 'btn btn-primary']) ?>
 			<?= "<?= " ?>BaseHtml::a(<?= $generator->generateString('Delete') ?>, ['delete', <?= $urlParams ?>], [
 				'class' => 'btn btn-danger',
@@ -48,6 +47,12 @@ $this->params['breadcrumbs'] = [
 		<?= "<?= " ?>DetailView::widget([
 			'model' => $model,
 			'attributes' => [
+				/*
+				[
+					'attribute' => 'type',
+					'value' => Lookup::item('SourceType', $model->type),
+				],
+				*/
 <?php
 if (($tableSchema = $generator->getTableSchema()) === false) {
     foreach ($generator->getColumnNames() as $name) {
