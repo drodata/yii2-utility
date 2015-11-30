@@ -1,1 +1,10 @@
-0.1.3 couldn't be cloned.
+# Change Log
+
+### 1.0.3 2015-11-29
+
+- controller template: Access Filter 默认只有登录用户能访问；
+
+##1.0.2 November 28, 2015
+
+- Enh: `title` property of `Panel` widget could be `false`, which will hide panel header.
+##0.1.3 couldn't be cloned.

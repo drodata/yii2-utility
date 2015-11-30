@@ -28,24 +28,23 @@ class <?= StringHelper::basename($generator->controllerClass) ?> extends <?= '\\
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
-					/*
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    /*
                     [
                         'allow' => true,
 						'actions' => ['create', 'index', 'view', 'update', 'delete', 'resetpswd'],
                         'roles' => ['root'], 
                     ],
-                    [
-                        'allow' => true,
-						'actions' => ['detail','changepswd'],
-                        'roles' => ['@'], // authorized users
-                    ],
-					*/
+                    */
                 ],
             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    //'delete' => ['POST'],
+                    'delete' => ['POST'],
                 ],
             ],
         ];
