@@ -1,7 +1,8 @@
 <?php
+namespace drodata\widgets;
 
-namespace common\widgets;
-use yii\helpers\Html;
+use Yii;
+use yii\bootstrap\Html;
 
 class Box extends \yii\bootstrap\Widget
 {

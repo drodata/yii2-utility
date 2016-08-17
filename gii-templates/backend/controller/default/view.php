@@ -9,12 +9,26 @@
 
 echo "<?php\n";
 ?>
+use yii\bootstrap\Html;
+use drodata\widgets\Box;
+
 /* @var $this yii\web\View */
+
+$this->title = 'Dashboard';
+$this->params = [
+    'title' => $this->title,
+    'breadcrumbs' => [
+        ['label' => 'Index', 'url' => 'index'],
+        $this->title,
+    ],
+];
+
 <?= "?>" ?>
 
-<h1><?= $generator->getControllerID() . '/' . $action ?></h1>
+<?= "<?php\n" ?>
+Box::begin([
+    'title' => $this->title,
+]);
+<?= "?>\n" ?>
 
-<p>
-    You may change the content of this page by modifying
-    the file <code><?= '<?=' ?> __FILE__; ?></code>.
-</p>
+<?= "<?php Box::end();?>" ?>
