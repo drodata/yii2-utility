@@ -11,8 +11,7 @@ $urlParams = $generator->generateUrlParams();
 echo "<?php\n";
 ?>
 
-use yii\helpers\Html;
-use yii\bootstrap\BaseHtml;
+use yii\bootstrap\Html;
 use common\widgets\Box;
 use common\models\Lookup;
 use yii\widgets\DetailView;
@@ -21,12 +20,16 @@ use yii\widgets\DetailView;
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 
 $this->title = $model-><?= $generator->getNameAttribute() ?>;
-$this->params['title'] = $this->title;
-$this->params['breadcrumbs'][] = ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params = [
+    'title' => $this->title,
+    'breadcrumbs' => [
+        ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => ['index']],
+        $this->title,
+    ],
+];
 ?>
 <div class="row <?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-view">
-    <div class="col-sm-12">
+    <div class="col-md-12 col-lg-8 col-lg-offset-2">
         <?= "<?php " ?>Box::begin([
             'title' => $this->title,
         ]);<?= "?>\n" ?>

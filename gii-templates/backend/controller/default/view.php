@@ -25,6 +25,7 @@ $this->params = [
 
 <?= "?>" ?>
 
+<div class="col-sm-12">
 <?= "<?php\n" ?>
 Box::begin([
     'title' => $this->title,
@@ -32,3 +33,4 @@ Box::begin([
 <?= "?>\n" ?>
 
 <?= "<?php Box::end();?>" ?>
+</div>

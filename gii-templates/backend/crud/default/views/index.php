@@ -24,10 +24,12 @@ use common\models\Lookup;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>;
-$this->params['title'] = $this->title;
-$this->params['breadcrumbs'] = [
-    // ['label' => '', 'url' => ''],
-    $this->title,
+$this->params = [
+    'title' => $this->title,
+    'breadcrumbs' => [
+        ['label' => $this->title, 'url' => 'index'],
+        '管理',
+    ],
 ];
 ?>
 <div class="row <?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-index">
