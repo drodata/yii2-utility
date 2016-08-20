@@ -19,6 +19,7 @@ echo "<?php\n";
 namespace <?= $generator->ns ?>;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\bootstrap\Html;
 use yii\behaviors\TimestampBehavior;
 use yii\behaviors\BlameableBehavior;
@@ -57,6 +58,17 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         return Yii::$app->get('<?= $generator->db ?>');
     }
 <?php endif; ?>
+
+
+    /**
+     * key means scenario names
+     */
+    public function transactions()
+    {
+        return [
+            'default' => self::OP_ALL,
+        ];
+    }
 
     /**
      * @inheritdoc
@@ -124,6 +136,52 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         return new <?= $queryClassFullName ?>(get_called_class());
     }
 <?php endif; ?>
+    /**
+     * @inheritdoc
+     * @return boolean
+     */
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            if ($insert) {
+                // you logic
+            } else {
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+    /**
+     * @inheritdoc
+     * @return void
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        if ($insert) {
+            // logic
+        } else {
+            // logic
+        }
+    }
+    public function beforeDelete()
+    {
+        if (parent::beforeDelete()) {
+            // ...custom code here...
+            return true;
+        } else {
+            return false;
+        }
+    }
+    /**
+     * @inheritdoc
+     * @return void
+     */
+    public function afterDelete()
+    {
+        parent::afterDelete();
+    }
     /*
     public function append($orderIds)
     {

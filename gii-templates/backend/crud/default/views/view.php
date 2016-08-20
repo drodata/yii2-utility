@@ -32,18 +32,17 @@ $this->params = [
     <div class="col-md-12 col-lg-8 col-lg-offset-2">
         <?= "<?php " ?>Box::begin([
             'title' => $this->title,
+            'tools' => [
+                Html::a(<?= $generator->generateString('修改') ?>, ['update', <?= $urlParams ?>], ['class' => 'btn btn-sm btn-primary']),
+                Html::a(<?= $generator->generateString('删除') ?>, ['delete', <?= $urlParams ?>], [
+                    'class' => 'btn btn-sm btn-danger',
+                    'data' => [
+                        'confirm' => <?= $generator->generateString('确定删除此条目吗？') ?>,
+                        'method' => 'post',
+                    ],
+                ]),
+            ],
         ]);<?= "?>\n" ?>
-        <p>
-            <?= "<?= " ?>Html::a(<?= $generator->generateString('修改') ?>, ['update', <?= $urlParams ?>], ['class' => 'btn btn-primary']) ?>
-            <?= "<?= " ?>Html::a(<?= $generator->generateString('删除') ?>, ['delete', <?= $urlParams ?>], [
-                'class' => 'btn btn-danger',
-                'data' => [
-                    'confirm' => <?= $generator->generateString('确定删除此条目吗？') ?>,
-                    'method' => 'post',
-                ],
-            ]) ?>
-        </p>
-
         <?= "<?= " ?>DetailView::widget([
             'model' => $model,
             'attributes' => [
