@@ -12,9 +12,9 @@ echo "<?php\n";
 ?>
 
 use yii\bootstrap\Html;
-use common\widgets\Box;
-use common\models\Lookup;
 use yii\widgets\DetailView;
+use drodata\widgets\Box;
+use common\models\Lookup;
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */

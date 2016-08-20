@@ -12,12 +12,11 @@ $nameAttribute = $generator->getNameAttribute();
 echo "<?php\n";
 ?>
 
-use yii\helpers\Html;
-use yii\bootstrap\BaseHtml;
+use yii\bootstrap\Html;
+use drodata\widgets\Box;
+use common\models\Lookup;
 use <?= $generator->indexWidgetType === 'grid' ? "yii\\grid\\GridView" : "yii\\widgets\\ListView" ?>;
 <?= $generator->enablePjax ? "use yii\widgets\Pjax;\n" : '' ?>
-use common\widgets\Box;
-use common\models\Lookup;
 
 /* @var $this yii\web\View */
 <?= !empty($generator->searchModelClass) ? "/* @var \$searchModel " . ltrim($generator->searchModelClass, '\\') . " */\n" : '' ?>
@@ -95,7 +94,7 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
                         'template' => '{view} {update} {delete} {}',
                         'buttons' => [
                             '' => function ($url, $model, $key) {
-                                return BaseHtml::a(BaseHtml::icon(''), ['/order/view', 'id' => $model->id],[
+                                return Html::a(BaseHtml::icon(''), ['/order/view', 'id' => $model->id],[
                                     'title' => '',
                                     'data' => [
                                         'id' => $model->id,

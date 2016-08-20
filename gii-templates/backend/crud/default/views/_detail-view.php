@@ -11,11 +11,10 @@ $urlParams = $generator->generateUrlParams();
 echo "<?php\n";
 ?>
 
-use yii\helpers\Html;
-use yii\bootstrap\BaseHtml;
-use common\widgets\Box;
-use commom\models\Lookup;
+use yii\bootstrap\Html;
 use yii\widgets\DetailView;
+use drodata\widgets\Box;
+use commom\models\Lookup;
 
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 

@@ -9,10 +9,9 @@ use yii\helpers\StringHelper;
 echo "<?php\n";
 ?>
 
-use yii\helpers\Html;
-use yii\bootstrap\BaseHtml;
+use yii\bootstrap\Html;
 use yii\bootstrap\ActiveForm;
-use common\widgets\Box;
+use drodata\widgets\Box;
 use commom\models\Lookup;
 
 /* @var $this yii\web\View */

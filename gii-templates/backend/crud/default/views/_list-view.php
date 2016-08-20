@@ -12,8 +12,7 @@ $nameAttribute = $generator->getNameAttribute();
 echo "<?php\n";
 ?>
 
-use yii\helpers\Html;
-use yii\bootstrap\BaseHtml;
+use yii\bootstrap\Html;
 use common\models\Lookup;
 ?>
 <div class="">

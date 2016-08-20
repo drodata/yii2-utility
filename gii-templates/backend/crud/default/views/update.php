@@ -12,7 +12,7 @@ echo "<?php\n";
 ?>
 
 use yii\bootstrap\Html;
-use common\widgets\Box;
+use drodata\widgets\Box;
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
