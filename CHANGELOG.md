@@ -1,5 +1,13 @@
 # Change Log
 
+### 1.0.11 2016-08-27
+
+- helpers: customize yii\bootstrap\Html::icon(), use fa icons;
+
+### 1.0.10 2016-08-27
+
+- Gii template: added `scenarios()` in Model template
+
 ### 1.0.3 2015-11-29
 
 - controller template: Access Filter 默认只有登录用户能访问；
@@ -8,3 +16,4 @@
 
 - Enh: `title` property of `Panel` widget could be `false`, which will hide panel header.
 ##0.1.3 couldn't be cloned.
+
