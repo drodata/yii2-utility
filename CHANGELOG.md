@@ -1,5 +1,7 @@
 # Change Log
 
+### 1.0.12 2016-08-27
+
 ### 1.0.11 2016-08-27
 
 - helpers: customize yii\bootstrap\Html::icon(), use fa icons;
