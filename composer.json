@@ -19,7 +19,7 @@
 
     "require": {
         "yiisoft/yii2": "*",
-        "fontawesome/font-awesome": "*",
+        "fortawesome/font-awesome": "*",
 		"bower-asset/bootstrap": "3.3.* | 3.2.* | 3.1.*"
     },
 

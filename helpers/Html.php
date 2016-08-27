@@ -1,5 +1,6 @@
 <?php
 namespace yii\bootstrap;
+use yii\helpers\ArrayHelper;
 /**
  * customize icon() method, with font awesome enabled
  *
@@ -10,7 +11,7 @@ class Html extends BaseHtml
 {
     public static function icon($name, $options = [])
     {
-        $tag = ArrayHelper::remove($options, 'tag', 'span');
+        $tag = ArrayHelper::remove($options, 'tag', 'i');
         $classPrefix = ArrayHelper::remove($options, 'prefix', 'fa fa-');
         static::addCssClass($options, $classPrefix . $name);
         return static::tag($tag, '', $options);
