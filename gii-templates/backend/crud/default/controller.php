@@ -119,12 +119,13 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', '新记录已创建');
-            return $this->redirect(['view', <?= $urlParams ?>]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            return $this->redirect('index');
+            //return $this->redirect(['view', <?= $urlParams ?>]);
         }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -138,12 +139,13 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
         $model = $this->findModel(<?= $actionParams ?>);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', <?= $urlParams ?>]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            Yii::$app->session->setFlash('success', '修改已保存');
+            return $this->redirect('index');
         }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     /**

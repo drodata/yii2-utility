@@ -34,17 +34,22 @@ $this->params = [
 <div class="row <?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-index">
     <div class="col-sm-12">
 <?php if(!empty($generator->searchModelClass)): ?>
-<?= "       <?php " . ($generator->indexWidgetType === 'grid' ? "// " : "") ?>echo $this->render('_search', ['model' => $searchModel]); ?>
 <?php endif; ?>
-        <p>
-            <?= "<?= " ?>Html::a(<?= $generator->generateString('Create ' . Inflector::camel2words(StringHelper::basename($generator->modelClass))) ?>, ['create'], ['class' => 'btn btn-success']) ?>
-        </p>
         <?= "<?php " ?>Box::begin([
             'title' => $this->title,
+            'tools' => [
+                Html::a(<?= $generator->generateString('新建' . Inflector::camel2words(StringHelper::basename($generator->modelClass))) ?>, ['create'], ['class' => 'btn btn-sm btn-success'])
+            ],
         ]);<?= "?>\n" ?>
 <?= $generator->enablePjax ? "            <?php Pjax::begin(); ?>\n" : '' ?>
 <?php if ($generator->indexWidgetType === 'grid'): ?>
-
+/* `afterRow` has the same signature
+'rowOptions' => function ($model, $key, $index, $grid) {
+     return [
+         'class' => ($model->status == Product::DISABLED) ? 'bg-danger' : '',
+     ];
+},
+*/
             <?= "<?= " ?>GridView::widget([
                 'dataProvider' => $dataProvider,
                 <?= !empty($generator->searchModelClass) ? "'filterModel' => \$searchModel,\n               'columns' => [\n" : "'columns' => [\n"; ?>
@@ -78,6 +83,7 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
                         'value' => function ($model, $key, $index, $column) {
                             return Lookup::item('UserStatus', $model->status);
                         },
+                        'contentOptions' => ['width' => '80px'],
                     ],
                     [
                         'label' => '',

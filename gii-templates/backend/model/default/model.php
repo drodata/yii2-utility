@@ -60,6 +60,15 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
 <?php endif; ?>
 
 
+    public function scenarios()
+    {
+        $default = parent::scenarios();
+        $custom = [
+            // put custom scenarios here
+        ];
+        return yii\helpers\ArrayHelper::merge($default, $custom);
+    }
+
     /**
      * key means scenario names
      */
