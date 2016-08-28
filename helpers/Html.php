@@ -1,11 +1,12 @@
 <?php
-namespace yii\bootstrap;
+namespace drodata\helpers;
 use yii\helpers\ArrayHelper;
+use yii\bootstrap\BaseHtml;
 /**
  * customize icon() method, with font awesome enabled
  *
  * @author drodata@foxmail.com
- * @since 1.0.11
+ * @since 1.0.14
  */
 class Html extends BaseHtml
 {
