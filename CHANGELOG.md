@@ -1,5 +1,9 @@
 # Change Log
 
+### 1.0.15 2016-08-27
+
+- Gii template: 将 `yii\bootstrap\Html` 替换为 `drodata\helpers\Html`;
+
 ### 1.0.12 2016-08-27
 
 ### 1.0.11 2016-08-27

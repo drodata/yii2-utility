@@ -11,7 +11,7 @@ $urlParams = $generator->generateUrlParams();
 echo "<?php\n";
 ?>
 
-use yii\bootstrap\Html;
+use drodata\helpers\Html;
 use drodata\widgets\Box;
 
 /* @var $this yii\web\View */

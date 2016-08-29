@@ -11,8 +11,8 @@ $urlParams = $generator->generateUrlParams();
 echo "<?php\n";
 ?>
 
-use yii\bootstrap\Html;
 use yii\widgets\DetailView;
+use drodata\helpers\Html;
 use drodata\widgets\Box;
 use commom\models\Lookup;
 
@@ -24,6 +24,10 @@ use commom\models\Lookup;
 ]);<?= "?>\n" ?>
     <?= "<?= " ?>DetailView::widget([
         'model' => $model,
+        'template' => Html::beginTag('tr')
+            . Html::tag('th', '{label}', ['width' => '20%', 'class' => 'text-right'])
+            . Html::tag('td', '{value}')
+            . Html::endTag('td'),
         'attributes' => [
 <?php
 if (($tableSchema = $generator->getTableSchema()) === false) {

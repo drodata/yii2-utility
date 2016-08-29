@@ -11,8 +11,8 @@ $urlParams = $generator->generateUrlParams();
 echo "<?php\n";
 ?>
 
-use yii\bootstrap\Html;
 use yii\widgets\DetailView;
+use drodata\helpers\Html;
 use drodata\widgets\Box;
 use common\models\Lookup;
 
