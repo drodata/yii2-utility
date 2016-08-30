@@ -1,8 +1,12 @@
 # Change Log
 
+### 1.0.16 2016-08-30
+
+- validator: 新增身份证号码 CitizenIdValidator;
+
 ### 1.0.15 2016-08-27
 
-- Gii template: 将 `yii\bootstrap\Html` 替换为 `drodata\helpers\Html`;
+Gii template: 将 `yii\bootstrap\Html` 替换为 `drodata\helpers\Html`;
 
 ### 1.0.12 2016-08-27
 
