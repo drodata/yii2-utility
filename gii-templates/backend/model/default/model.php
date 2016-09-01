@@ -20,11 +20,9 @@ namespace <?= $generator->ns ?>;
 
 use Yii;
 use yii\helpers\ArrayHelper;
-use yii\bootstrap\Html;
+use drodata\helpers\Html;
 use yii\behaviors\TimestampBehavior;
 use yii\behaviors\BlameableBehavior;
-use common\models\Lookup;
-//use common\models\User;
 
 /**
  * This is the model class for table "<?= $generator->generateTableName($tableName) ?>".

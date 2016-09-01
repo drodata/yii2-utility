@@ -9,7 +9,7 @@
 
 echo "<?php\n";
 ?>
-use yii\bootstrap\Html;
+use drodata\helpers\Html;
 use drodata\widgets\Box;
 
 /* @var $this yii\web\View */
@@ -29,6 +29,9 @@ $this->params = [
 <?= "<?php\n" ?>
 Box::begin([
     'title' => $this->title,
+    'tools' => [
+        Html::a(Html::icon('plus'), '', ['class' => 'btn btn-sm btn-primary']),
+    ],
 ]);
 <?= "?>\n" ?>
 
