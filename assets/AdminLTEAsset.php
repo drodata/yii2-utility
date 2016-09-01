@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\assets;
+namespace drodata\assets;
 
 use Yii;
 use yii\web\AssetBundle;
