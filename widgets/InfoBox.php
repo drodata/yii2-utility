@@ -2,8 +2,7 @@
 
 namespace drodata\widgets;
 use Yii;
-use yii\helpers\Html;
-use yii\bootstrap\BaseHtml;
+use drodata\helpers\Html;
 
 class InfoBox extends \yii\bootstrap\Widget
 {
@@ -26,7 +25,7 @@ class InfoBox extends \yii\bootstrap\Widget
             // icon
             $opt  .= Html::tag(
                 'span',
-                BaseHtml::icon($this->icon),
+                Html::icon($this->icon),
                 ['class' => 'info-box-icon bg-' . $this->style]
             );
             // content
