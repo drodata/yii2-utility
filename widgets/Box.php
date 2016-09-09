@@ -27,6 +27,22 @@ class Box extends \yii\bootstrap\Widget
         $opt  .= Html::tag('h3', $this->title, ['class' => 'box-title']);
 
         if (count($this->tools) > 0) {
+            $predefinedBtns = [
+                'collapse' => Html::button(Html::icon('minus'), [
+                        'class' => 'btn btn-box-tool',
+                        'title' => '折叠',
+                        'data' => [
+                            'widget' => 'collapse',
+                            'toggle' => 'tolltip',
+                        ],
+                    ]),
+            ];
+            for ($i = 0; $i < count($this->tools); $i++) {
+                $alias = $this->tools[$i];
+                if (isset($predefinedBtns[$alias])) {
+                    $this->tools[$i] = $predefinedBtns[$alias];
+                }
+            }
             $opt  .= Html::beginTag('div', ['class' => 'box-tools pull-right']);
             $opt .= implode('', $this->tools);
             $opt  .= Html::endTag('div');
