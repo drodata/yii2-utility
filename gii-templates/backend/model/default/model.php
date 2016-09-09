@@ -119,8 +119,10 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
 <?php endforeach; ?>
         ];
     }
-<?php foreach ($relations as $name => $relation): ?>
 
+    // ==== getter starts ====
+
+<?php foreach ($relations as $name => $relation): ?>
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -129,6 +131,9 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         <?= $relation[0] . "\n" ?>
     }
 <?php endforeach; ?>
+
+    // ==== getter ends ====
+
 <?php if ($queryClassName): ?>
 <?php
     $queryClassFullName = ($generator->ns === $generator->queryNs) ? $queryClassName : '\\' . $generator->queryNs . '\\' . $queryClassName;
