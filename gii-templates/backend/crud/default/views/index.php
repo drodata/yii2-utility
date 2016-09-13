@@ -43,15 +43,15 @@ $this->params = [
         ]);<?= "?>\n" ?>
 <?= $generator->enablePjax ? "            <?php Pjax::begin(); ?>\n" : '' ?>
 <?php if ($generator->indexWidgetType === 'grid'): ?>
-/* `afterRow` has the same signature
-'rowOptions' => function ($model, $key, $index, $grid) {
-     return [
-         'class' => ($model->status == Product::DISABLED) ? 'bg-danger' : '',
-     ];
-},
-*/
             <?= "<?= " ?>GridView::widget([
                 'dataProvider' => $dataProvider,
+                /* `afterRow` has the same signature
+                'rowOptions' => function ($model, $key, $index, $grid) {
+                     return [
+                         'class' => ($model->status == Product::DISABLED) ? 'bg-danger' : '',
+                     ];
+                },
+                */
                 <?= !empty($generator->searchModelClass) ? "'filterModel' => \$searchModel,\n               'columns' => [\n" : "'columns' => [\n"; ?>
                     ['class' => 'yii\grid\SerialColumn'],
 <?php
