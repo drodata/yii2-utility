@@ -33,7 +33,15 @@ class Box extends \yii\bootstrap\Widget
                         'title' => '折叠',
                         'data' => [
                             'widget' => 'collapse',
-                            'toggle' => 'tolltip',
+                            'toggle' => 'tooltip',
+                        ],
+                    ]),
+                'remove' => Html::button(Html::icon('times'), [
+                        'class' => 'btn btn-box-tool',
+                        'title' => '移除',
+                        'data' => [
+                            'widget' => 'remove',
+                            'toggle' => 'tooltip',
                         ],
                     ]),
             ];
