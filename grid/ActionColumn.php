@@ -6,7 +6,7 @@ use Yii;
 use yii\helpers\Url;
 use drodata\helpers\Html;
 
-class ActionColumn extends yii\grid\ActionColumn
+class ActionColumn extends \yii\grid\ActionColumn
 {
     /**
      * Migrate glyphicon to fant awesome
