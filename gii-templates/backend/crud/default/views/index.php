@@ -93,14 +93,14 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
                         },
                     ],
                     */
-                    ['class' => 'yii\grid\ActionColumn'],
+                    ['class' => 'drodata\grid\ActionColumn'],
                     /*
                     [
-                        'class' => 'yii\grid\ActionColumn',
+                        'class' => 'drodata\grid\ActionColumn',
                         'template' => '{view} {update} {delete} {}',
                         'buttons' => [
                             '' => function ($url, $model, $key) {
-                                return Html::a(BaseHtml::icon(''), ['/order/view', 'id' => $model->id],[
+                                return Html::a(Html::icon(''), ['/order/view', 'id' => $model->id],[
                                     'title' => '',
                                     'data' => [
                                         'id' => $model->id,
