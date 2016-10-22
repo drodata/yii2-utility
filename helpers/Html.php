@@ -21,6 +21,17 @@ class Html extends BaseHtml
     }
 
     /**
+     * Fix-width icon
+     */
+    public static function fwicon($name, $options = [])
+    {
+        $tag = ArrayHelper::remove($options, 'tag', 'i');
+        $classPrefix = ArrayHelper::remove($options, 'prefix', 'fa fa-fw fa-');
+        static::addCssClass($options, $classPrefix . $name);
+        return static::tag($tag, '', $options);
+    }
+
+    /**
      * Add the special `visible` attribute
      */
     public static function a($text, $url = null, $options = [])

@@ -4,6 +4,7 @@
 .form-group .btn,
 .button-group .btn {margin: 0 3px;}
 .tooltip-inner  { white-space:pre; max-width:none; }
+.popover-fullwidth-wrapper .popover  { max-width:none; }
 .table-hover > tbody > tr:hover {
   background-color: #d9ead3;
 }
