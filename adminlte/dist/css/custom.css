@@ -41,8 +41,7 @@
 .box-tools > button { margin: 0 5px; }
 .operation-group {margin-bottom: 10px;}
 
-.grid-view .glyphicon, .grid-view .fa {font-size: 16px;}
-.grid-view .glyphicon, .grid-view .fa, 
+.grid-view .fa, .control-label .fa,
 .nav-tabs-custom > .nav-tabs .fa, .btn .fa
 {margin: 0 2px;}
 
