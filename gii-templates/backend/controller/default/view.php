@@ -17,6 +17,7 @@ use drodata\widgets\Box;
 $this->title = 'Dashboard';
 $this->params = [
     'title' => $this->title,
+    'subtitle' => '',
     'breadcrumbs' => [
         ['label' => 'Index', 'url' => 'index'],
         $this->title,

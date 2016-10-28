@@ -25,6 +25,7 @@ use <?= $generator->indexWidgetType === 'grid' ? "yii\\grid\\GridView" : "yii\\w
 $this->title = <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>;
 $this->params = [
     'title' => $this->title,
+    'subtitle' => '',
     'breadcrumbs' => [
         ['label' => $this->title, 'url' => 'index'],
         '管理',

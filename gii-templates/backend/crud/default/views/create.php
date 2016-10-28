@@ -18,6 +18,7 @@ use drodata\widgets\Box;
 $this->title = <?= $generator->generateString('Create ' . Inflector::camel2words(StringHelper::basename($generator->modelClass))) ?>;
 $this->params = [
     'title' => $this->title,
+    'subtitle' => '',
     'breadcrumbs' => [
         ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => ['index']],
         $this->title,

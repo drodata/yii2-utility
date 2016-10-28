@@ -22,6 +22,7 @@ use common\models\Lookup;
 $this->title = $model-><?= $generator->getNameAttribute() ?>;
 $this->params = [
     'title' => $this->title,
+    'subtitle' => '#' . $model->id,
     'breadcrumbs' => [
         ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => ['index']],
         $this->title,
