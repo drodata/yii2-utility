@@ -9,6 +9,7 @@ class Box extends \yii\bootstrap\Widget
     public $style = 'default';
     public $solid = false;
     public $title = '';
+    public $content = '';
     public $footer = null;
     public $tools = [];
     public function init()
@@ -64,12 +65,14 @@ class Box extends \yii\bootstrap\Widget
     }
     public function run()
     {
+        $content = empty($this->content) ? '' : $this->content;
+
         $tail = Html::endTag('div'); // .box-body 
         if (!empty($this->footer)) {
             $tail  .= Html::tag('div', $this->footer, ['class' => 'box-footer']);
         }
         $tail .= Html::endTag('div'); // .box ends
 
-        echo $tail;
+        return $content . $tail;
     }
 }

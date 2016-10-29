@@ -30,12 +30,11 @@ $this->params = [
 ?>
 <div class=row "<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-update">
     <div class="col-md-12 col-lg-8 col-lg-offset-2">
-        <?= "<?php " ?>Box::begin([
+        <?= "<?= " ?>Box::widget([
             'title' => $this->title,
-        ]);<?= "?>\n" ?>
-            <?= "<?= " ?>$this->render('_form', [
+            'content' => $this->render('_form', [
                 'model' => $model,
-            ]) ?>
-        <?= "<?php " ?>Box::end();<?= "?>\n" ?>
+            ]),
+        ]) <?= "?>\n" ?>
     </div>
 </div>

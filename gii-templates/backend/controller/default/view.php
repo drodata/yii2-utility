@@ -27,14 +27,8 @@ $this->params = [
 <?= "?>" ?>
 
 <div class="col-sm-12">
-<?= "<?php\n" ?>
-Box::begin([
-    'title' => $this->title,
-    'tools' => [
-        Html::a(Html::icon('plus'), '', ['class' => 'btn btn-sm btn-primary']),
-    ],
-]);
-<?= "?>\n" ?>
-
-<?= "<?php Box::end();?>" ?>
+    <?= "<?= " ?>Box::widget([
+        'title' => $this->title,
+        'content' => '',
+    ]) <?= "?>\n" ?>
 </div>
