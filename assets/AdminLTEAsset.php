@@ -22,11 +22,11 @@ class AdminLTEAsset extends AssetBundle
     ];
     private $_css;
 
-    protected function getCss()
+    public function getCss()
     {
         return $this->_css;
     }
-    protected function setCss($arr)
+    public function setCss($arr)
     {
         $this->_css = $arr;
 
@@ -34,12 +34,12 @@ class AdminLTEAsset extends AssetBundle
 
     public function init()
     {
+        parent::init();
+
         $skin = empty(Yii::$app->params['skin']) ? 'blue' : Yii::$app->params['skin'];
         $this->css = [
             'css/AdminLTE.css',
             'css/skins/skin-' . $skin . '.css',
         ];
-
-        parent::init();
     }
 }
