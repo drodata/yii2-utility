@@ -39,6 +39,15 @@ use yii\behaviors\BlameableBehavior;
  */
 class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
 {
+    //const EVENT_ = '';
+
+    public function init()
+    {
+        //$this->on(self::EVENT_AFTER_SAVE, [$this, 'handlerName']);
+
+        parent::init();
+    }
+
     /**
      * @inheritdoc
      */
@@ -57,15 +66,6 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     }
 <?php endif; ?>
 
-
-    public function scenarios()
-    {
-        $default = parent::scenarios();
-        $custom = [
-            // put custom scenarios here
-        ];
-        return yii\helpers\ArrayHelper::merge($default, $custom);
-    }
 
     /**
      * key means scenario names
@@ -134,6 +134,9 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
 
     // ==== getter ends ====
 
+    // ==== event-handler begins ====
+    // ==== event-handler begins ====
+
 <?php if ($queryClassName): ?>
 <?php
     $queryClassFullName = ($generator->ns === $generator->queryNs) ? $queryClassName : '\\' . $generator->queryNs . '\\' . $queryClassName;
@@ -148,52 +151,6 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         return new <?= $queryClassFullName ?>(get_called_class());
     }
 <?php endif; ?>
-    /**
-     * @inheritdoc
-     * @return boolean
-     */
-    public function beforeSave($insert)
-    {
-        if (parent::beforeSave($insert)) {
-            if ($insert) {
-                // you logic
-            } else {
-            }
-            return true;
-        } else {
-            return false;
-        }
-    }
-    /**
-     * @inheritdoc
-     * @return void
-     */
-    public function afterSave($insert, $changedAttributes)
-    {
-        parent::afterSave($insert, $changedAttributes);
-        if ($insert) {
-            // logic
-        } else {
-            // logic
-        }
-    }
-    public function beforeDelete()
-    {
-        if (parent::beforeDelete()) {
-            // ...custom code here...
-            return true;
-        } else {
-            return false;
-        }
-    }
-    /**
-     * @inheritdoc
-     * @return void
-     */
-    public function afterDelete()
-    {
-        parent::afterDelete();
-    }
     /*
     public function append($orderIds)
     {
