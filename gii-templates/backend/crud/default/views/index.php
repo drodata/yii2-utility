@@ -94,7 +94,13 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
                         },
                     ],
                     */
-                    ['class' => 'drodata\grid\ActionColumn'],
+                    [
+                        'class' => 'drodata\grid\ActionColumn',
+                        'contentOptions' => [
+                            'style' => 'min-width:80px',
+                            'class' => 'text-center',
+                        ],
+                    ],
                     /*
                     [
                         'class' => 'drodata\grid\ActionColumn',
