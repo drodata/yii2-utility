@@ -19,6 +19,8 @@ class AdminLTEAsset extends AssetBundle
         'yii\bootstrap\BootstrapAsset',
         'yii\bootstrap\BootstrapPluginAsset',
         'drodata\assets\FontAwesomeAsset',
+        'drodata\assets\AdminLTEWithoutGoogleFontAsset',
+        
     ];
     private $_css;
 
@@ -38,7 +40,6 @@ class AdminLTEAsset extends AssetBundle
 
         $skin = empty(Yii::$app->params['skin']) ? 'blue' : Yii::$app->params['skin'];
         $this->css = [
-            'css/AdminLTE.css',
             'css/skins/skin-' . $skin . '.css',
         ];
     }
