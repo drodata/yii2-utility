@@ -14,6 +14,8 @@ echo "<?php\n";
 
 namespace <?= $generator->getControllerNamespace() ?>;
 
+use Yii;
+
 class <?= StringHelper::basename($generator->controllerClass) ?> extends <?= '\\' . trim($generator->baseClass, '\\') . "\n" ?>
 {
 <?php foreach ($generator->getActionIDs() as $action): ?>
@@ -23,4 +25,13 @@ class <?= StringHelper::basename($generator->controllerClass) ?> extends <?= '\\
     }
 
 <?php endforeach; ?>
+
+    /*
+    public function actionAjaxX()
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        return $_POST;
+    }
+    */
 }
