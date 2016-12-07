@@ -21,8 +21,8 @@ use common\models\Lookup;
 
 $this->title = $model-><?= $generator->getNameAttribute() ?>;
 $this->params = [
-    'title' => $this->title,
-    'subtitle' => '#' . $model->id,
+    'title' => '详情',
+    //'subtitle' => '#' . $model->id,
     'breadcrumbs' => [
         ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => ['index']],
         $this->title,
@@ -34,9 +34,13 @@ $this->params = [
         <?= "<?php " ?>Box::begin([
             'title' => $this->title,
             'tools' => [
-                Html::a(<?= $generator->generateString('修改') ?>, ['update', <?= $urlParams ?>], ['class' => 'btn btn-sm btn-primary']),
-                Html::a(<?= $generator->generateString('删除') ?>, ['delete', <?= $urlParams ?>], [
+                Html::a(Html::icon('pencil'), ['update', <?= $urlParams ?>], [
+                    'class' => 'btn btn-sm btn-primary',
+                    'title' => <?= $generator->generateString('修改') ?>,
+                ]),
+                Html::a(Html::icon('trash'), ['delete', <?= $urlParams ?>], [
                     'class' => 'btn btn-sm btn-danger',
+                    'title' => <?= $generator->generateString('删除') ?>,
                     'data' => [
                         'confirm' => <?= $generator->generateString('确定删除此条目吗？') ?>,
                         'method' => 'post',

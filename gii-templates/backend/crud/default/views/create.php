@@ -15,7 +15,7 @@ use drodata\widgets\Box;
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 
-$this->title = <?= $generator->generateString('Create ' . Inflector::camel2words(StringHelper::basename($generator->modelClass))) ?>;
+$this->title = '新建';
 $this->params = [
     'title' => $this->title,
     'subtitle' => '',

@@ -39,7 +39,10 @@ $this->params = [
         <?= "<?php " ?>Box::begin([
             'title' => $this->title,
             'tools' => [
-                Html::a(<?= $generator->generateString('新建' . Inflector::camel2words(StringHelper::basename($generator->modelClass))) ?>, ['create'], ['class' => 'btn btn-sm btn-success'])
+                Html::a(Html::icon('plus'), ['create'], [
+                    'class' => 'btn btn-sm btn-success',
+                    'title' => '新建',
+                ])
             ],
         ]);<?= "?>\n" ?>
 <?= $generator->enablePjax ? "            <?php Pjax::begin(); ?>\n" : '' ?>
