@@ -26,6 +26,10 @@ $this->title = <?= $generator->generateString(Inflector::pluralize(Inflector::ca
 $this->params = [
     'title' => $this->title,
     'subtitle' => '',
+    'breadcrumbs' => [
+        ['label' => $this->title, 'url' => 'index'],
+        '管理',
+    ],
 ];
 ?>
 <div class="row <?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-index">
@@ -50,7 +54,7 @@ $this->params = [
                 },
                 */
                 <?= !empty($generator->searchModelClass) ? "'filterModel' => \$searchModel,\n               'columns' => [\n" : "'columns' => [\n"; ?>
-                    //['class' => 'yii\grid\SerialColumn'],
+                    ['class' => 'yii\grid\SerialColumn'],
 <?php
 $count = 0;
 if (($tableSchema = $generator->getTableSchema()) === false) {

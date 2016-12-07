@@ -19,6 +19,10 @@ $this->title = <?= $generator->generateString('Create ' . Inflector::camel2words
 $this->params = [
     'title' => $this->title,
     'subtitle' => '',
+    'breadcrumbs' => [
+        ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => ['index']],
+        $this->title,
+    ],
 ];
 ?>
 <div class="row <?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-create">

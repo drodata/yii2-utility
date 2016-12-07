@@ -21,6 +21,11 @@ $this->title = <?= $generator->generateString('Update {modelClass}: ', ['modelCl
 $this->params = [
     'title' => $this->title,
     'subtitle' => '',
+    'breadcrumbs' => [
+        ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => ['index']],
+        ['label' => $model-><?= $generator->getNameAttribute() ?>, 'url' => ['view', <?= $urlParams ?>]],
+        <?= $generator->generateString('Update') ?>,
+    ],
 ];
 ?>
 <div class=row "<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-update">

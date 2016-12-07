@@ -23,6 +23,10 @@ $this->title = $model-><?= $generator->getNameAttribute() ?>;
 $this->params = [
     'title' => $this->title,
     'subtitle' => '#' . $model->id,
+    'breadcrumbs' => [
+        ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => ['index']],
+        $this->title,
+    ],
 ];
 ?>
 <div class="row <?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-view">
