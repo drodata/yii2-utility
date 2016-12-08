@@ -40,7 +40,9 @@ use common\models\Lookup;
     }
 } ?>
     <div class="form-group">
-        <?= "<?= " ?>Html::submitButton($model->isNewRecord ? <?= $generator->generateString('新建') ?> : <?= $generator->generateString('保存') ?>, ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= "<?= " ?>Html::submitButton($model->isNewRecord ? <?= $generator->generateString('新建') ?> : <?= $generator->generateString('保存') ?>, [
+            'class' => ($model->isNewRecord ? 'btn btn-success' : 'btn btn-primary') . ' submit-once',
+        ]) ?>
     </div>
 
     <?= "<?php " ?>ActiveForm::end(); ?>
