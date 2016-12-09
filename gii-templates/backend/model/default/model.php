@@ -21,8 +21,8 @@ namespace <?= $generator->ns ?>;
 use Yii;
 use yii\helpers\ArrayHelper;
 use drodata\helpers\Html;
-use yii\behaviors\TimestampBehavior;
-use yii\behaviors\BlameableBehavior;
+//use yii\behaviors\TimestampBehavior;
+//use yii\behaviors\BlameableBehavior;
 
 /**
  * This is the model class for table "<?= $generator->generateTableName($tableName) ?>".
@@ -83,8 +83,8 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
-            BlameableBehavior::className(),
+            //TimestampBehavior::className(),
+            //BlameableBehavior::className(),
         ];
     }
 

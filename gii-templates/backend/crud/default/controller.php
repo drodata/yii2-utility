@@ -184,6 +184,7 @@ if (count($pks) === 1) {
     public function actionDelete(<?= $actionParams ?>)
     {
         $this->findModel(<?= $actionParams ?>)->delete();
+        Yii::$app->session->setFlash('success', '已删除');
 
         return $this->redirect(['index']);
     }
