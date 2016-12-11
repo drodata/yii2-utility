@@ -20,6 +20,7 @@ namespace <?= $generator->ns ?>;
 
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\base\InvalidParamException;
 use drodata\helpers\Html;
 //use yii\behaviors\TimestampBehavior;
 //use yii\behaviors\BlameableBehavior;
