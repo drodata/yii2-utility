@@ -23,6 +23,12 @@ use common\models\Lookup;
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 /* @var $form yii\widgets\ActiveForm */
+
+/*
+$js = <<<JS
+JS;
+$this->registerJs($js);
+*/
 ?>
 
 <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-form">
