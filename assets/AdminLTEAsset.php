@@ -20,6 +20,7 @@ class AdminLTEAsset extends AssetBundle
         'yii\bootstrap\BootstrapPluginAsset',
         'drodata\assets\FontAwesomeAsset',
         'drodata\assets\AdminLTEWithoutGoogleFontAsset',
+        'drodata\slimscroll\SlimScrollAsset',
         
     ];
     private $_css;
