@@ -6,7 +6,7 @@
  *
  * The AdminLTE fixed theme requires this plugin
  */
-namespace drodata\typeahead;
+namespace drodata\slimscroll;
 use yii\web\AssetBundle;
 
 class SlimScrollAsset extends AssetBundle
