@@ -29,6 +29,7 @@
   color: white !important;
 }
 .nav-tabs .badge,
+.btn .badge,
 .box-header .badge
 {margin-left: 5px;}
 
