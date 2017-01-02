@@ -14,7 +14,7 @@ class AssetBundle extends \yii\web\AssetBundle
         if ($this->appendMd5Hash) {
             foreach (['css', 'js'] as $prop) {
                 for ($i = 0; $i < count($this->$prop); $i++) {
-                    $relative = !is_null($this->sourcePath) ?: $this->basePath;
+                    $relative = is_null($this->sourcePath) ? $this->basePath : $this->sourcePath;
                     $hash = substr(md5_file($relative . '/' . $this->{$prop}[$i]), 0, 10);
                     $this->{$prop}[$i] .= '?v=' . $hash;
                 }
