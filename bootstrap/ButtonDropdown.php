@@ -20,7 +20,7 @@ use yii\bootstrap\Button;
 
 class ButtonDropdown extends \yii\bootstrap\ButtonDropdown
 {
-    public $mainButtonClass = '';
+    public $buttonOptions = [];
 
     /**
      * Generates the button dropdown.
@@ -34,11 +34,7 @@ class ButtonDropdown extends \yii\bootstrap\ButtonDropdown
             $label = Html::encode($label);
         }
         if ($this->split) {
-            $options = $this->options;
-            // compared to parent class, only the following line
-            // was added.
-            Html::addCssClass($options, $this->mainButtonClass);
-
+            $options = $this->buttonOptions;
             $this->options['data-toggle'] = 'dropdown';
             Html::addCssClass($this->options, ['toggle' => 'dropdown-toggle']);
             unset($this->options['id']);
