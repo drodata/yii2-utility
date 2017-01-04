@@ -32,16 +32,35 @@ class Html extends BaseHtml
     }
 
     /**
-     * Add the special `visible` attribute
+     * Feature:
+     *
+     * - Add the special `visible` attribute
+     * - Support build-in tooltip for disabled links
+     *
      */
     public static function a($text, $url = null, $options = [])
     {
         if ($url !== null) {
             $options['href'] = Url::to($url);
         }
+        $classes = explode(' ', ArrayHelper::getValue($options, 'class', ''));
+        $classes = array_map('trim', $classes);
+        $title = ArrayHelper::getValue($options, 'title');
         $visible = ArrayHelper::remove($options, 'visible', true);
-        return $visible ? static::tag('a', $text, $options) : '';
+        $link = $visible ? static::tag('a', $text, $options) : '';
+
+        if (in_array('disabled', $classes) && isset($title)) {
+            $link = static::tag('span', $link, [
+                'data' => [
+                    'toggle' => 'tooltip',
+                    'title' => $title,
+                ],
+            ]);
+        }
+
+        return $link;
     }
+
 
     /**
      * Add the special `visible` attribute
