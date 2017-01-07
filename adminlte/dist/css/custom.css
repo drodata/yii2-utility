@@ -82,6 +82,11 @@
 .alert-danger hr { border-top-color: #e4b9c0 !important; }
 .alert-danger .alert-link { color: #843534 !important; }
 
+    /* https://github.com/drodata/yii2-utility/issues/1 */
+.select2-container .select2-selection--single .select2-selection__rendered {
+  margin-top: 0;
+}
+
 /** ======================
  *  main-tabs layout
  ** ====================== */
