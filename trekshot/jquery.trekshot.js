@@ -1,3 +1,14 @@
+/*
+ * Ajax request failure handler. e.g.:
+ * 
+ * ```js
+ * $.post(yourUrl, postData, function(response) {
+ *     // success handler
+ * }).fail(ajax_fail_handler).always(function(){
+ *     // always runs
+ * });
+ * ```
+ */
 function ajax_fail_handler (XHR, textStatus, errorThrown) {
     var err = {};
     switch (textStatus) {
@@ -21,9 +32,7 @@ function ajax_fail_handler (XHR, textStatus, errorThrown) {
     }
 
     if (err) {
-        $('#general-modal .modal-header h2').text(err.header);
-        $('#general-modal').find('.modal-body').html(err.body);
-        $('#general-modal').modal();
+        alert(err.header + "\n\n" + err.body);
     }
 }
 
