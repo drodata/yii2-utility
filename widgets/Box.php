@@ -45,6 +45,17 @@ class Box extends \yii\bootstrap\Widget
                             'toggle' => 'tooltip',
                         ],
                     ]),
+                'return' => Html::a(
+                    Html::icon('arrow-left'),
+                    Yii::$app->request->referrer,
+                    [
+                        'class' => 'btn btn-box-tool',
+                        'title' => '返回',
+                        'data' => [
+                            'toggle' => 'tooltip',
+                        ],
+                    ]
+                ),
             ];
             for ($i = 0; $i < count($this->tools); $i++) {
                 $alias = $this->tools[$i];
