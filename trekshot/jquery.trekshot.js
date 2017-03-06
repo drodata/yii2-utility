@@ -34,6 +34,9 @@ function ajax_fail_handler (XHR, textStatus, errorThrown) {
     if (err) {
         alert(err.header + "\n\n" + err.body);
     }
+
+    // find detail in console.
+    console.log(XHR);
 }
 
 /**
