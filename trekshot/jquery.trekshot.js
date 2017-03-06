@@ -27,6 +27,8 @@ function ajax_fail_handler (XHR, textStatus, errorThrown) {
         if (XHR.responseText && !/^\s*$/.test(XHR.responseText)) {
             var response = jQuery.parseJSON(XHR.responseText);
             err.body = response.name + ': ' + response.message;
+            // find detail in console.
+            console.log(response);
         }
         break;
     }
@@ -34,9 +36,6 @@ function ajax_fail_handler (XHR, textStatus, errorThrown) {
     if (err) {
         alert(err.header + "\n\n" + err.body);
     }
-
-    // find detail in console.
-    console.log(XHR);
 }
 
 /**
