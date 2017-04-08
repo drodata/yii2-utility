@@ -73,4 +73,46 @@ class Html extends BaseHtml
         $visible = ArrayHelper::remove($options, 'visible', true);
         return $visible ? static::tag('button', $content, $options) : '';
     }
+
+    /**
+     * Assemble a lite table using just data array.
+     *
+     * @param array $rows array of row data, the first element is table head,
+     * and other is body element, e.g.
+     * 
+     * ```php
+     * echo Html::liteTable([
+     *     ['Name', 'Age'],
+     *     ['Jack', '18'],
+     *     ['Jim', '23'],
+     * ]);
+     * ```
+     *
+     * @param string | null $class the `class` value of table.
+     * @return string
+     */
+    public static function liteTable($rows, $class = null) 
+    {
+        $class = is_null($class) ? "table table-striped table-bordered" : $class;
+        $headers = array_shift($rows);
+        $headSlice = $bodySlice = [];
+
+        foreach ($headers as $head) {
+            $headSlice[] = Html::tag('th', $head);
+        }
+        $thead = Html::tag('thead', Html::tag('tr', implode("\n", $headSlice)));
+
+        foreach ($rows as $row) {
+            $rowSlice = [];
+            foreach ($row as $cell) {
+                $rowSlice[] = Html::tag('td', $cell);
+            }
+            $bodySlice[] = Html::tag('tr', implode("\n", $rowSlice));
+        }
+        $tbody = Html::tag('tbody', implode("\n", $bodySlice));
+
+        return Html::tag('table', $thead . $tbody, [
+            'class' => $class,
+        ]);
+    }
 }
