@@ -38,7 +38,7 @@ use drodata\helpers\Html;
 <?php endforeach; ?>
 <?php endif; ?>
  */
-class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
+class <?= $className ?> extends \drodata\db\ActiveRecord
 {
     //const EVENT_ = '';
 
@@ -136,7 +136,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     // ==== getter ends ====
 
     // ==== event-handler begins ====
-    // ==== event-handler begins ====
+    // ==== event-handler ends ====
 
 <?php if ($queryClassName): ?>
 <?php
@@ -158,7 +158,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         $transaction = Yii::$app->db->beginTransaction();
         try {
             if (!$this->save()) {
-                throw new \yii\db\Exception('xxx failed to save.');
+                throw new \yii\db\Exception('Failed to insert xxx.');
             }
 
             $transaction->commit();
