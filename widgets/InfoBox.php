@@ -4,6 +4,9 @@ namespace drodata\widgets;
 use Yii;
 use drodata\helpers\Html;
 
+/**
+ * Deprecated, please use drodata\adminlte\InfoBox instead
+ */
 class InfoBox extends \yii\bootstrap\Widget
 {
     public $style;
