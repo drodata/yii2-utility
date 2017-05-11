@@ -1,6 +1,7 @@
 <?php
 namespace drodata\helpers;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Markdown;
 use yii\helpers\Url;
 use yii\bootstrap\BaseHtml;
 
@@ -117,24 +118,22 @@ class Html extends BaseHtml
     }
 
     /**
-     * Shorthand for generating a popover helper icon.
+     * A quick way to to generate a popover helper icon.
      *
+     * @param string $content markdown-enabled content
      * @param array $attrs the following attributes are available:
      * 
-     * - string `content` (required): markdown-enabled content
-     * - string `icon` (optional): font-awesome icon name, defaults to 'question-circle-o'
-     * - string `title` (optional): popover title
-     * - string `direction` (optional): popover direction, defaults to `top`
+     * - string `icon` : font-awesome icon name, defaults to 'question-circle-o'
+     * - string `title` : popover title
+     * - string `direction` : popover direction, defaults to `top`
      *
      * @since 1.0.16
      */
-    public static function popoverHelper($attrs)
+    public static function popoverIcon($content, $attrs = [])
     {
         $icon = ArrayHelper::remove($attrs, 'icon', 'question-circle-o');
         $direction = ArrayHelper::remove($attrs, 'direction', 'top');
         $title = ArrayHelper::remove($attrs, 'title', '');
-
-        $content = Markdown::process(ArrayHelper::remove($attrs, 'content'));
 
         return Html::icon($icon, [
             'class' => 'text-info',
@@ -145,8 +144,41 @@ class Html extends BaseHtml
                 'container' => 'body',
                 'placement' => "auto $direction",
                 'title' => $title,
-                'content' => $content,
+                'content' => Markdown::process($content),
             ],
+        ]);
+    }
+
+    /**
+     * A quick way to generate an icon with tooltip. 
+     * This method is mainly used in disabled action column button of gridview.
+     * For exampel,
+     * 
+     * ```php
+     * // muted icon
+     * echo Html::tooltipIcon('Please confirm deletion', 'trash');
+     *
+     * // red icon
+     * echo Html::tooltipIcon('Your order was locked', 'lock', [
+     *     'class' => 'text-danger',
+     * ]);
+     * ```
+     * 
+     * @param string $tooltip tooltip message
+     * @param string $icon font-awesome icon name
+     * @param array $options other html options for icon tag. 
+     *
+     * @since 0.5.6
+     *
+     */
+    public static function tooltipIcon($tooltip, $icon, $options = [])
+    {
+        $class = ArrayHelper::remove($options, 'class', 'text-muted');
+
+        return Html::icon($icon, [
+            'title' => $tooltip,
+            'class' => $class,
+            'data' => [ 'toggle' => 'tooltip'],
         ]);
     }
 }
