@@ -37,9 +37,8 @@ class ActiveField extends \yii\bootstrap\ActiveField
 
         $hintContent = $this->model->getAttributeHint($this->attribute);
 
-        $this->parts['{hint}'] = empty($hintContent) ? '' : Html::popoverHelper([
-            'content' => $hintContent,
-        ]);
+        $this->parts['{hint}'] = empty($hintContent) 
+            ? '' : Html::popoverIcon($hintContent);
 
         return $this;
     }
