@@ -38,7 +38,7 @@ use drodata\helpers\Html;
 <?php endforeach; ?>
 <?php endif; ?>
  */
-class <?= $className ?> extends \drodata\db\ActiveRecord
+class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
 {
     //const EVENT_ = '';
 
