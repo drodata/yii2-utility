@@ -34,15 +34,17 @@ $this->params = [
 ?>
 <div class="row <?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-index">
     <div class="col-sm-12">
+        <div class="operation-group">
+            <?= "<?= " ?>Html::a('新建', ['create'], [
+                'class' => 'btn btn-sm btn-success',
+                'visible' => true,
+            ]) <?= "?>\n" ?>
+        </div>
 <?php if(!empty($generator->searchModelClass)): ?>
 <?php endif; ?>
         <?= "<?php " ?>Box::begin([
             'title' => $this->title,
             'tools' => [
-                Html::a(Html::icon('plus'), ['create'], [
-                    'class' => 'btn btn-sm btn-success',
-                    'title' => '新建',
-                ])
             ],
         ]);<?= "?>\n" ?>
 <?= $generator->enablePjax ? "            <?php Pjax::begin(); ?>\n" : '' ?>
@@ -99,16 +101,13 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
                     */
                     [
                         'class' => 'drodata\grid\ActionColumn',
+                        'template' => '{view} {update} {delete}',
                         'contentOptions' => [
                             'style' => 'min-width:80px',
                             'class' => 'text-center',
                         ],
-                    ],
-                    /*
-                    [
-                        'class' => 'drodata\grid\ActionColumn',
-                        'template' => '{view} {update} {delete} {}',
                         'buttons' => [
+                            // cutom button template
                             '' => function ($url, $model, $key) {
                                 return Html::a(Html::icon(''), ['/order/view', 'id' => $model->id],[
                                     'title' => '',
@@ -119,7 +118,6 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
                             },
                         ],
                     ],
-                    */
                 ],
             ]); ?>
 <?php else: ?>
