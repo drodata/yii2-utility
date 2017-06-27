@@ -50,7 +50,7 @@ class Html extends BaseHtml
         $visible = ArrayHelper::remove($options, 'visible', true);
         $link = $visible ? static::tag('a', $text, $options) : '';
 
-        if (in_array('disabled', $classes) && isset($title)) {
+        if (in_array('btn', $classes) && in_array('disabled', $classes) && isset($title)) {
             $link = static::tag('span', $link, [
                 'data' => [
                     'toggle' => 'tooltip',
@@ -60,6 +60,57 @@ class Html extends BaseHtml
         }
 
         return $link;
+    }
+
+    /**
+     *
+     * A quick way to generate a icon link, this method is mainly used
+     * in action column of grid view.
+     * 
+     * @param string $name font-awesome icon name
+     * @param string|array $url link url
+     * @param array $options link html options, the follow special attributes are available:
+     *     - `visible`: bool,
+     *     - `muted`: bool,
+     *     - `mutedTitle`: string, only meaningful when `muted` is `true`.
+     * 
+     * Examples:
+     * 
+     * ```php
+     * echo Html::iconLink('eye', ['view', 'id' => 3]);
+     * 
+     * // muted version
+     * echo Html::iconLink('eye', ['view', 'id' => 3], [
+     *     'muted' => true,
+     *     'mutedText' => 'You are not allowd to view.',
+     * ]);
+     * ```
+     *
+     * @since 1.0.16
+     */
+    public static function iconLink($name, $url = null, $options = [])
+    {
+        if ($url !== null) {
+            $options['href'] = Url::to($url);
+        }
+        $visible = ArrayHelper::remove($options, 'visible', true);
+        $muted = ArrayHelper::remove($options, 'muted', false);
+
+        if (!$visible) {
+            return '';
+        }
+
+        if ($muted) {
+            $title = ArrayHelper::remove($options, 'mutedTitle');
+
+            return static::icon($name, [
+                'title' => $title,
+                'class' => 'text-muted',
+                'data-toggle' => 'tooltip',
+            ]);
+        }
+
+        return static::a(static::icon($name), $url, $options);
     }
 
 

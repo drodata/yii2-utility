@@ -109,11 +109,11 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
                         'buttons' => [
                             // cutom button template
                             '' => function ($url, $model, $key) {
-                                return Html::a(Html::icon(''), ['/order/view', 'id' => $model->id],[
+                                return Html::iconLink('eye', ['/order/view', 'id' => $model->id], [
                                     'title' => '',
-                                    'data' => [
-                                        'id' => $model->id,
-                                    ],
+                                    'mutedTitle' => '',
+                                    'visible' => true,
+                                    'muted' => false,
                                 ]);
                             },
                         ],
