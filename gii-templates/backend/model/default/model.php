@@ -22,8 +22,8 @@ use Yii;
 use yii\helpers\ArrayHelper;
 use yii\base\InvalidParamException;
 use drodata\helpers\Html;
-//use yii\behaviors\TimestampBehavior;
-//use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
+use yii\behaviors\BlameableBehavior;
 
 /**
  * This is the model class for table "<?= $generator->generateTableName($tableName) ?>".
@@ -44,9 +44,8 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
 
     public function init()
     {
-        //$this->on(self::EVENT_AFTER_SAVE, [$this, 'handlerName']);
-
         parent::init();
+        //$this->on(self::EVENT_AFTER_SAVE, [$this, 'handlerName']);
     }
 
     /**
@@ -84,8 +83,16 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     public function behaviors()
     {
         return [
-            //TimestampBehavior::className(),
-            //BlameableBehavior::className(),
+            /*
+            [
+                'class' => TimestampBehavior::className(),
+                'updatedAtAttribute' => false,
+            ],
+            [
+                'class' => BlameableBehavior::className(),
+                'updatedByAttribute' => false,
+            ],
+            */
         ];
     }
 

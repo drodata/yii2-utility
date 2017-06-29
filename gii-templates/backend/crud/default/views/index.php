@@ -34,12 +34,6 @@ $this->params = [
 ?>
 <div class="row <?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-index">
     <div class="col-sm-12">
-        <div class="operation-group">
-            <?= "<?= " ?>Html::a('新建', ['create'], [
-                'class' => 'btn btn-sm btn-success',
-                'visible' => true,
-            ]) <?= "?>\n" ?>
-        </div>
 <?php if(!empty($generator->searchModelClass)): ?>
 <?php endif; ?>
         <?= "<?php " ?>Box::begin([
@@ -49,6 +43,12 @@ $this->params = [
         ]);<?= "?>\n" ?>
 <?= $generator->enablePjax ? "            <?php Pjax::begin(); ?>\n" : '' ?>
 <?php if ($generator->indexWidgetType === 'grid'): ?>
+            <div class="operation-group">
+                <?= "<?= " ?>Html::a('新建', ['create'], [
+                    'class' => 'btn btn-sm btn-success',
+                    'visible' => true,
+                ]) <?= "?>\n" ?>
+            </div>
             <?= "<?= " ?>GridView::widget([
                 'dataProvider' => $dataProvider,
                 /* `afterRow` has the same signature
