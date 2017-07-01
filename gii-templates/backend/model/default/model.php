@@ -66,6 +66,20 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     }
 <?php endif; ?>
 
+<?php if ($queryClassName): ?>
+<?php
+    $queryClassFullName = ($generator->ns === $generator->queryNs) ? $queryClassName : '\\' . $generator->queryNs . '\\' . $queryClassName;
+    echo "\n";
+?>
+    /**
+     * @inheritdoc
+     * @return <?= $queryClassFullName ?> the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new <?= $queryClassFullName ?>(get_called_class());
+    }
+<?php endif; ?>
 
     /**
      * key means scenario names
@@ -106,10 +120,10 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     }
 
     /* inline validator
-    public function inlineV($attribute, $params)
+    public function inlineV($attribute, $params, $validator)
     {
         if ($this->$attribute != 'a') {
-            $this->addError($attribute, '原密码输入错误');
+            $this->addError($attribute, 'error message');
             return false;
         }
         return true;
@@ -128,7 +142,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         ];
     }
 
-    // ==== getter starts ====
+    // ==== getters start ====
 
 <?php foreach ($relations as $name => $relation): ?>
     /**
@@ -140,27 +154,12 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     }
 <?php endforeach; ?>
 
-    // ==== getter ends ====
+    // ==== getters end ====
 
-    // ==== event-handler begins ====
-    // ==== event-handler ends ====
-
-<?php if ($queryClassName): ?>
-<?php
-    $queryClassFullName = ($generator->ns === $generator->queryNs) ? $queryClassName : '\\' . $generator->queryNs . '\\' . $queryClassName;
-    echo "\n";
-?>
     /**
-     * @inheritdoc
-     * @return <?= $queryClassFullName ?> the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new <?= $queryClassFullName ?>(get_called_class());
-    }
-<?php endif; ?>
-    /*
-    public function append($orderIds)
+     * Transaction block template
+     *
+    public function create($data)
     {
         $transaction = Yii::$app->db->beginTransaction();
         try {
@@ -176,4 +175,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         }
     }
     */
+
+    // ==== event-handlers begin ====
+    // ==== event-handlers end ====
 }
