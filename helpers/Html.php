@@ -232,4 +232,15 @@ class Html extends BaseHtml
             'data' => [ 'toggle' => 'tooltip'],
         ]);
     }
+
+    /**
+     * Print a variable in browser friendly.
+     *
+     * @return string print result in string format.
+     *
+     */
+    public static function printR($var)
+    {
+        return static::tag('pre', print_r($var, true));
+    }
 }
