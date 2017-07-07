@@ -1,5 +1,8 @@
 <?php
+
 namespace drodata\helpers;
+
+use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Markdown;
 use yii\helpers\Url;
@@ -242,5 +245,18 @@ class Html extends BaseHtml
     public static function printR($var)
     {
         return static::tag('pre', print_r($var, true));
+    }
+
+    /**
+     * A shorthand to render a cancel button.
+     *
+     * @return string 
+     *
+     */
+    public static function cancelButton()
+    {
+        return Html::a('取消', Yii::$app->request->referrer, [
+            'class' => 'btn btn-default',
+        ]);
     }
 }
