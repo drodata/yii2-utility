@@ -39,6 +39,8 @@ $this->registerJs($js);
             <div class="col-lg-6 col-md-12">
             </div>
         </div>
+
+        'inputTemplate' => '<div class="input-group"><div class="input-group-addon">$</div>{input}</div>'
         -->
 <?php foreach ($generator->getColumnNames() as $attribute) {
     if (in_array($attribute, $safeAttributes)) {
