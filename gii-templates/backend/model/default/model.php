@@ -21,9 +21,9 @@ namespace <?= $generator->ns ?>;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\base\InvalidParamException;
-use drodata\helpers\Html;
-use yii\behaviors\TimestampBehavior;
 use yii\behaviors\BlameableBehavior;
+use drodata\helpers\Html;
+use drodata\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "<?= $generator->generateTableName($tableName) ?>".

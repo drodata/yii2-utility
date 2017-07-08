@@ -2,15 +2,38 @@
 
 namespace drodata\behaviors;
 
+use Yii;
+
 class TimestampBehavior extends \yii\behaviors\TimestampBehavior
 {
     /**
-     * Format a timestamp attribute to date time
+     * Get human readable value of $this->createdAtAttribute
      *
-     * @param int $attribute
+     * @param string $format date formatter, available values: 'datetime', 'date'
+     * @return string converted date string
      */
-    public function getReadableTimestamp($attribute)
+    public function getReadableCreatedAt($format = 'datetime')
     {
-        return Yii::$app->formatter->asDatetime($attribute);
+        // $this->owner is the attached AR model
+        $value = $this->owner->{$this->createdAtAttribute};
+        return $this->humanRead($value, $format);
+    }
+
+    /**
+     * Get human readable value of $this->updatedAtAttribute
+     *
+     * @param string $format date formatter, available values: 'datetime', 'date'
+     * @return string converted date string
+     */
+    public function getReadableUpdatedAt($format = 'datetime')
+    {
+        $value = $this->owner->{$this->updatedAtAttribute};
+        return $this->humanRead($value, $format);
+    }
+
+    private function humanRead($value, $format)
+    {
+        $method = $format == 'datetime' ? 'asDatetime' : 'asDate';
+        return Yii::$app->formatter->{$method}($value);
     }
 }
