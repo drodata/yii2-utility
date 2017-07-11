@@ -21,7 +21,7 @@ use commom\models\Lookup;
 
 <div class="row <?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-search">
     <div class="col-sm-12">
-        <?= "<?php " ?>Box::begin([ 'title' => '搜索', ]);<?= "?>\n" ?>
+        <?= "<?php " ?>Box::begin([ 'title' => '搜索', 'style' => 'info']);<?= "?>\n" ?>
             <?= "<?php " ?>$form = ActiveForm::begin([
                 'action' => ['index'],
                 'method' => 'get',
@@ -37,9 +37,10 @@ foreach ($generator->getColumnNames() as $attribute) {
 }
 ?>
             <div class="form-group">
-                <?= "<?= " ?>Html::submitButton(<?= $generator->generateString('Search') ?>, ['class' => 'btn btn-primary']) ?>
-                <?= "<?= " ?>Html::resetButton(<?= $generator->generateString('Reset') ?>, ['class' => 'btn btn-default']) ?>
+                <?= "<?= " ?>Html::submitButton(<?= $generator->generateString('搜索') ?>, ['class' => 'btn btn-primary']) ?>
+                <?= "<?= " ?>Html::a('重置', "/<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>/index", ['class' => 'btn btn-default']) ?>
             </div>
-        <?= "<?php " ?>ActiveForm::end(); ?>
+            <?= "<?php " ?>ActiveForm::end(); ?>
+        <?= "<?php " ?>Box::end();<?= "?>\n" ?>
     </div>
 </div>
