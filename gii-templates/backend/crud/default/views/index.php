@@ -12,6 +12,9 @@ $nameAttribute = $generator->getNameAttribute();
 echo "<?php\n";
 ?>
 
+<?php if ($generator->indexWidgetType === 'grid'): ?>
+use yii\widgets\ListView;
+<?php endif; ?>
 use drodata\helpers\Html;
 use drodata\widgets\Box;
 use common\models\Lookup;
@@ -31,105 +34,68 @@ $this->params = [
         '管理',
     ],
 ];
+
+// operation buttons
+$buttons = [
+    Html::actionLink('/<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>/create', [
+        'type' => 'button',
+        'title' => '新建',
+        'icon' => 'plus',
+        'color' => 'success',
+    ]),
+];
 ?>
 <div class="row <?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-index">
-    <div class="col-sm-12">
-<?php if(!empty($generator->searchModelClass)): ?>
+<?php if ($generator->enablePjax): ?>
+    <?= "<?php " ?>Pjax::begin(); <?= "?>\n" ?>
 <?php endif; ?>
+<?php if ($generator->indexWidgetType === 'grid'): ?>
+    <!-- hide on phone -->
+    <div class="col-xs-12 hidden-xs">
         <?= "<?php " ?>Box::begin([
             'title' => $this->title,
-            'tools' => [
-            ],
+            'tools' => [],
         ]);<?= "?>\n" ?>
-<?= $generator->enablePjax ? "            <?php Pjax::begin(); ?>\n" : '' ?>
-<?php if ($generator->indexWidgetType === 'grid'): ?>
-            <div class="operation-group">
-                <?= "<?= " ?>Html::a('新建', ['create'], [
-                    'class' => 'btn btn-sm btn-success',
-                    'visible' => true,
-                ]) <?= "?>\n" ?>
-            </div>
-            <?= "<?= " ?>GridView::widget([
-                'dataProvider' => $dataProvider,
-                /* `afterRow` has the same signature
-                'rowOptions' => function ($model, $key, $index, $grid) {
-                     return [
-                         'class' => ($model->status == Product::DISABLED) ? 'bg-danger' : '',
-                     ];
-                },
-                */
-                <?= !empty($generator->searchModelClass) ? "'filterModel' => \$searchModel,\n               'columns' => [\n" : "'columns' => [\n"; ?>
-                    ['class' => 'yii\grid\SerialColumn'],
-<?php
-$count = 0;
-if (($tableSchema = $generator->getTableSchema()) === false) {
-    foreach ($generator->getColumnNames() as $name) {
-        if (++$count < 6) {
-            echo "                    '" . $name . "',\n";
-        } else {
-            echo "                    // '" . $name . "',\n";
-        }
-    }
-} else {
-    foreach ($tableSchema->columns as $column) {
-        $format = $generator->generateColumnFormat($column);
-        if (++$count < 6) {
-            echo "                    '" . $column->name . ($format === 'text' ? "" : ":" . $format) . "',\n";
-        } else {
-            echo "                    // '" . $column->name . ($format === 'text' ? "" : ":" . $format) . "',\n";
-        }
-    }
-}
-?>
-
-                    /*
-                    [
-                        'attribute' => 'status',
-                        'filter' => Lookup::items('UserStatus'),
-                        'value' => function ($model, $key, $index, $column) {
-                            return Lookup::item('UserStatus', $model->status);
-                        },
-                        'contentOptions' => ['width' => '80px'],
-                    ],
-                    [
-                        'label' => '',
-                        'format' => 'raw',
-                        'value' => function ($model, $key, $index, $column) {
-                            return $model->rolesString;
-                        },
-                    ],
-                    */
-                    [
-                        'class' => 'drodata\grid\ActionColumn',
-                        'template' => '{view} {update} {delete}',
-                        'contentOptions' => [
-                            'style' => 'min-width:80px',
-                            'class' => 'text-center',
-                        ],
-                        'buttons' => [
-                            // cutom button template
-                            '' => function ($url, $model, $key) {
-                                return Html::iconLink('eye', ['/order/view', 'id' => $model->id], [
-                                    'title' => '',
-                                    'mutedTitle' => '',
-                                    'visible' => true,
-                                    'muted' => false,
-                                ]);
-                            },
-                        ],
-                    ],
-                ],
-            ]); ?>
-<?php else: ?>
-            <?= "<?= " ?>ListView::widget([
-                'dataProvider' => $dataProvider,
-                'options' => ['class' => 'row'],
-                'itemOptions' => ['class' => 'col-sm-12 col-md-6 col-lg-4'],
-                'summaryOptions' => ['class' => 'col-xs-12'],
-                'itemView' => '_list-view',
-            ]) ?>
-<?php endif; ?>
-<?= $generator->enablePjax ? "            <?php Pjax::end(); ?>\n" : '' ?>
+             <?= "<?= " ?>$this->render('_button', ['buttons' => $buttons]) <?= "?>\n" ?>
+             <?= "<?= " ?>$this->render('_grid', [
+                 'searchModel' => $searchModel,
+                 'dataProvider' => $dataProvider,
+             ]) <?= "?>\n" ?>
         <?= "<?php " ?>Box::end();<?= "?>\n" ?>
     </div>
+    <!-- visible on phone -->
+    <div class="col-xs-12 visible-xs-block">
+        <?= "<?= " ?>$this->render('_button', ['buttons' => $buttons]) <?= "?>\n" ?>
+        <?= "<?= " ?>$this->render('_search', [
+            'model' => $searchModel,
+        ]) <?= "?>\n" ?>
+        <?= "<?= " ?>ListView::widget([
+            'dataProvider' => $dataProvider,
+            'options' => ['class' => 'row'],
+            'itemOptions' => ['class' => 'col-xs-12'],
+            'summaryOptions' => ['class' => 'col-xs-12'],
+            'emptyTextOptions' => ['class' => 'col-xs-12'],
+            'layout' => "{summary}\n{items}\n<div class=\"col-xs-12\">{pager}</div>",
+            'pager' => ['maxButtonCount' => 5],
+            'itemView' => '_list-view',
+        ]) ?>
+    </div>
+<?php else: ?>
+    <div class="col-xs-12">
+        <?= "<?= " ?>$this->render('_button', ['buttons' => $buttons]) <?= "?>\n" ?>
+        <?= "<?= " ?>$this->render('_search', [
+            'model' => $searchModel,
+        ]) <?= "?>\n" ?>
+        <?= "<?= " ?>ListView::widget([
+            'dataProvider' => $dataProvider,
+            'options' => ['class' => 'row'],
+            'itemOptions' => ['class' => 'col-sm-12 col-md-6 col-lg-4'],
+            'summaryOptions' => ['class' => 'col-xs-12'],
+            'emptyTextOptions' => ['class' => 'col-xs-12'],
+            'layout' => "{summary}\n{items}\n<div class=\"col-xs-12\">{pager}</div>",
+            'itemView' => '_list-view',
+        ]) ?>
+    </div>
+<?php endif; ?>
+<?= $generator->enablePjax ? "    <?php Pjax::end(); ?>\n" : '' ?>
 </div> <!-- .row -->

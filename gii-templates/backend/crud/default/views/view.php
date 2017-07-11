@@ -33,21 +33,9 @@ $this->params = [
     <div class="col-md-12 col-lg-6 col-lg-offset-3">
         <?= "<?php " ?>Box::begin([
             'title' => $this->title,
-            'tools' => [
-                Html::a(Html::icon('pencil'), ['update', <?= $urlParams ?>], [
-                    'class' => 'btn btn-sm btn-primary',
-                    'title' => <?= $generator->generateString('修改') ?>,
-                ]),
-                Html::a(Html::icon('trash'), ['delete', <?= $urlParams ?>], [
-                    'class' => 'btn btn-sm btn-danger',
-                    'title' => <?= $generator->generateString('删除') ?>,
-                    'data' => [
-                        'confirm' => <?= $generator->generateString('确定删除此条目吗？') ?>,
-                        'method' => 'post',
-                    ],
-                ]),
-            ],
+            'tools' => [],
         ]);<?= "?>\n" ?>
+        <?= "<?= " ?>$this->render('_detail-action', ['model' => $model])<?= "?>\n" ?>
         <?= "<?= " ?>DetailView::widget([
             'model' => $model,
             'attributes' => [

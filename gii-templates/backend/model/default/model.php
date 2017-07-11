@@ -142,6 +142,58 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         ];
     }
 
+    /**
+     * Render a specified action link, which is usually used in 
+     * GridView or ListView.
+     *
+     * @param string $action action name
+     * @param string $type link type, 'icon' and 'button' are available,
+     * the former is used in action column in grid view, while the latter
+     * is use in list view.
+     * @return mixed the link html content
+     */
+    public function actionLink($action, $type = 'icon')
+    {
+        $route = '/<?= $generator->generateTableName($tableName) ?>/' . $action;
+        switch ($action) {
+            case 'view':
+                return Html::actionLink(
+                    [$route, 'id' => $this->id],
+                    [
+                        'type' => $type,
+                        'title' => '详情',
+                        'icon' => 'eye',
+                    ]
+                );
+                break;
+            case 'update':
+                return Html::actionLink(
+                    [$route, 'id' => $this->id],
+                    [
+                        'type' => $type,
+                        'title' => '修改',
+                        'icon' => 'pencil',
+                    ]
+                );
+                break;
+            case 'delete':
+                return Html::actionLink(
+                    [$route, 'id' => $this->id],
+                    [
+                        'type' => $type,
+                        'title' => '删除',
+                        'icon' => 'trash',
+                        'color' => 'danger',
+                        'data' => [
+                            'method' => 'post',
+                            'confirm' => '请再次确认删除操作。',
+                        ],
+                    ]
+                );
+                break;
+        }
+    }
+
     // ==== getters start ====
 
 <?php foreach ($relations as $name => $relation): ?>
