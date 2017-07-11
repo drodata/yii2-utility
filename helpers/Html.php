@@ -7,6 +7,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Markdown;
 use yii\helpers\Url;
 use yii\bootstrap\BaseHtml;
+use yii\base\InvalidConfigException;
 
 /**
  * customize icon() method, with font awesome enabled
@@ -64,58 +65,6 @@ class Html extends BaseHtml
 
         return $link;
     }
-
-    /**
-     *
-     * A quick way to generate a icon link, this method is mainly used
-     * in action column of grid view.
-     * 
-     * @param string $name font-awesome icon name
-     * @param string|array $url link url
-     * @param array $options link html options, the follow special attributes are available:
-     *     - `visible`: bool,
-     *     - `muted`: bool,
-     *     - `mutedTitle`: string, only meaningful when `muted` is `true`.
-     * 
-     * Examples:
-     * 
-     * ```php
-     * echo Html::iconLink('eye', ['view', 'id' => 3]);
-     * 
-     * // muted version
-     * echo Html::iconLink('eye', ['view', 'id' => 3], [
-     *     'muted' => true,
-     *     'mutedText' => 'You are not allowd to view.',
-     * ]);
-     * ```
-     *
-     * @since 1.0.16
-     */
-    public static function iconLink($name, $url = null, $options = [])
-    {
-        if ($url !== null) {
-            $options['href'] = Url::to($url);
-        }
-        $visible = ArrayHelper::remove($options, 'visible', true);
-        $muted = ArrayHelper::remove($options, 'muted', false);
-
-        if (!$visible) {
-            return '';
-        }
-
-        if ($muted) {
-            $title = ArrayHelper::remove($options, 'mutedTitle');
-
-            return static::icon($name, [
-                'title' => $title,
-                'class' => 'text-muted',
-                'data-toggle' => 'tooltip',
-            ]);
-        }
-
-        return static::a(static::icon($name), $url, $options);
-    }
-
 
     /**
      * Add the special `visible` attribute
@@ -258,5 +207,88 @@ class Html extends BaseHtml
         return Html::a('取消', Yii::$app->request->referrer, [
             'class' => 'btn btn-default',
         ]);
+    }
+
+    /**
+     *
+     * A quick way to generate a action link, this method is mainly used
+     * in action column of grid view and list view.
+     * 
+     * @param string|array $url link url
+     * @param array $options link html options, the follow special attributes are available:
+     *     - `type`: string, link type, 'icon' or 'button'
+     *     - `visible`: bool,
+     *     - `disabled`: bool, whether to disable button
+     *     - `disabledHint`: string, only meaningful when `disabled` is `true`.
+     *     - `icon` (optional): string, fa icon name
+     *     - `size` (optional): string, button size, 'sm' (D), 'lg' etc,
+     *     - `color` (optional): string, button color, 'primary' (D) and others
+     * 
+     * Examples:
+     * 
+     * ```php
+     * 
+     * // icon version (in grid view)
+     * echo Html::actionLink(['view', 'id' => 3], [
+     *     'title' => 'view order',
+     *     'icon' => 'eye',
+     *     'disabled' => true,
+     *     'disabledHint' => 'You are not allowd to view.',
+     * ]);
+     * 
+     * // button version
+     * echo Html::actionLink(['view', 'id' => 3], [
+     *     'type' => 'button',
+     *     'title' => 'Delete',
+     *     'icon' => 'trash',
+     *     'color' => 'danger',
+     *     'disabled' => true,
+     *     'disabledHint' => 'You are not allowd to view.',
+     * ]);
+     * ```
+     *
+     * @since 1.0.16
+     */
+    public static function actionLink($url, $options)
+    {
+        if ($url !== null) {
+            $options['href'] = Url::to($url);
+        }
+        $visible = ArrayHelper::remove($options, 'visible', true);
+        $disabled = ArrayHelper::remove($options, 'disabled', false);
+        $disabledHint = ArrayHelper::remove($options, 'disabledHint');
+        $type = ArrayHelper::remove($options, 'type', 'icon');
+        $icon = ArrayHelper::remove($options, 'icon');
+        $size = ArrayHelper::remove($options, 'size', 'sm');
+        $color = ArrayHelper::remove($options, 'color', 'primary');
+
+        $class = ArrayHelper::getValue($options, 'class', '');
+        $title = ArrayHelper::getValue($options, 'title');
+
+        if (!$visible) {
+            return '';
+        }
+
+        if ($type == 'icon') {
+            if ($disabled) {
+                return static::icon($icon, [
+                    'title' => $disabledHint,
+                    'class' => 'text-muted',
+                    'data-toggle' => 'tooltip',
+                ]);
+            }
+            return static::a(static::icon($icon), $url, $options);
+        } elseif ($type == 'button') {
+            $class .= " btn btn-$color" 
+                . ($size ? " btn-$size" : '')
+                . ($disabled ? " disabled" : '');
+            if ($disabled) {
+                $options['title'] = $disabledHint;
+            }
+            $options['class'] = $class;
+            $text = empty($icon) ? '' : static::icon($icon);
+
+            return static::a($text . $title, $url, $options);
+        }
     }
 }
