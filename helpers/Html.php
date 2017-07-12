@@ -217,10 +217,12 @@ class Html extends BaseHtml
      * @param string|array $url link url
      * @param array $options link html options, the follow special attributes are available:
      *     - `type`: string, link type, 'icon' or 'button'
-     *     - `visible`: bool,
-     *     - `disabled`: bool, whether to disable button
-     *     - `disabledHint`: string, only meaningful when `disabled` is `true`.
+     *     - `title`: string, link text
+     *     - `visible` (optional): bool,
+     *     - `disabled` (optional): bool, whether to disable button
+     *     - `disabledHint` (optional): string, only meaningful when `disabled` is `true`.
      *     - `icon` (optional): string, fa icon name
+     *     - `hideIcon` (optional, defaults to `false`): bool, whether to use only the `title` option as link text
      *     - `size` (optional): string, button size, 'sm' (D), 'lg' etc,
      *     - `color` (optional): string, button color, 'primary' (D) and others
      * 
@@ -241,6 +243,7 @@ class Html extends BaseHtml
      *     'type' => 'button',
      *     'title' => 'Delete',
      *     'icon' => 'trash',
+     *     'hideIcon' => true,
      *     'color' => 'danger',
      *     'disabled' => true,
      *     'disabledHint' => 'You are not allowd to view.',
@@ -259,6 +262,7 @@ class Html extends BaseHtml
         $disabledHint = ArrayHelper::remove($options, 'disabledHint');
         $type = ArrayHelper::remove($options, 'type', 'icon');
         $icon = ArrayHelper::remove($options, 'icon');
+        $hideIcon = ArrayHelper::remove($options, 'hideIcon', false);
         $size = ArrayHelper::remove($options, 'size', 'sm');
         $color = ArrayHelper::remove($options, 'color', 'primary');
 
@@ -269,15 +273,26 @@ class Html extends BaseHtml
             return '';
         }
 
+        $text = (empty($icon) || $hideIcon) ? '' : static::icon($icon);
+        $text .= $title;
+
         if ($type == 'icon') {
             if ($disabled) {
-                return static::icon($icon, [
-                    'title' => $disabledHint,
-                    'class' => 'text-muted',
-                    'data-toggle' => 'tooltip',
-                ]);
+                if (empty($icon) || $hideIcon) {
+                    return static::tag('span', $text, [
+                        'title' => $disabledHint,
+                        'class' => 'text-muted',
+                        'data-toggle' => 'tooltip',
+                    ]);
+                } else {
+                    return static::icon($icon, [
+                        'title' => $disabledHint,
+                        'class' => 'text-muted',
+                        'data-toggle' => 'tooltip',
+                    ]);
+                }
             }
-            return static::a(static::icon($icon), $url, $options);
+            return static::a($text, $url, $options);
         } elseif ($type == 'button') {
             $class .= " btn btn-$color" 
                 . ($size ? " btn-$size" : '')
@@ -286,9 +301,8 @@ class Html extends BaseHtml
                 $options['title'] = $disabledHint;
             }
             $options['class'] = $class;
-            $text = empty($icon) ? '' : static::icon($icon);
 
-            return static::a($text . $title, $url, $options);
+            return static::a($text, $url, $options);
         }
     }
 }
