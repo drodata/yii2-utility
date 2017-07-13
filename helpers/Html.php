@@ -273,10 +273,10 @@ class Html extends BaseHtml
             return '';
         }
 
-        $text = (empty($icon) || $hideIcon) ? '' : static::icon($icon);
-        $text .= $title;
 
         if ($type == 'icon') {
+            $text = (empty($icon) || $hideIcon) ? $title : static::icon($icon);
+
             if ($disabled) {
                 if (empty($icon) || $hideIcon) {
                     return static::tag('span', $text, [
@@ -301,6 +301,9 @@ class Html extends BaseHtml
                 $options['title'] = $disabledHint;
             }
             $options['class'] = $class;
+
+            $text = (empty($icon) || $hideIcon) ? '' : static::icon($icon);
+            $text .= $title;
 
             return static::a($text, $url, $options);
         }
