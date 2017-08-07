@@ -26,12 +26,18 @@ class <?= StringHelper::basename($generator->controllerClass) ?> extends <?= '\\
 
 <?php endforeach; ?>
 
-    /*
-    public function actionAjaxX()
+    /**
+     * View a record in modal
+     *
+     * @param string $id
+     */
+    public function actionModalView($id)
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-        return $_POST;
+        return $this->renderPartial('modal-view', [
+            'model' => $this->findModel($id),
+        ]);
+
     }
-    */
 }

@@ -163,6 +163,8 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
                         'type' => $type,
                         'title' => '详情',
                         'icon' => 'eye',
+                        // comment the next line if you don't want to view model in modal.
+                        'class' => 'modal-view',
                     ]
                 );
                 break;

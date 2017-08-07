@@ -11,10 +11,7 @@ $urlParams = $generator->generateUrlParams();
 echo "<?php\n";
 ?>
 
-/**
- * Action buttons in list item footer
- *
- */
+/* action buttons in detail view on Mobile */
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
@@ -24,7 +21,6 @@ echo "<?php\n";
     <div class="col-xs-12">
         <div class="operation-group text-right">
             <?= "<?php\n" ?>
-            echo $model->actionLink('view', 'button');
             echo $model->actionLink('update', 'button');
             echo $model->actionLink('delete', 'button');
             <?= "?>\n" ?>

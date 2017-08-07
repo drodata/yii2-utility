@@ -30,36 +30,26 @@ $this->params = [
 ];
 ?>
 <div class="row <?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-view">
-    <div class="col-md-12 col-lg-6 col-lg-offset-3">
-        <?= "<?php " ?>Box::begin([
+    <div class="col-xs-12 visible-xs-block">
+        <?= "<?php\n" ?>
+        Box::begin([
             'title' => $this->title,
             'tools' => [],
-        ]);<?= "?>\n" ?>
-        <?= "<?= " ?>$this->render('_detail-action', ['model' => $model])<?= "?>\n" ?>
-        <?= "<?= " ?>DetailView::widget([
-            'model' => $model,
-            'attributes' => [
-<?php
-if (($tableSchema = $generator->getTableSchema()) === false) {
-    foreach ($generator->getColumnNames() as $name) {
-        echo "                '" . $name . "',\n";
-    }
-} else {
-    foreach ($generator->getTableSchema()->columns as $column) {
-        $format = $generator->generateColumnFormat($column);
-        echo "                '" . $column->name . ($format === 'text' ? "" : ":" . $format) . "',\n";
-    }
-}
-?>
-                /*
-                [
-                    'attribute' => 'status',
-                    'value' => Lookup::item('UserStatus', $model->status),
-                ],
-                */
-            ],
-        ]) ?>
-
-        <?= "<?php " ?>Box::end();<?= "?>\n" ?>
+        ]);
+        echo $this->render('_detail-action-xs', ['model' => $model]);
+        echo $this->render('_detail-view-xs', ['model' => $model]);
+        Box::end();
+        <?= "?>\n" ?>
+    </div>
+    <div class="col-sm-12 col-lg-8 col-lg-offset-2 hidden-xs">
+        <?= "<?php\n" ?>
+        Box::begin([
+            'title' => $this->title,
+            'tools' => [],
+        ]);
+        echo $this->render('_detail-action', ['model' => $model]);
+        echo $this->render('_detail-view', ['model' => $model]);
+        Box::end();
+        <?= "?>\n" ?>
     </div>
 </div>
