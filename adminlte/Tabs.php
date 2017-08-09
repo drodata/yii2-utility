@@ -120,8 +120,11 @@ class Tabs extends \yii\bootstrap\Tabs
             $headers[] = Html::tag('li', $header, $headerOptions);
         }
 
-        return Html::tag('ul', implode("\n", $headers), $this->options)
+        $content = Html::tag('ul', implode("\n", $headers), $this->options)
         . ($this->renderTabContent ? "\n" . Html::tag('div', implode("\n", $panes), ['class' => 'tab-content']) : '');
+
+        // wrap tab content using AdminLTE's class name.
+        return Html::tag('div', $content, ['class' => 'nav-tabs-custom']);
     }
 }
 
