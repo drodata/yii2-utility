@@ -16,9 +16,9 @@ if (empty($safeAttributes)) {
 echo "<?php\n";
 ?>
 
-use yii\bootstrap\Html;
+use drodata\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use common\models\Lookup;
+use backend\models\Lookup;
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */

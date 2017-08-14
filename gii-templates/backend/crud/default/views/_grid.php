@@ -54,6 +54,18 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
 ?>
         /*
         [
+            'attribute' => 'created_at',
+            'format' => 'datetime',
+            'contentOptions' => ['style' => 'width:150px'],
+            'filter' => Lookup::dateRangeFilter($searchModel, 'created_at'),
+        ],
+        [
+            'attribute' => 'amount',
+            'format' => 'decimal',
+            'headerOptions' => ['class' => 'text-right'],
+            'contentOptions' => ['class' => 'text-right text-bold'],
+        ],
+        [
             'attribute' => 'status',
             'filter' => Lookup::items('UserStatus'),
             'value' => function ($model, $key, $index, $column) {
