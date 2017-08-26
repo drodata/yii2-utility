@@ -2,7 +2,7 @@
 
 ## Ajax View in Modal
 
-在实际项目中，对那些频繁的查看操作（例如订单的查看）来说，在页面不跳转的情况下，直接通过 AJAX 的方式在 Modal 内显示更加快捷高效。具体实现起来也很简单，问题在于有这种需求的模型可能有多个，为了避免不必要的代码重复，这里我们需要对代码进行抽象。大致思路是：声明一个全局的 click 事件出发函数，用户点击模型的查看链接时，提前拦截以组织页面跳转，之后根据 query string 中模型 id 发起一个 AJAX GET 请求；将传输过来的 Modal 内容追加到 DOM 中，之后调用 `modal()` 显示内容。
+在实际项目中，对那些频繁的查看操作（例如订单的查看）来说，在页面不跳转的情况下，直接通过 AJAX 的方式在 Modal 内显示更加快捷高效。具体实现起来也很简单，问题在于有这种需求的模型可能有多个，为了避免不必要的代码重复，这里我们需要对代码进行抽象。大致思路是：声明一个全局的 click 事件触发函数，用户点击模型的查看链接时，提前拦截以阻止页面跳转，之后根据 query string 中模型 id 发起一个 AJAX GET 请求；将传输过来的 Modal 内容追加到 DOM 中，之后调用 `modal()` 显示内容。
 
 Event handler 定义如下：
 
@@ -10,14 +10,18 @@ Event handler 定义如下：
 // 拦截含有 .modal-view 类名的链接
 $(document).on('click', '.modal-view', function(e) {
     e.preventDefault();
-    var queryString = $(this).prop('href').split('?')[1];
-    var slices = $(this).prop('href').split('/');
 
-    // 假设每个控制器内都有一个 actionModalView
-    var ajaxRoute = slices[slices.length - 2] + '/modal-view?' + queryString;
+    $(this).tooltip('hide');
+
+    var queryString = $(this).prop('href').split('?')[1];
+    var slices = $(this).prop('href').split('?')[0].split('/');
+    var controller = slices[slices.length - 2];
+    var action = slices[slices.length - 1];
+    var ajaxRoute = controller + '/modal-' + action + '?' + queryString;
+
     $.get(APP.baseUrl + ajaxRoute, function(response) {
         $(response).appendTo('body');
-        // 所有模型的 modal 的 id 都是 view-modal
+        // 所有模型的 modal 的 id 约定为 view-modal
         $('#view-modal').modal('show')
     }).fail(ajax_fail_handler).always(function(){
         $(document).on('hide.bs.modal', '#view-modal', function() {
