@@ -53,8 +53,6 @@ $buttons = [
     <!-- hide on phone -->
     <div class="col-xs-12 hidden-xs">
         <?= "<?php " ?>Box::begin([
-            'title' => $this->title,
-            'tools' => [],
         ]);<?= "?>\n" ?>
              <?= "<?= " ?>$this->render('_button', ['buttons' => $buttons]) <?= "?>\n" ?>
              <?= "<?= " ?>$this->render('_grid', [

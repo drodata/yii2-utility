@@ -6,10 +6,9 @@
 use yii\bootstrap\ActiveForm;
 use drodata\helpers\Html;
 use backend\models\Lookup;
-use backend\models\Goods;
 
 $token = 'drodata';
-$goods = new Goods();
+$goods = new Lookup();
 $js = <<<JS
 $('form#dummy-form').remove();
 JS;
@@ -23,12 +22,12 @@ $this->registerJs($js);
         <table><tbody>
             <tr class="itemRow" data-key="<?= $token ?>">
                 <td>
-                    <?= $form->field($goods, "[$token]warehousing_id")->label(false)->dropDownList(Lookup::warehousingNumbers(), [
+                    <?= $form->field($goods, "[$token]id")->label(false)->dropDownList([], [
                         'prompt' => '',
                     ]) ?>
                 </td>
                 <td>
-                    <?= $form->field($goods, "[$token]qutity", [
+                    <?= $form->field($goods, "[$token]name", [
                         'inputTemplate' => '<div class="input-group">{input}<div class="input-group-addon">kg</div></div>',
                     ])->label(false)->input('number', [
                         'placeholder' => '',

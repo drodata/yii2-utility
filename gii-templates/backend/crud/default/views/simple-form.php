@@ -42,7 +42,6 @@ $this->registerJs($js);
 <div class="row <?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-form">
     <div class="col-md-12 col-lg-6">
         <?= "<?php " ?>Box::begin([
-            'title' => $this->title,
         ]); <?= "?>\n" ?>
             <?= "<?php " ?>$form = ActiveForm::begin(); ?>
                 <!--
