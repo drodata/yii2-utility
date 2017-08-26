@@ -8,7 +8,10 @@ class Box extends \yii\bootstrap\Widget
 {
     public $style = 'default';
     public $solid = false;
-    public $title = '';
+    /**
+     * @var $title
+     */
+    public $title = null;
     public $content = '';
     public $footer = null;
     public $tools = [];
@@ -24,8 +27,10 @@ class Box extends \yii\bootstrap\Widget
         $opt  = Html::beginTag('div', ['class' => implode(' ', $boxClassNames)]);
 
         // header
-        $opt  .= Html::beginTag('div', ['class' => 'box-header with-border']);
-        $opt  .= Html::tag('h3', $this->title, ['class' => 'box-title']);
+        if (isset($this->title)) {
+            $opt  .= Html::beginTag('div', ['class' => 'box-header with-border']);
+            $opt  .= Html::tag('h3', $this->title, ['class' => 'box-title']);
+        }
 
         if (count($this->tools) > 0) {
             $predefinedBtns = [
@@ -67,7 +72,11 @@ class Box extends \yii\bootstrap\Widget
             $opt .= implode('', $this->tools);
             $opt  .= Html::endTag('div');
         }
-        $opt  .= Html::endTag('div');
+
+        // header end tag
+        if (isset($this->title)) {
+            $opt  .= Html::endTag('div');
+        }
 
         // body
         $opt  .= Html::beginTag('div', ['class' => 'box-body']);
