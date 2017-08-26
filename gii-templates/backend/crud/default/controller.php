@@ -136,6 +136,21 @@ if (count($pks) === 1) {
     }
 
     /**
+     * View a record in modal
+     *
+     * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
+     */
+    public function actionModalView(<?= $actionParams ?>)
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        return $this->renderPartial('modal-view', [
+            'model' => $this->findModel(<?= $actionParams ?>),
+        ]);
+
+    }
+
+    /**
      * Creates a new <?= $modelClass ?> model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
