@@ -30,13 +30,16 @@ echo DetailView::widget([
     'attributes' => [
         /*
         [
-            'attribute' => 'product_id',
-            'value' => $model->product->size,
+            'label' => '',
+            'value' => $model->id,
         ],
         [
-            'attribute' => 'status',
-            'format' => 'raw',
-            'value' => $model->readableStatus,
+            'attribute' => 'amount',
+            'format' => 'decimal',
+            'contentOptions' => ['class' => 'text-right'],
+            'captionOptions' => [
+                'class' => 'text-right text-bold',
+            ],
         ],
         */
 <?php

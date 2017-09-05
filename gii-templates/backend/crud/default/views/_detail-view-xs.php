@@ -35,5 +35,15 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
     }
 }
 ?>
+            /*
+            [
+                'attribute' => 'amount',
+                'format' => 'decimal',
+                'contentOptions' => ['class' => 'text-right'],
+                'captionOptions' => [
+                    'class' => 'text-right text-bold',
+                ],
+            ],
+            */
         ],
     ]) ?>

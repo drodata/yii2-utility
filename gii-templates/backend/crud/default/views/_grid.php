@@ -63,7 +63,10 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
             'attribute' => 'amount',
             'format' => 'decimal',
             'headerOptions' => ['class' => 'text-right'],
-            'contentOptions' => ['class' => 'text-right text-bold'],
+            'contentOptions' => [
+                'class' => 'text-right text-bold',
+                'style' => 'width:80px',
+            ],
         ],
         [
             'attribute' => 'status',
@@ -71,7 +74,7 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
             'value' => function ($model, $key, $index, $column) {
                 return Lookup::item('UserStatus', $model->status);
             },
-            'contentOptions' => ['width' => '80px'],
+            'contentOptions' => ['style' => 'width:80px'],
         ],
         [
             'label' => '',
