@@ -33,17 +33,16 @@ $this->params = [
         ['label' => $this->title, 'url' => 'index'],
         '管理',
     ],
+    'buttons' => [
+        Html::actionLink('/<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>/create', [
+            'type' => 'button',
+            'title' => '新建',
+            'icon' => 'plus',
+            'color' => 'success',
+        ]),
+    ],
 ];
 
-// operation buttons
-$buttons = [
-    Html::actionLink('/<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>/create', [
-        'type' => 'button',
-        'title' => '新建',
-        'icon' => 'plus',
-        'color' => 'success',
-    ]),
-];
 ?>
 <div class="row <?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-index">
 <?php if ($generator->enablePjax): ?>
@@ -54,7 +53,7 @@ $buttons = [
     <div class="col-xs-12 hidden-xs">
         <?= "<?php " ?>Box::begin([
         ]);<?= "?>\n" ?>
-             <?= "<?= " ?>$this->render('_button', ['buttons' => $buttons]) <?= "?>\n" ?>
+             <?= "<?= " ?>$this->render('_button') <?= "?>\n" ?>
              <?= "<?= " ?>$this->render('_grid', [
                  'searchModel' => $searchModel,
                  'dataProvider' => $dataProvider,
@@ -63,7 +62,7 @@ $buttons = [
     </div>
     <!-- visible on phone -->
     <div class="col-xs-12 visible-xs-block">
-        <?= "<?= " ?>$this->render('_button', ['buttons' => $buttons]) <?= "?>\n" ?>
+        <?= "<?= " ?>$this->render('_button') <?= "?>\n" ?>
         <?= "<?= " ?>$this->render('_search', [
             'model' => $searchModel,
         ]) <?= "?>\n" ?>
@@ -80,7 +79,7 @@ $buttons = [
     </div>
 <?php else: ?>
     <div class="col-xs-12">
-        <?= "<?= " ?>$this->render('_button', ['buttons' => $buttons]) <?= "?>\n" ?>
+        <?= "<?= " ?>$this->render('_button') <?= "?>\n" ?>
         <?= "<?= " ?>$this->render('_search', [
             'model' => $searchModel,
         ]) <?= "?>\n" ?>
