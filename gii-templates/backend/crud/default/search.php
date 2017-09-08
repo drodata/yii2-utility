@@ -121,4 +121,25 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
             //->andFilterWhere(['LIKE', 'user_group.name', $this->getAttribute('group.name')])
         return $dataProvider;
     }
+
+    /**
+     * Template
+     * 无需 sort 和 pagination 的 data provider
+     * @see 
+     */
+    public function tpl()
+    {
+        $query = <?= isset($modelAlias) ? $modelAlias : $modelClass ?>::find();
+        /*
+        if (Yii::$app->user->can('saler')) {
+            $query->andWhere([]);
+        }
+        */
+
+        return new ActiveDataProvider([
+            'query' => $query,
+			'pagination' => false,
+			'sort' => false,
+        ]);
+    }
 }
