@@ -76,6 +76,9 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
         /*
         $query = <?= isset($modelAlias) ? $modelAlias : $modelClass ?>::find()->joinWith(['company']);
             ->where(['{{%company}}.category' => Company::CATEGORY_LOGISTICS]);
+        if (Yii::$app->user->can('saler') && !Yii::$app->user->can('saleDirector')) {
+            $query->andWhere(['{{%interaction}}.created_by' => Yii::$app->user->id]);
+        }
         */
 
         // add conditions that should always apply here
@@ -117,5 +120,26 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
         <?= implode("\n        ", $searchConditions) ?>
             //->andFilterWhere(['LIKE', 'user_group.name', $this->getAttribute('group.name')])
         return $dataProvider;
+    }
+
+    /**
+     * Template
+     * 无需 sort 和 pagination 的 data provider
+     * @see 
+     */
+    public function tpl()
+    {
+        $query = <?= isset($modelAlias) ? $modelAlias : $modelClass ?>::find();
+        /*
+        if (Yii::$app->user->can('saler')) {
+            $query->andWhere([]);
+        }
+        */
+
+        return new ActiveDataProvider([
+            'query' => $query,
+			'pagination' => false,
+			'sort' => false,
+        ]);
     }
 }
