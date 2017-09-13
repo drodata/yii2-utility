@@ -20,8 +20,10 @@ echo "<?php\n";
 <div class="row">
     <div class="col-xs-12">
         <div class="operation-group text-right">
-            <?= "<?= " ?>$model->actionLink('update', 'button') <?= "?>\n" ?>
-            <?= "<?= " ?>$model->actionLink('delete', 'button') <?= "?>\n" ?>
+            <?= "<?php\n" ?>
+            echo $model->actionLink('update', 'button');
+            echo $model->actionLink('delete', 'button');
+            <?= "?>\n" ?>
         </div>
     </div>
 </div>
