@@ -98,11 +98,11 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     {
         return [
             /*
-            [
+            'timestamp' => [
                 'class' => TimestampBehavior::className(),
                 'updatedAtAttribute' => false,
             ],
-            [
+            'blameable' => [
                 'class' => BlameableBehavior::className(),
                 'updatedByAttribute' => false,
             ],
