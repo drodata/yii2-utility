@@ -138,8 +138,8 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
 
         return new ActiveDataProvider([
             'query' => $query,
-			'pagination' => false,
-			'sort' => false,
+            'pagination' => false,
+            'sort' => false,
         ]);
     }
 }
