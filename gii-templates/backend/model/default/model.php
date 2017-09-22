@@ -112,6 +112,28 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
 
     /**
      * @inheritdoc
+     *
+    public function fields()
+    {
+        $fields = parent::fields();
+        
+        // 删除涉及敏感信息的字段
+        unset($fields['auth_key']);
+        
+        // 增加自定义字段
+        return ArrayHelper::merge($fields, [
+            'fullName' => function () {
+                return $this->id . $this->username;
+            },
+            'group' => function () {
+                return $this->group;
+            },
+        ]);
+    }
+    */
+
+    /**
+     * @inheritdoc
      */
     public function rules()
     {
