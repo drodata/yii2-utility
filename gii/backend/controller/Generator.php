@@ -5,7 +5,7 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace yii\gii\generators\controller;
+namespace drodata\gii\backend\controller;
 
 use Yii;
 use yii\gii\CodeFile;
@@ -37,7 +37,7 @@ class Generator extends \yii\gii\Generator
     /**
      * @var string the base class of the controller
      */
-    public $baseClass = 'yii\web\Controller';
+    public $baseClass = 'drodata\web\Controller';
     /**
      * @var string list of action IDs separated by commas or spaces
      */

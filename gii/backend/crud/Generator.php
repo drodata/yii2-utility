@@ -5,7 +5,7 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace yii\gii\generators\crud;
+namespace drodata\gii\backend\crud;
 
 use Yii;
 use yii\db\ActiveRecord;
@@ -34,7 +34,7 @@ class Generator extends \yii\gii\Generator
     public $modelClass;
     public $controllerClass;
     public $viewPath;
-    public $baseControllerClass = 'yii\web\Controller';
+    public $baseControllerClass = 'drodata\web\Controller';
     public $indexWidgetType = 'grid';
     public $searchModelClass = '';
     /**
