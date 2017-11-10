@@ -61,4 +61,23 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
         return implode('', $errors);
     }
+
+    /**
+     * 直接返回第一个错误信息。对某些场景来说（小程序），
+     * key 并不重要，且不需要一次性显示过多错误提示信息。
+     *
+     * @return string
+     */
+    public function getFirstErrorMessage()
+    {
+        if (!$this->hasErrors()) {
+            return '';
+        }
+
+        foreach ($this->getFirstErrors() as $key => $error) {
+            $message = $error;
+        }
+
+        return $message;
+    }
 }
