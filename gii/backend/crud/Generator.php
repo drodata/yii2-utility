@@ -42,6 +42,7 @@ class Generator extends \yii\gii\Generator
      * @since 2.0.5
      */
     public $enablePjax = false;
+    public $enableResponsive = false;
 
 
     /**
@@ -49,7 +50,7 @@ class Generator extends \yii\gii\Generator
      */
     public function getName()
     {
-        return 'CRUD Generator';
+        return 'kuixy CRUD Generator';
     }
 
     /**
@@ -57,8 +58,7 @@ class Generator extends \yii\gii\Generator
      */
     public function getDescription()
     {
-        return 'This generator generates a controller and views that implement CRUD (Create, Read, Update, Delete)
-            operations for the specified data model.';
+        return '支持是否显示手机端 responsive';
     }
 
     /**
@@ -78,7 +78,7 @@ class Generator extends \yii\gii\Generator
             [['controllerClass', 'searchModelClass'], 'validateNewClass'],
             [['indexWidgetType'], 'in', 'range' => ['grid', 'list']],
             [['modelClass'], 'validateModelClass'],
-            [['enableI18N', 'enablePjax'], 'boolean'],
+            [['enableI18N', 'enablePjax', 'enableResponsive'], 'boolean'],
             [['messageCategory'], 'validateMessageCategory', 'skipOnEmpty' => false],
             ['viewPath', 'safe'],
         ]);
@@ -97,6 +97,7 @@ class Generator extends \yii\gii\Generator
             'indexWidgetType' => 'Widget Used in Index Page',
             'searchModelClass' => 'Search Model Class',
             'enablePjax' => 'Enable Pjax',
+            'enableResponsive' => '针对小屏页面生成单独的页面',
         ]);
     }
 
@@ -124,6 +125,7 @@ class Generator extends \yii\gii\Generator
             'enablePjax' => 'This indicates whether the generator should wrap the <code>GridView</code> or <code>ListView</code>
                 widget on the index page with <code>yii\widgets\Pjax</code> widget. Set this to <code>true</code> if you want to get
                 sorting, filtering and pagination without page refreshing.',
+            'enableResponsive' => '哈哈哈',
         ]);
     }
 

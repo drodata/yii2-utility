@@ -30,6 +30,7 @@ Modal::begin([
 <?= "?>\n" ?>
 
 <div class="row">
+<?php if ($generator->enableResponsive): ?>
     <div class="col-xs-12 visible-xs-block">
         <?= "<?php\n" ?>
         echo $this->render('_detail-action-xs', ['model' => $model]);
@@ -42,6 +43,14 @@ Modal::begin([
         echo $this->render('_detail-view', ['model' => $model]);
         <?= "?>\n" ?>
     </div>
+<?php else: ?>
+    <div class="col-xs-12">
+        <?= "<?php\n" ?>
+        echo $this->render('_detail-action', ['model' => $model]);
+        echo $this->render('_detail-view', ['model' => $model]);
+        <?= "?>\n" ?>
+    </div>
+<?php endif; ?>
 </div>
 
 <?= "<?php Modal::end(); ?>" ?>
