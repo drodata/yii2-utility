@@ -34,7 +34,7 @@ class Generator extends \yii\gii\Generator
     public $modelClass;
     public $controllerClass;
     public $viewPath;
-    public $baseControllerClass = 'drodata\web\Controller';
+    public $baseControllerClass = 'yii\web\Controller';
     public $indexWidgetType = 'grid';
     public $searchModelClass = '';
     /**
@@ -42,6 +42,10 @@ class Generator extends \yii\gii\Generator
      * @since 2.0.5
      */
     public $enablePjax = false;
+
+    /**
+     * @var boolean 当屏幕变小时，是否将 index 页面中的 GridView 转换成 ListView
+     */
     public $enableResponsive = false;
 
 
@@ -50,7 +54,7 @@ class Generator extends \yii\gii\Generator
      */
     public function getName()
     {
-        return 'kuixy CRUD Generator';
+        return "Drodata's CRUD Generator";
     }
 
     /**

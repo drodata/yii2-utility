@@ -42,15 +42,13 @@ $this->params = [
         ]),
     ],
 ];
-
 ?>
 <div class="row <?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-index">
 <?php if ($generator->enablePjax): ?>
     <?= "<?php " ?>Pjax::begin(); <?= "?>\n" ?>
 <?php endif; ?>
 <?php if ($generator->indexWidgetType === 'grid'): ?>
-    <?php if ($generator->enableResponsive): ?>
-
+<?php if ($generator->enableResponsive): ?>
     <!-- hide on phone -->
     <div class="col-xs-12 hidden-xs">
         <?= "<?php " ?>Box::begin([
@@ -79,7 +77,7 @@ $this->params = [
             'itemView' => '_list-view',
         ]) ?>
     </div>
-    <?php else: ?>
+<?php else: ?>
     <div class="col-xs-12">
         <?= "<?php " ?>Box::begin([
         ]);<?= "?>\n" ?>
@@ -90,7 +88,7 @@ $this->params = [
              ]) <?= "?>\n" ?>
         <?= "<?php " ?>Box::end();<?= "?>\n" ?>
     </div>
-    <?php endif; ?>
+<?php endif; ?>
 <?php else: ?>
     <div class="col-xs-12">
         <?= "<?= " ?>$this->render('_button') <?= "?>\n" ?>
@@ -108,6 +106,5 @@ $this->params = [
         ]) ?>
     </div>
 <?php endif; ?>
-<?= $generator->enablePjax ? "    <?php Pjax::end(); ?>\n" : '' ?>
-
+<?= $generator->enablePjax ? "    <?php Pjax::end(); ?>\n" : "" ?>
 </div> <!-- .row -->
