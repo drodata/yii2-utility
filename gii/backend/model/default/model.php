@@ -139,6 +139,18 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     {
         return [<?= "\n            " . implode(",\n            ", $rules) . ",\n        " ?>];
         //['passwordOld', 'inlineV'],
+        /*
+            [
+                'billing_period', 'required', 
+                'when' => function ($model, $attribute) {
+                    return $model->payment_way != self::PAYMENT_WAY_SINGLE;
+                },
+                'on' => self::SCENARIO_ACCOUNTANT,
+                'whenClient' => "function (attribute, value) {
+                    return $('#company-payment_way input:checked').val() != '1';
+                }",
+            ],
+        */
     }
 
     /* inline validator
