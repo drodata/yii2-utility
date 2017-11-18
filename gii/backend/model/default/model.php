@@ -21,9 +21,9 @@ namespace <?= $generator->ns ?>;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\base\InvalidParamException;
-use yii\behaviors\BlameableBehavior;
 use drodata\helpers\Html;
 use drodata\behaviors\TimestampBehavior;
+use drodata\behaviors\BlameableBehavior;
 
 /**
  * This is the model class for table "<?= $generator->generateTableName($tableName) ?>".
@@ -105,6 +105,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
             'blameable' => [
                 'class' => BlameableBehavior::className(),
                 'updatedByAttribute' => false,
+                'humanReadAttbiute' => 'display_name',
             ],
             */
         ];
@@ -118,15 +119,15 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         $fields = parent::fields();
         
         // 删除涉及敏感信息的字段
-        unset($fields['auth_key']);
+        //unset($fields['auth_key']);
         
         // 增加自定义字段
         return ArrayHelper::merge($fields, [
-            'fullName' => function () {
-                return $this->id . $this->username;
+            'time' => function () {
+                return $this->readableCreateTime;
             },
-            'group' => function () {
-                return $this->group;
+            'creator' => function () {
+                return $this->readableCreator;
             },
         ]);
     }
