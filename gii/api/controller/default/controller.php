@@ -35,14 +35,27 @@ class <?= StringHelper::basename($generator->controllerClass) ?> extends <?= '\\
         return $behaviors;
     }
 
-    /*
-    public function actionIndex()
+    public function actions()
+    {
+        $actions = parent::actions();
+    
+        // disable the "delete" and "create" actions
+        //unset($actions['delete'], $actions['create']);
+    
+        // customize the data provider preparation with the "prepareDataProvider()" method
+        //$actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
+    
+        return $actions;
+    }
+
+    /**
+     * 覆盖默认的 index action dataprovider
+    public function prepareDataProvider()
     {
         $query = <?= StringHelper::basename($generator->controllerModel) ?>::find();
         return new ActiveDataProvider([
             'query' => $query,
-            'pagination' => [],
         ]);
     }
-    */
+     */
 }
