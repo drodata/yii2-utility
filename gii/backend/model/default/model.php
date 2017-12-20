@@ -105,7 +105,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
             'blameable' => [
                 'class' => BlameableBehavior::className(),
                 'updatedByAttribute' => false,
-                'humanReadAttbiute' => 'display_name',
+                'humanReadAttribute' => 'display_name',
             ],
             */
         ];
