@@ -114,27 +114,17 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
         // grid filtering conditions
         <?= implode("\n        ", $searchConditions) ?>
             //->andFilterWhere(['LIKE', 'user_group.name', $this->getAttribute('group.name')])
-        return $dataProvider;
-    }
-
-    /**
-     * Template
-     * 无需 sort 和 pagination 的 data provider
-     * @see 
-     */
-    public function tpl()
-    {
-        $query = <?= isset($modelAlias) ? $modelAlias : $modelClass ?>::find();
+        
         /*
-        if (Yii::$app->user->can('saler')) {
-            $query->andWhere([]);
+        if (!empty($this->created_at) && strpos($this->created_at, '-') !== false) {
+            list($begin, $end) = explode('-', $this->created_at);
+            $begin .= ' 00:00:00';
+            $end .= ' 23:59:59';
+            $query->andFilterWhere(['BETWEEN', '{{%income}}.created_at', strtotime($begin), strtotime($end)]);
         }
         */
 
-        return new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => false,
-            'sort' => false,
-        ]);
+        return $dataProvider;
     }
+
 }

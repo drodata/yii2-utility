@@ -40,12 +40,13 @@ use drodata\behaviors\BlameableBehavior;
  */
 class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
 {
-    //const EVENT_ = '';
+    // const STATUS_ = 1;
+    // const SCENARIO_ = '';
 
     public function init()
     {
         parent::init();
-        //$this->on(self::EVENT_AFTER_SAVE, [$this, 'handlerName']);
+        //$this->on(self::EVENT_AFTER_INSERT, [$this, 'handlerName']);
     }
 
     /**
@@ -210,6 +211,9 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
                         'type' => $type,
                         'title' => '修改',
                         'icon' => 'pencil',
+                        'visible' => true, // Yii::$app->user->can(''),
+                        // 'disabled' => false,
+                        // 'disabledHint' => '',
                     ]
                 );
                 break;
@@ -241,6 +245,36 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     {
         <?= $relation[0] . "\n" ?>
     }
+
+    /*
+    public function getReadableStatus()
+    {
+        return Lookup::item('Status', $this->status);
+    }
+    public function getStatusLabel()
+    {
+        $map = [
+            self::STATUS_ACTIVE => 'success',
+            self::STATUS_ARCHIVED => 'default',
+        ];
+        $class = 'label label-' . $map[$this->status];
+        return Html::tag('span', $this->readableStatus, ['class' => $class]);
+    }
+
+    /**
+     * 无需 sort 和 pagination 的 data provider
+     *
+     */
+    public function getItemsDataProvider()
+    {
+        return new ActiveDataProvider([
+            'query' => static::find(),
+            'pagination' => false,
+            'sort' => false,
+        ]);
+    }
+    */
+
 <?php endforeach; ?>
 
     // ==== getters end ====
@@ -266,5 +300,16 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     */
 
     // ==== event-handlers begin ====
+    /**
+     *
+     * Triggerred by self::EVENT_AFTER_INSERT 
+     *
+    public function doSomething($event)
+    {
+        if (!$this->save()) {
+            throw new \yii\db\Exception($this->stringifyErrors());
+        }
+    }
+    */
     // ==== event-handlers end ====
 }

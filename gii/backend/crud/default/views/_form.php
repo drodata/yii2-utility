@@ -19,6 +19,7 @@ echo "<?php\n";
 use drodata\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use backend\models\Lookup;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
@@ -41,6 +42,18 @@ $this->registerJs($js);
         </div>
 
         'inputTemplate' => '<div class="input-group"><div class="input-group-addon">$</div>{input}</div>'
+
+        dropDownList(Lookup::items(''), ['prompt' => ''])
+        inline()->radioList(Lookup::items(''))
+        textArea(['rows' => 3])
+        input('number', ['step' => 0.01]);
+        widget(Select2::classname(), [
+            'data' => Lookup::items('AcceptanceSource'),
+            'options' => ['placeholder' => '请选择'],
+            'addon' => [
+            ],
+        ])
+        staticControl()
         -->
 <?php foreach ($generator->getColumnNames() as $attribute) {
     if (in_array($attribute, $safeAttributes)) {
@@ -49,7 +62,7 @@ $this->registerJs($js);
 } ?>
     <div class="form-group">
         <?= "<?= " ?>Html::submitButton($model->isNewRecord ? <?= $generator->generateString('新建') ?> : <?= $generator->generateString('保存') ?>, [
-            'class' => ($model->isNewRecord ? 'btn btn-success' : 'btn btn-primary') . ' submit-once',
+            'class' => ($model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'),
         ]) ?>
     </div>
 
