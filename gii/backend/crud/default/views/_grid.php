@@ -64,7 +64,7 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
             'format' => 'decimal',
             'headerOptions' => ['class' => 'text-right'],
             'contentOptions' => [
-                'class' => 'text-right text-bold',
+                'class' => 'text-right',
                 'style' => 'width:80px',
             ],
         ],

@@ -39,6 +39,7 @@ $this->params = [
             'title' => '新建',
             'icon' => 'plus',
             'color' => 'success',
+            'visible' => true, //Yii::$app->user->can(''),
         ]),
     ],
 ];

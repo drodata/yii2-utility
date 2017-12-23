@@ -91,21 +91,16 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
             'attributes' => [
                 /*
                 'office_phone',
-                'group.name' => [
-                    'asc'   => ['company.name' => SORT_ASC],
-                    'desc'  => ['company.name' => SORT_DESC],
-                ],
                 'company.name' => [
                     'asc'  => ['CONVERT({{%company}}.full_name USING gbk)' => SORT_ASC],
                     'desc' => ['CONVERT({{%company}}.full_name USING gbk)' => SORT_DESC],
                 ],
                 */
             ],
-            /* Warning: defaultOrder 内指定的列必须在上面的 attributes 内声明过，否则排序无效
+            // Warning: defaultOrder 内指定的列必须在上面的 attributes 内声明过，否则排序无效
             'defaultOrder' => [
-                'group.name' => SORT_DESC,
+                'id' => SORT_DESC,
             ],
-            */
         ]);
 
         $this->load($params);

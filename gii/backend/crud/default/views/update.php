@@ -19,7 +19,7 @@ use drodata\widgets\Box;
 
 $this->title = <?= $generator->generateString('修改{modelClass}: ', ['modelClass' => Inflector::camel2words(StringHelper::basename($generator->modelClass))]) ?> . $model->id;
 $this->params = [
-    'title' => '修改',
+    'title' => $this->title,
     'subtitle' => '',
     'breadcrumbs' => [
         ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => ['index']],

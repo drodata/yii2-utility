@@ -34,12 +34,13 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
 ?>
             /*
             [
-                'attribute' => 'amount',
-                'format' => 'decimal',
-                'contentOptions' => ['class' => 'text-right'],
-                'captionOptions' => [
-                    'class' => 'text-right text-bold',
-                ],
+                'attribute' => 'status',
+                'format' => 'raw',
+                'value' => Lookup::item('OrderStatus', $model->status),
+            ],
+            [
+                'attribute' => 'created_by',
+                'value' => $model->readableCreator,
             ],
             */
         ],

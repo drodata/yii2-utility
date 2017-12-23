@@ -39,6 +39,7 @@
 .content-wrapper { background-color: #eee; }
 .box-tools > a, 
 .operation-group > a, /* in bootstrap modal view */
+.operation-group > span, /* 带 tooltip 特性的禁用按钮外面由 span 包裹 */
 .operation-group > button,
 .box-tools > button { margin: 0 5px; }
 .operation-group {margin-bottom: 10px;}
