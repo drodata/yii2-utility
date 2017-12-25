@@ -77,6 +77,44 @@ function PdfUtil(url) {
  * Active Form
  *
  * ===================================================== */
+    /**
+     * 显示 ActiveForm 错误信息,用法举例
+     *
+     * ```js
+     * var af = $('#purchase-form');
+     * $.post(APP.baseUrl + 'purchase/ajax-submit', af.serialize(), function(response) {
+     *     if (!response.status) {
+     *         af.displayErrors(response)
+     *         return false;
+     *     }
+     * })
+     * ```
+     */
+    $.fn.displayErrors = function (response) {
+        // flush former errors
+        this.find('.has-error').each(function(){
+            $(this).removeClass('has-error');
+        })
+        this.find('.help-block').each(function(){
+            $(this).empty();
+        })
+        
+        for (var model in response.errors) {
+            if (model == '_hybrid') {
+                var submitBtn = this.find('button[type=submit]');
+                var msg = response.errors[model]
+                $('<span class="help-block">' + msg + '</span>').insertAfter(submitBtn)
+                var formGroup = submitBtn.parents('.form-group').first();
+                formGroup.addClass('has-error');
+            }
+            for (var attribute in response.errors[model]) {
+                var ae = $('#' + model + '-' + attribute);
+                var formGroup = ae.parents('.form-group').first();
+                formGroup.addClass('has-error');
+                formGroup.find('.help-block').empty().text(response.errors[model][attribute][0]);
+            }
+        }
+    }
     $.fn.afGetYii2 = function ( prefix ) {
         var name = full_name = tag = '';
         var elements = {};
