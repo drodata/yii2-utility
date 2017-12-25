@@ -23,6 +23,16 @@ $this->params = [
         ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => ['index']],
         $this->title,
     ],
+    /*
+    'alerts' => [
+        [
+            'options' => ['class' => 'alert-info'],
+            'body' => 'hello',
+            'closeButton' => false,
+            'visible' => true, //Yii::$app->user->can(''),
+        ], 
+    ],
+    */
 ];
 ?>
 <div class="row <?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-create">

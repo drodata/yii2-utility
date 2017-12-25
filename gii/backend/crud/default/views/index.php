@@ -42,6 +42,16 @@ $this->params = [
             'visible' => true, //Yii::$app->user->can(''),
         ]),
     ],
+    /*
+    'alerts' => [
+        [
+            'options' => ['class' => 'alert-info'],
+            'body' => 'hello',
+            'closeButton' => false,
+            'visible' => true, //Yii::$app->user->can(''),
+        ], 
+    ],
+    */
 ];
 ?>
 <div class="row <?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-index">
