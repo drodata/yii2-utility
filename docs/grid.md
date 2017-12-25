@@ -29,4 +29,4 @@ echo GridView::widget([
 ```
 效果图：
 
-[](images/select2-grid-filter.png)
+![](images/select2-grid-filter.png)
