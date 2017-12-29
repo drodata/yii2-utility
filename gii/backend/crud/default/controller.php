@@ -153,6 +153,19 @@ if (count($pks) === 1) {
     }
 
     /**
+     * 在 Modal 内高级搜索
+     */
+    public function actionModalSearch()
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        return $this->renderPartial('modal-search', [
+            'model' => new <?= $searchModelClass ?>(),
+        ]);
+
+    }
+
+    /**
      * Creates a new <?= $modelClass ?> model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -211,7 +224,7 @@ if (count($pks) === 1) {
      * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
      * @return mixed
      */
-    public function actionUpdate(<?= $actionParams ?>)
+    public function actionUpload(<?= $actionParams ?>)
     {
         $model = $this->findModel(<?= $actionParams ?>);
         // 根据需要修改场景值

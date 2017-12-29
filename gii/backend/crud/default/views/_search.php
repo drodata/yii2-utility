@@ -11,7 +11,6 @@ echo "<?php\n";
 
 use yii\bootstrap\ActiveForm;
 use drodata\helpers\Html;
-use drodata\widgets\Box;
 use backend\models\Lookup;
 
 /* @var $this yii\web\View */
@@ -19,41 +18,34 @@ use backend\models\Lookup;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="row <?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-search">
+<?= "<?php " ?>$form = ActiveForm::begin([
+    'action' => ['index'],
+    'method' => 'get',
+]); ?>
+<div class="row">
+    <div class="col-xs-12 col-sm-6">
+        <?= "<?php" ?> //echo $form->field($model, 'id')->input('number'); <?= "?>\n" ?>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+        <?= "<?php" ?> //echo $form->field($model, 'status')->dropDownList(Lookup::items('Status'), ['prompt' => '']); <?= "?>\n" ?>
+    </div>
+</div>
+<div class="row">
     <div class="col-xs-12">
-        <?= "<?php " ?>Box::begin([
-            'title' => '搜索',
-            'style' => 'info',
-            'tools' => ['collapse'],
-        ]);<?= "?>\n" ?>
-            <?= "<?php " ?>$form = ActiveForm::begin([
-                'action' => ['index'],
-                'method' => 'get',
-                'options' => ['class' => 'row'],
-            ]); ?>
-            <div class="col-xs-6">
-                <?= "<?php" ?> //echo $form->field($model, 'id')->label(false)->input('number', ['placeholder' => 'ID']); <?= "?>\n" ?>
-            </div>
-            <div class="col-xs-6">
-                <?= "<?php" ?> //echo $form->field($model, 'status')->label(false)->dropDownList(Lookup::items('Status'), ['prompt' => '']); <?= "?>\n" ?>
-            </div>
-            <div class="col-xs-12">
 <?php
 $count = 0;
 foreach ($generator->getColumnNames() as $attribute) {
     if (++$count < 6) {
-        echo "            <?= " . $generator->generateActiveSearchField($attribute) . " ?>\n\n";
+        echo "        <?= " . $generator->generateActiveSearchField($attribute) . " ?>\n\n";
     } else {
-        echo "            <?php // echo " . $generator->generateActiveSearchField($attribute) . " ?>\n\n";
+        echo "        <?php // echo " . $generator->generateActiveSearchField($attribute) . " ?>\n\n";
     }
 }
 ?>
-            <div class="form-group">
-                <?= "<?= " ?>Html::submitButton(<?= $generator->generateString('搜索') ?>, ['class' => 'btn btn-primary']) ?>
-                <?= "<?= " ?>Html::a('重置', "/<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>/index", ['class' => 'btn btn-default']) ?>
-            </div>
-            </div>
-            <?= "<?php " ?>ActiveForm::end(); ?>
-        <?= "<?php " ?>Box::end();<?= "?>\n" ?>
+        <div class="form-group">
+            <?= "<?= " ?>Html::submitButton(<?= $generator->generateString('搜索') ?>, ['class' => 'btn btn-primary']) ?>
+            <?= "<?= " ?>Html::a('取消', "/<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>/index", ['class' => 'btn btn-default']) ?>
+        </div>
     </div>
 </div>
+<?= "<?php " ?>ActiveForm::end(); ?>

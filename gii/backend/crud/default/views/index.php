@@ -41,6 +41,13 @@ $this->params = [
             'color' => 'success',
             'visible' => true, //Yii::$app->user->can(''),
         ]),
+        Html::actionLink('/<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>/modal-search', [
+            'type' => 'button',
+            'title' => '高级搜索',
+            'icon' => 'search',
+            'color' => 'primary',
+            'class' => 'modal-search',
+        ]),
     ],
     /*
     'alerts' => [
@@ -64,7 +71,7 @@ $this->params = [
     <div class="col-xs-12 hidden-xs">
         <?= "<?php " ?>Box::begin([
         ]);<?= "?>\n" ?>
-             <?= "<?= " ?>$this->render('_button') <?= "?>\n" ?>
+             <?= "<?= " ?>$this->render('@drodata/views/_button') <?= "?>\n" ?>
              <?= "<?= " ?>$this->render('_grid', [
                  'searchModel' => $searchModel,
                  'dataProvider' => $dataProvider,
@@ -73,7 +80,7 @@ $this->params = [
     </div>
     <!-- visible on phone -->
     <div class="col-xs-12 visible-xs-block">
-        <?= "<?= " ?>$this->render('_button') <?= "?>\n" ?>
+        <?= "<?= " ?>$this->render('@drodata/views/_button') <?= "?>\n" ?>
         <?= "<?= " ?>$this->render('_search', [
             'model' => $searchModel,
         ]) <?= "?>\n" ?>
@@ -92,7 +99,7 @@ $this->params = [
     <div class="col-xs-12">
         <?= "<?php " ?>Box::begin([
         ]);<?= "?>\n" ?>
-             <?= "<?= " ?>$this->render('_button') <?= "?>\n" ?>
+             <?= "<?= " ?>$this->render('@drodata/views/_button') <?= "?>\n" ?>
              <?= "<?= " ?>$this->render('_grid', [
                  'searchModel' => $searchModel,
                  'dataProvider' => $dataProvider,
@@ -102,7 +109,7 @@ $this->params = [
 <?php endif; ?>
 <?php else: ?>
     <div class="col-xs-12">
-        <?= "<?= " ?>$this->render('_button') <?= "?>\n" ?>
+        <?= "<?= " ?>$this->render('@drodata/views/_button') <?= "?>\n" ?>
         <?= "<?= " ?>$this->render('_search', [
             'model' => $searchModel,
         ]) <?= "?>\n" ?>
