@@ -42,6 +42,8 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
 {
     // const STATUS_ = 1;
     // const SCENARIO_ = '';
+    // 单独上传附件事件
+    const EVENT_UPLOAD = 'upload';
 
     public function init()
     {
@@ -300,16 +302,39 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     */
 
     // ==== event-handlers begin ====
+
     /**
+     * 保存附件。
      *
-     * Triggerred by self::EVENT_AFTER_INSERT 
+     * 可由 self::EVENT_AFTER_INSERT, self::EVENT_UPLOAD 等触发
      *
-    public function doSomething($event)
+     * @param yii\web\UploadedFile $event->data 承兑图片
+    public function insertImages($event)
     {
-        if (!$this->save()) {
-            throw new \yii\db\Exception($this->stringifyErrors());
+        $images = $event->data;
+
+        Media::store([
+            'files' => $images,
+            'referenceId' => $this->id,
+            'type' => Media::TYPE_IMAGE,
+            'category' => Media::CATEGORY_ACCEPTANCE,
+            'from2to' => Mapping::ACCEPTANCE2MEDIA,
+        ]);
+    }
+     */
+
+    /**
+     * 删除文件
+     *
+     * 由 self::EVENT_BEFORE_DELETE 触发
+    public function deleteImages($event)
+    {
+        foreach ($this->images as $image) {
+            if (!$image->delete()) {
+                throw new \yii\db\Exception('Failed to flush image.');
+            }
         }
     }
-    */
+     */
     // ==== event-handlers end ====
 }

@@ -35,6 +35,12 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
             /*
             [
                 'attribute' => 'status',
+                'label' => '',
+                'format' => 'raw',
+                'value' => $this->render('_table', ['model' => $model]),
+            ],
+            [
+                'attribute' => 'status',
                 'format' => 'raw',
                 'value' => Lookup::item('OrderStatus', $model->status),
             ],

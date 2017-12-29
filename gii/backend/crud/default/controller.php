@@ -30,6 +30,7 @@ echo "<?php\n";
 namespace <?= StringHelper::dirname(ltrim($generator->controllerClass, '\\')) ?>;
 
 use Yii;
+use backend\models\CommonForm;
 use <?= ltrim($generator->modelClass, '\\') ?>;
 <?php if (!empty($generator->searchModelClass)): ?>
 use <?= ltrim($generator->searchModelClass, '\\') . (isset($searchModelAlias) ? " as $searchModelAlias" : "") ?>;
@@ -39,6 +40,7 @@ use yii\data\ActiveDataProvider;
 use <?= ltrim($generator->baseControllerClass, '\\') ?>;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
+use yii\web\UploadedFile;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 
@@ -202,5 +204,33 @@ if (count($pks) === 1) {
         Yii::$app->session->setFlash('success', '已删除');
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     * 为 <?= $modelClass ?> 模型上传附件 
+     * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
+     * @return mixed
+     */
+    public function actionUpdate(<?= $actionParams ?>)
+    {
+        $model = $this->findModel(<?= $actionParams ?>);
+        // 根据需要修改场景值
+        $common = new CommonForm(['scenario' => CommonForm::SCENARIO_XXX]);
+
+        if ($common->load(Yii::$app->request->post())) {
+            $common->images = UploadedFile::getInstances($common, 'images');
+            if ($common->validate()) {
+                $model->on(<?= $modelClass ?>::EVENT_UPLOAD, [$model, 'insertImages'], $common->images);
+                $model->trigger(<?= $modelClass ?>::EVENT_UPLOAD);
+                Yii::$app->session->setFlash('success', '图片已上传。');
+
+                return $this->redirect('index');
+            }
+        }
+
+        return $this->render('upload', [
+            'model' => $model,
+            'common' => $common,
+        ]);
     }
 }
