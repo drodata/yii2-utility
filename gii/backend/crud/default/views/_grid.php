@@ -8,6 +8,7 @@ use yii\helpers\StringHelper;
 
 $urlParams = $generator->generateUrlParams();
 $nameAttribute = $generator->getNameAttribute();
+$searchModelClass = StringHelper::basename($generator->searchModelClass);
 
 echo "<?php\n";
 ?>
@@ -20,6 +21,21 @@ use backend\models\Lookup;
 <?= !empty($generator->searchModelClass) ? "/* @var \$searchModel " . ltrim($generator->searchModelClass, '\\') . " */\n" : '' ?>
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+/**
+ * 借助 'caption' 属性显示筛选数据累计金额
+if (empty(Yii::$app->request->get('<?= $searchModelClass ?>'))) {
+    $caption = '';
+} else {
+    $sum = 0;
+    foreach ($dataProvider->models as $model) {
+        $sum += $model->amount;
+    }
+    $badge = Html::tag('span', Yii::$app->formatter->asDecimal($sum), [
+        'class' => 'badge',
+    ]);
+    $caption = Html::tag('p', "金额累计 $badge");
+}
+ */
 echo GridView::widget([
     'dataProvider' => $dataProvider,
     /* `afterRow` has the same signature
