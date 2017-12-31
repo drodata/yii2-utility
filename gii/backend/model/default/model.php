@@ -21,6 +21,7 @@ namespace <?= $generator->ns ?>;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\base\InvalidParamException;
+use yii\data\ActiveDataProvider;
 use drodata\helpers\Html;
 use drodata\behaviors\TimestampBehavior;
 use drodata\behaviors\BlameableBehavior;
@@ -266,7 +267,6 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     /**
      * 无需 sort 和 pagination 的 data provider
      *
-     */
     public function getItemsDataProvider()
     {
         return new ActiveDataProvider([
@@ -276,6 +276,24 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         ]);
     }
     */
+    /**
+     * 搭配 getItemsDataProvider() 使用，
+     * 计算累计值，可用在 grid footer 内
+    public function getItemsSum()
+    {
+        $amount = 0;
+
+        if (empty($this->itemsDataProvider->models)) {
+            return $amount;
+        }
+        foreach ($this->itemsDataProvider->models as $item) {
+            $amount += $item->quantity;
+        }
+
+        return $amount;
+        
+    }
+     */
 
 <?php endforeach; ?>
 
