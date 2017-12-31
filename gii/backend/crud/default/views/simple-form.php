@@ -7,6 +7,10 @@ use yii\helpers\StringHelper;
 /* @var $generator yii\gii\generators\crud\Generator */
 /* @var $form yii\bootstrap\ActiveForm */
 
+// 模型中文名称
+$modelNameCn = empty($generator->modelNameCn)
+    ? Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))
+    : $generator->modelNameCn;
 echo "<?php\n";
 ?>
 
@@ -27,7 +31,7 @@ $this->params = [
     'title' => $this->title,
     'subtitle' => '',
     'breadcrumbs' => [
-        ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => ['index']],
+        ['label' =>'<?= $modelNameCn ?>' , 'url' => ['index']],
         $this->title,
     ],
 ];

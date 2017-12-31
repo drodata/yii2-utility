@@ -7,6 +7,10 @@ use yii\helpers\StringHelper;
 /* @var $generator yii\gii\generators\crud\Generator */
 
 $urlParams = $generator->generateUrlParams();
+// 模型中文名称
+$modelNameCn = empty($generator->modelNameCn)
+    ? Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))
+    : $generator->modelNameCn;
 
 echo "<?php\n";
 ?>
@@ -21,7 +25,7 @@ use backend\models\Lookup;
 
 Modal::begin([
     'id' => 'view-modal',
-    'header' => '详情',
+    'header' => '<?= $modelNameCn ?>详情',
     'headerOptions' => [
         'class' => 'h3 text-center',
     ],
