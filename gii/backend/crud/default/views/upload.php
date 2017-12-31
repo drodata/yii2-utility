@@ -7,6 +7,10 @@ use yii\helpers\StringHelper;
 /* @var $generator yii\gii\generators\crud\Generator */
 /* @var $form yii\bootstrap\ActiveForm */
 
+// 模型中文名称
+$modelNameCn = empty($generator->modelNameCn)
+    ? Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))
+    : $generator->modelNameCn;
 echo "<?php\n";
 ?>
 
@@ -22,12 +26,12 @@ use drodata\helpers\Html;
 use drodata\widgets\Box;
 use backend\models\Lookup;
 
-$this->title = '上传文件';
+$this->title = '上传附件';
 $this->params = [
     'title' => $this->title,
     'subtitle' => '',
     'breadcrumbs' => [
-        ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => ['index']],
+        ['label' =>'<?= $modelNameCn ?>' , 'url' => ['index']],
         $this->title,
     ],
     /*

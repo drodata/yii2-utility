@@ -8,7 +8,10 @@ use yii\helpers\StringHelper;
 
 $urlParams = $generator->generateUrlParams();
 $nameAttribute = $generator->getNameAttribute();
-
+// 模型中文名称
+$modelNameCn = empty($generator->modelNameCn)
+    ? Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))
+    : $generator->modelNameCn;
 echo "<?php\n";
 ?>
 
@@ -25,22 +28,23 @@ use <?= $generator->indexWidgetType === 'grid' ? "yii\\grid\\GridView" : "yii\\w
 <?= !empty($generator->searchModelClass) ? "/* @var \$searchModel " . ltrim($generator->searchModelClass, '\\') . " */\n" : '' ?>
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>;
+$this->title = "<?= $modelNameCn ?>";
 $this->params = [
     'title' => $this->title,
     'subtitle' => '',
     'breadcrumbs' => [
-        ['label' => $this->title, 'url' => 'index'],
+        ['label' => "<?= $modelNameCn ?>", 'url' => 'index'],
         '管理',
     ],
     'buttons' => [
         Html::actionLink('/<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>/create', [
             'type' => 'button',
-            'title' => '新建',
+            'title' => '新建<?= $modelNameCn ?>',
             'icon' => 'plus',
             'color' => 'success',
             'visible' => true, //Yii::$app->user->can(''),
         ]),
+        /*
         Html::actionLink('/<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>/modal-search', [
             'type' => 'button',
             'title' => '高级搜索',
@@ -48,6 +52,7 @@ $this->params = [
             'color' => 'primary',
             'class' => 'modal-search',
         ]),
+        */
     ],
     /*
     'alerts' => [

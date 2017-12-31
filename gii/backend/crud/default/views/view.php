@@ -7,6 +7,10 @@ use yii\helpers\StringHelper;
 /* @var $generator yii\gii\generators\crud\Generator */
 
 $urlParams = $generator->generateUrlParams();
+// 模型中文名称
+$modelNameCn = empty($generator->modelNameCn)
+    ? Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))
+    : $generator->modelNameCn;
 
 echo "<?php\n";
 ?>
@@ -19,13 +23,12 @@ use common\models\Lookup;
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 
-$this->title = $model-><?= $generator->getNameAttribute() ?>;
+$this->title = '<?= $modelNameCn ?>详情';
 $this->params = [
-    'title' => '详情',
-    //'subtitle' => '#' . $model->id,
+    'title' => $this->title,
+    'subtitle' => '',
     'breadcrumbs' => [
-        ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => ['index']],
-        $this->title,
+        ['label' =>'<?= $modelNameCn ?>' , 'url' => ['index']],
     ],
 ];
 ?>

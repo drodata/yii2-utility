@@ -6,6 +6,10 @@ use yii\helpers\StringHelper;
 /* @var $this yii\web\View */
 /* @var $generator yii\gii\generators\crud\Generator */
 
+// 模型中文名称
+$modelNameCn = empty($generator->modelNameCn)
+    ? Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))
+    : $generator->modelNameCn;
 echo "<?php\n";
 ?>
 
@@ -15,13 +19,13 @@ use drodata\widgets\Box;
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 
-$this->title = '新建';
+$this->title = '新建<?= $modelNameCn ?>';
 $this->params = [
     'title' => $this->title,
     'subtitle' => '',
     'breadcrumbs' => [
-        ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => ['index']],
-        $this->title,
+        ['label' =>'<?= $modelNameCn ?>' , 'url' => ['index']],
+        '新建',
     ],
     /*
     'alerts' => [
