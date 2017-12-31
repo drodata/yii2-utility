@@ -238,6 +238,29 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         }
     }
 
+    /**
+     * 从 lookup 表中查询对应的记录的 name 值。
+     * 当模型中有多个列使用了 lookup 后，就需要声明多个类似下面的 getter:
+     *
+     * ```php
+     * public function getReadableStatus()
+     * {
+     *     return Lookup::item('Status', $this->status);
+     * }
+     * ```
+     *
+     * 此方法旨在减少上面代码的个数。这在模型详情页非常好用，
+     * 且不必添加 backend\models\Lookup 命名空间。
+     *
+     * @param string type lookup 表中 type 列值
+     * @param string code lookup 表中 code 列值
+     * @return string|null name 值. 未找到记录时返回 null
+     */
+    public function lookup($type, $code)
+    {
+        return Lookup::item($type, $code);
+    }
+
     // ==== getters start ====
 
 <?php foreach ($relations as $name => $relation): ?>
@@ -250,10 +273,6 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     }
 
     /*
-    public function getReadableStatus()
-    {
-        return Lookup::item('Status', $this->status);
-    }
     public function getStatusLabel()
     {
         $map = [
@@ -261,7 +280,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
             self::STATUS_ARCHIVED => 'default',
         ];
         $class = 'label label-' . $map[$this->status];
-        return Html::tag('span', $this->readableStatus, ['class' => $class]);
+        return Html::tag('span', $this->lookup('Status', $this->status), ['class' => $class]);
     }
 
     /**
