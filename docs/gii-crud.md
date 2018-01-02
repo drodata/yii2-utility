@@ -1,5 +1,30 @@
 # CRUD
 
+## 模型中文名称
+
+借助 Gii model 和 crud 两个模板，我们可以迅速地管理一张表。crud 模板生成代码后，我们通常需要重复做以下工作：
+
+- 调整 index GridView 中列的顺序、种类；
+- 调整 `_form` 视图中表单元素的类型；
+- 修改 create, update, index 等页面中模型的名称；以 create.php 页面为例，我们需要将下面代码中两处 ‘Activities' 改成 '活动':
+
+```php
+$this->title = '新建Activities'; // <--- 将这里的 'Activities' 改成中文名称；
+$this->params = [
+    'title' => $this->title,
+    'subtitle' => '',
+    'breadcrumbs' => [
+        //      ---> 还有下面这个 <----
+        ['label' =>'Activities' , 'url' => ['index']],
+        '新建',
+    ],
+    ...
+```
+
+每次在这里都要重复劳动，有必要自动化生成。 这三步操作中，最后一个完全可以通过在 crud generator 类中声明一个中文模型名称，用来替换默认的英文模型名称。
+
+通过这样的设置， crud 模板生成的代码就离“开箱可用”又近了一步。
+
 ## 在 Grid 内显示筛选数据累加金额
 
 GridView 一个常见的需求是显示筛选数据的累加值。例如一个订单模型，我们通过 filter 筛选出当月所有订单，我们想知道所筛选订单的总金额。这类累加值本来放在 `footer`最合适，但它适合 GridView 没有分页的情况下，当满足要求的记录过多时，这种显示办法会让页面加载很慢。
