@@ -33,11 +33,12 @@ if (empty(Yii::$app->request->get('<?= $searchModelClass ?>'))) {
     $badge = Html::tag('span', Yii::$app->formatter->asDecimal($sum), [
         'class' => 'badge',
     ]);
-    $caption = Html::tag('p', "金额累计 $badge");
+    $caption = Html::tag('p', "筛选金额累计 $badge");
 }
  */
 echo GridView::widget([
     'dataProvider' => $dataProvider,
+    // 'caption' => $caption,
     /* `afterRow` has the same signature
     'rowOptions' => function ($model, $key, $index, $grid) {
         return [
@@ -87,17 +88,11 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
         [
             'attribute' => 'status',
             'filter' => Lookup::items('UserStatus'),
-            'value' => function ($model, $key, $index, $column) {
-                return Lookup::item('UserStatus', $model->status);
-            },
-            'contentOptions' => ['style' => 'width:80px'],
-        ],
-        [
-            'label' => '',
             'format' => 'raw',
             'value' => function ($model, $key, $index, $column) {
-                return $model->rolesString;
+                return $model->statusLabel;
             },
+            'contentOptions' => ['style' => 'width:80px'],
         ],
         */
         [

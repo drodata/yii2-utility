@@ -34,15 +34,14 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
 ?>
             /*
             [
-                'attribute' => 'status',
-                'label' => '',
+                'label' => '明细',
                 'format' => 'raw',
-                'value' => $this->render('_table', ['model' => $model]),
+                'value' => $this->render('_grid-item', ['model' => $model]),
             ],
             [
                 'attribute' => 'status',
-                'format' => 'raw',
-                'value' => Lookup::item('OrderStatus', $model->status),
+                // 根据需要更改 'Status' 值
+                'value' => $model->lookup('Status', $model->status),
             ],
             [
                 'attribute' => 'created_by',

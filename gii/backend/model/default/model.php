@@ -19,6 +19,7 @@ echo "<?php\n";
 namespace <?= $generator->ns ?>;
 
 use Yii;
+use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use yii\base\InvalidParamException;
 use yii\data\ActiveDataProvider;
@@ -271,7 +272,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     {
         <?= $relation[0] . "\n" ?>
     }
-
+<?php endforeach; ?>
     /*
     public function getStatusLabel()
     {
@@ -282,6 +283,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         $class = 'label label-' . $map[$this->status];
         return Html::tag('span', $this->lookup('Status', $this->status), ['class' => $class]);
     }
+    */
 
     /**
      * 无需 sort 和 pagination 的 data provider
@@ -313,9 +315,6 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         
     }
      */
-
-<?php endforeach; ?>
-
     // ==== getters end ====
 
     /**

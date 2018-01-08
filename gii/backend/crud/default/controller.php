@@ -59,6 +59,10 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
+                        'actions' => [],
+                        'allow' => false,
+                    ],
+                    [
                         //'actions' => ['create', 'view', 'update', 'delete'],
                         'allow' => true,
                         'roles' => ['@'],
