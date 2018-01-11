@@ -216,8 +216,8 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
                         'title' => '修改',
                         'icon' => 'pencil',
                         'visible' => true, // Yii::$app->user->can(''),
-                        // 'disabled' => false,
-                        // 'disabledHint' => '',
+                        'disabled' => false,
+                        'disabledHint' => '',
                     ]
                 );
                 break;
@@ -233,6 +233,9 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
                             'method' => 'post',
                             'confirm' => '请再次确认删除操作。',
                         ],
+                        'visible' => true, // Yii::$app->user->can(''),
+                        'disabled' => false,
+                        'disabledHint' => '',
                     ]
                 );
                 break;

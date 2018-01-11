@@ -25,6 +25,7 @@ use yii\bootstrap\ActiveForm;
 use drodata\helpers\Html;
 use drodata\widgets\Box;
 use backend\models\Lookup;
+use kartik\select2\Select2;
 
 $this->title = '新建';
 $this->params = [
@@ -33,6 +34,14 @@ $this->params = [
     'breadcrumbs' => [
         ['label' =>'<?= $modelNameCn ?>' , 'url' => ['index']],
         $this->title,
+    ],
+    'alerts' => [
+        [
+            'options' => ['class' => 'alert-info'],
+            'body' => '提示：',
+            'closeButton' => false,
+            'visible' => false, //Yii::$app->user->can(''),
+        ], 
     ],
 ];
 
@@ -57,5 +66,6 @@ $this->registerJs($js);
                 </div>
             <?= "<?php " ?>ActiveForm::end(); ?>
         <?= "<?php " ?>Box::end(); ?>
+        <?= "<?= " ?>$this->render('@drodata/views/_alert') <?= " ?>\n" ?>
     </div>
 </div>
