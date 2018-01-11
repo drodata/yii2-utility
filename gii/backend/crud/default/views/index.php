@@ -44,26 +44,23 @@ $this->params = [
             'color' => 'success',
             'visible' => true, //Yii::$app->user->can(''),
         ]),
-        /*
         Html::actionLink('/<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>/modal-search', [
             'type' => 'button',
             'title' => '高级搜索',
             'icon' => 'search',
             'color' => 'primary',
             'class' => 'modal-search',
+            'visible' => false,
         ]),
-        */
     ],
-    /*
     'alerts' => [
         [
             'options' => ['class' => 'alert-info'],
             'body' => 'hello',
             'closeButton' => false,
-            'visible' => true, //Yii::$app->user->can(''),
+            'visible' => false, //Yii::$app->user->can(''),
         ], 
     ],
-    */
 ];
 ?>
 <div class="row <?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-index">
@@ -102,6 +99,7 @@ $this->params = [
     </div>
 <?php else: ?>
     <div class="col-xs-12">
+        <?= "<?= " ?>$this->render('@drodata/views/_alert') <?= "?>\n" ?>
         <?= "<?php " ?>Box::begin([
         ]);<?= "?>\n" ?>
              <?= "<?= " ?>$this->render('@drodata/views/_button') <?= "?>\n" ?>
