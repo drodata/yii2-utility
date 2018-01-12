@@ -14,6 +14,7 @@ use yii\db\Schema;
 use yii\gii\CodeFile;
 use yii\helpers\Inflector;
 use yii\helpers\VarDumper;
+use yii\helpers\StringHelper;
 use yii\web\Controller;
 
 /**
@@ -91,4 +92,44 @@ class Generator extends \yii\gii\generators\crud\Generator
         ]);
     }
 
+    /**
+     * @param \yii\db\ColumnSchema $column
+     * @return string
+     */
+    public function generateColumnFormat($column)
+    {
+        if (strpos($column->dbType, 'date') !== false || in_array($column->name, ['created_at', 'updated_at'])) {
+            return 'datetime';
+        }
+        if (
+            strpos($column->dbType, 'decimal') !== false 
+            || in_array($column->name, ['amount', 'quantity', 'weight'])
+        ) {
+            return 'decimal';
+        }
+        if (strpos($column->dbType, 'text') !== false) {
+            return 'ntext';
+        }
+        if (strpos($column->dbType, 'tinyint(1)') !== false || in_array($column->name, ['action'])) {
+            return 'lookup';
+        }
+        return 'text';
+    }
+
+    /**
+     * 根据模型名称和列明拼装出对应的 `lookup.type` 值
+     * GridView, DetailView 等都需要该值. 假设表名是 order, 列名是 'payment_way',
+     * 经过此方法返回的字符串是 'OrderPaymentWay', 对应订单结算方式存储在字典表内的 type 列。
+     *
+     * @param \yii\db\ColumnSchema $column
+     * @return string
+     */
+    public function assembleLookupType($column)
+    {
+        $modelClass = StringHelper::basename($this->modelClass);
+        $slices = explode('_', $column->name);
+        $slices = array_map('ucfirst', $slices);
+
+        return $modelClass . implode('', $slices);
+    }
 }

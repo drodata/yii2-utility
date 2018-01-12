@@ -9,7 +9,6 @@ use yii\helpers\StringHelper;
 $urlParams = $generator->generateUrlParams();
 $nameAttribute = $generator->getNameAttribute();
 $searchModelClass = StringHelper::basename($generator->searchModelClass);
-
 echo "<?php\n";
 ?>
 
@@ -39,13 +38,6 @@ if (empty(Yii::$app->request->get('<?= $searchModelClass ?>'))) {
 echo GridView::widget([
     'dataProvider' => $dataProvider,
     // 'caption' => $caption,
-    /* `afterRow` has the same signature
-    'rowOptions' => function ($model, $key, $index, $grid) {
-        return [
-            'class' => ($model->status == Product::DISABLED) ? 'bg-danger' : '',
-        ];
-    },
-    */
 <?= !empty($generator->searchModelClass) ? "    'filterModel' => \$searchModel,\n    'columns' => [\n" : "    'columns' => [\n"; ?>
         // ['class' => 'yii\grid\SerialColumn'],
 <?php
@@ -60,24 +52,26 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
     }
 } else {
     foreach ($tableSchema->columns as $column) {
-        $format = $generator->generateColumnFormat($column);
-        if (++$count < 6) {
-            echo "        '" . $column->name . ($format === 'text' ? "" : ":" . $format) . "',\n";
-        } else {
-            echo "        // '" . $column->name . ($format === 'text' ? "" : ":" . $format) . "',\n";
-        }
-    }
-}
-?>
-        /*
+        switch ($generator->generateColumnFormat($column)) {
+            case 'lookup':
+                $lookupType = $generator->assembleLookupType($column);
+                echo <<<LOOKUP
         [
-            'attribute' => 'created_at',
-            'format' => 'datetime',
-            'contentOptions' => ['style' => 'width:150px'],
-            'filter' => Lookup::dateRangeFilter($searchModel, 'created_at'),
+            'attribute' => '{$column->name}',
+            'filter' => Lookup::items($lookupType),
+            'format' => 'raw',
+            'value' => function (\$model, \$key, \$index, \$column) {
+                return \$model->{$column->name};
+            },
+            'contentOptions' => ['style' => 'width:80px'],
         ],
+
+LOOKUP;
+                break;
+            case 'decimal':
+                echo <<<AMOUNT
         [
-            'attribute' => 'amount',
+            'attribute' => '{$column->name}',
             'format' => 'decimal',
             'headerOptions' => ['class' => 'text-right'],
             'contentOptions' => [
@@ -85,16 +79,30 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
                 'style' => 'width:80px',
             ],
         ],
+
+AMOUNT;
+                break;
+            case 'datetime':
+                echo <<<DATETIME
         [
-            'attribute' => 'status',
-            'filter' => Lookup::items('UserStatus'),
-            'format' => 'raw',
-            'value' => function ($model, $key, $index, $column) {
-                return $model->statusLabel;
-            },
-            'contentOptions' => ['style' => 'width:80px'],
+            'attribute' => '{$column->name}',
+            'format' => 'datetime',
+            'filter' => Lookup::dateRangeFilter(\$searchModel, '{$column->name}'),
+            'contentOptions' => ['style' => 'width:150px'],
         ],
-        */
+
+DATETIME;
+                break;
+            case 'text':
+                echo <<<TEXT
+        '{$column->name}',
+
+TEXT;
+                break;
+        }
+    }
+}
+?>
         [
             'class' => 'drodata\grid\ActionColumn',
             'template' => '{view} {update} {delete}',

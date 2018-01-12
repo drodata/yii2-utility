@@ -5,7 +5,7 @@ use yii\helpers\StringHelper;
 
 /* @var $this yii\web\View */
 /* @var $generator yii\gii\generators\crud\Generator */
-
+$modelClass = StringHelper::basename($generator->modelClass);
 echo "<?php\n";
 ?>
 
@@ -19,7 +19,6 @@ echo "<?php\n";
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
-
 use yii\grid\GridView;
 use drodata\helpers\Html;
 use backend\models\Lookup;
@@ -33,52 +32,60 @@ echo GridView::widget([
     'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
 <?php
-$count = 0;
-if (($tableSchema = $generator->getTableSchema()) === false) {
-    foreach ($generator->getColumnNames() as $name) {
-        if (++$count < 6) {
-            echo "        '" . $name . "',\n";
-        } else {
-            echo "        // '" . $name . "',\n";
-        }
-    }
-} else {
-    foreach ($tableSchema->columns as $column) {
-        $format = $generator->generateColumnFormat($column);
-        if (++$count < 6) {
-            echo "        '" . $column->name . ($format === 'text' ? "" : ":" . $format) . "',\n";
-        } else {
-            echo "        // '" . $column->name . ($format === 'text' ? "" : ":" . $format) . "',\n";
-        }
-    }
-}
-?>
-        /*
+$tableSchema = $generator->getTableSchema();
+foreach ($tableSchema->columns as $column) {
+    $format = $generator->generateColumnFormat($column);
+    switch ($generator->generateColumnFormat($column)) {
+        case 'lookup':
+            $lookupType = $generator->assembleLookupType($column);
+            echo <<<LOOKUP
         [
-            'attribute' => 'created_at',
-            'format' => 'datetime',
-            'contentOptions' => ['style' => 'width:150px'],
+            'attribute' => '{$column->name}',
+            'filter' => Lookup::items($lookupType),
+            'format' => 'raw',
+            'value' => function (\$model, \$key, \$index, \$column) {
+                return \$model->{$column->name};
+            },
+            'contentOptions' => ['style' => 'width:80px'],
         ],
+
+LOOKUP;
+            break;
+        case 'decimal':
+            echo <<<AMOUNT
         [
-            'attribute' => 'amount',
+            'attribute' => '{$column->name}',
             'format' => 'decimal',
+            'footer' => '合计', // 自行在模型中声明方法计算总数 \$model->totalQuantity,
             'headerOptions' => ['class' => 'text-right'],
             'contentOptions' => [
                 'class' => 'text-right',
                 'style' => 'width:80px',
             ],
             'footerOptions' => ['class' => 'text-right text-bold'],
-            'footer' => $model->itemsSum,
-            'visible' => true, // Yii::$app->user->can('');
         ],
+
+AMOUNT;
+            break;
+        case 'datetime':
+            echo <<<DATETIME
         [
-            'attribute' => 'status',
-            'filter' => Lookup::items('UserStatus'),
-            'value' => function ($model, $key, $index, $column) {
-                return Lookup::item('UserStatus', $model->status);
-            },
-            'contentOptions' => ['style' => 'width:80px'],
+            'attribute' => '{$column->name}',
+            'format' => 'datetime',
+            'filter' => Lookup::dateRangeFilter(\$searchModel, '{$column->name}'),
+            'contentOptions' => ['style' => 'width:150px'],
         ],
-        */
+
+DATETIME;
+            break;
+        case 'text':
+            echo <<<TEXT
+        '{$column->name}',
+
+TEXT;
+            break;
+    }
+}
+?>
     ],
 ]); ?>

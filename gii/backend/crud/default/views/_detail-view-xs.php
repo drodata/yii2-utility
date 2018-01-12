@@ -19,31 +19,41 @@ use drodata\helpers\Html;
 use backend\models\Lookup;
 
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
-?>
-    <?= "<?= " ?>DetailView::widget([
-        'model' => $model,
-        'attributes' => [
+
+<?= "echo " ?>DetailView::widget([
+    'model' => $model,
+    'attributes' => [
 <?php
-if (($tableSchema = $generator->getTableSchema()) === false) {
-    foreach ($generator->getColumnNames() as $name) {
-        echo "            '" . $name . "',\n";
-    }
-} else {
-    foreach ($generator->getTableSchema()->columns as $column) {
-        $format = $generator->generateColumnFormat($column);
-        echo "            '" . $column->name . ($format === 'text' ? "" : ":" . $format) . "',\n";
+foreach ($generator->getTableSchema()->columns as $column) {
+    $format = $generator->generateColumnFormat($column);
+    if ($format == 'lookup') {
+        $lookupType = $generator->assembleLookupType($column);
+        echo <<<LOOKUP
+        [
+            'attribute' => '{$column->name}',
+            'value' => Lookup::item('$lookupType', \$model->{$column->name});
+        ],
+
+LOOKUP;
+    } elseif ($format == 'text') {
+        echo <<<NORMAL
+        '{$column->name}',
+
+NORMAL;
+    } else {
+        echo <<<NORMAL
+        '{$column->name}:$format',
+
+NORMAL;
     }
 }
 ?>
-            /*
-            [
-                'attribute' => 'amount',
-                'format' => 'decimal',
-                'contentOptions' => ['class' => 'text-right'],
-                'captionOptions' => [
-                    'class' => 'text-right text-bold',
-                ],
-            ],
-            */
+        /*
+        [
+            'label' => '明细',
+            'format' => 'raw',
+            'value' => $this->render('_grid-item', ['model' => $model]),
         ],
-    ]) ?>
+        */
+    ],
+]);
