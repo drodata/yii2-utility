@@ -12,7 +12,11 @@ $safeAttributes = $model->safeAttributes();
 if (empty($safeAttributes)) {
     $safeAttributes = $model->attributes();
 }
-
+/*
+echo '<pre>';
+print_r($generator->getTableSchema());
+echo '</pre>';
+*/
 echo "<?php\n";
 ?>
 
@@ -43,17 +47,6 @@ $this->registerJs($js);
     ]); ?>
         <!--
         'inputTemplate' => '<div class="input-group"><div class="input-group-addon">$</div>{input}</div>'
-        dropDownList(Lookup::items(''), ['prompt' => ''])
-        inline()->radioList(Lookup::items(''))
-        textArea(['rows' => 3, 'placeholder' => ''])
-        input('number', ['step' => 0.01, , 'placeholder' => '']);
-        widget(Select2::classname(), [
-            'data' => Lookup::items(''),
-            'options' => ['placeholder' => '请选择'],
-            'addon' => [
-            ],
-        ])
-        staticControl()
         -->
 <?php foreach ($generator->getColumnNames() as $attribute) {
     if (in_array($attribute, $safeAttributes)) {
@@ -76,6 +69,8 @@ $this->registerJs($js);
      */
     <?= "?>\n" ?>
     <div class="row">
+        <div class="col-lg-6 col-md-12">
+        </div>
         <div class="col-lg-6 col-md-12">
         </div>
     </div>

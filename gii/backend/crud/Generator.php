@@ -96,7 +96,7 @@ class Generator extends \yii\gii\generators\crud\Generator
      * 与原方法相比的不同：
      *
      * - 仅使用 ColumnSchema 中的 dbType 判断
-     * - 在最前面添加特殊的格式 'lookup', 表示使用字典存储的枚举类型值
+     * - 添加两个特殊的格式 'lookup' and 'fk', 前者表示使用字典存储的枚举类型值; 后者表示外键，在生成表单时尝使用下拉菜单选择
      *
      * @param \yii\db\ColumnSchema $column
      * @return string
@@ -106,13 +106,16 @@ class Generator extends \yii\gii\generators\crud\Generator
         if (strpos($column->dbType, 'tinyint(1)') !== false || in_array($column->name, ['action'])) {
             return 'lookup';
         }
+        if (stripos($column->name, '_id') !== false) {
+            // '_id' 结尾的通常是外键
+            return 'fk';
+        }
         if (strpos($column->dbType, 'date') !== false || in_array($column->name, ['created_at', 'updated_at'])) {
             return 'datetime';
         }
         if (strpos($column->dbType, 'decimal') !== false) {
             return 'decimal';
         }
-        // '_id' 结尾的通常是外键，不需要使用 integer 格式
         if (
             strpos($column->dbType, 'int') !== false 
             && stripos($column->name, '_id') === false
@@ -130,6 +133,47 @@ class Generator extends \yii\gii\generators\crud\Generator
             return 'url';
         }
         return 'text';
+    }
+    /**
+     * Generates code for active field
+     * @param string $attribute
+     * @return string
+     */
+    public function generateActiveField($attribute)
+    {
+        $column = $this->getTableSchema()->columns[$attribute];
+        $format = $this->generateColumnFormat($column);
+
+        switch ($format) {
+            case 'lookup':
+                $lookupType = $this->assembleLookupType($column);
+                return "\$form->field(\$model, '$attribute')->inline()->radioList(Lookup::items('$lookupType'))";
+                break;
+            case 'fk':
+                return <<<EOF
+\$form->field(\$model, '$attribute')->widget(Select2::classname(), [
+        'data' => [],
+        'options' => ['placeholder' => '请选择'],
+        'addon' => [ ],
+    ])
+EOF;
+                break;
+            case 'integer':
+                return "\$form->field(\$model, '$attribute')->input('number', ['step' => 1])";
+                break;
+            case 'datetime':
+                return "\$form->field(\$model, '$attribute')->input('date', [])";
+                break;
+            case 'decimal':
+                return "\$form->field(\$model, '$attribute')->input('number', ['step' => 0.01])";
+                break;
+            case 'ntext':
+                return "\$form->field(\$model, '$attribute')->textArea(['rows' => 3, 'placeholder' => '选填'])";
+                break;
+            case 'text':
+                return "\$form->field(\$model, '$attribute')->textInput(['maxlength' => true])";
+                break;
+        }
     }
 
     /**

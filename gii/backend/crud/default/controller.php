@@ -59,7 +59,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => [],
+                        'actions' => ['xxx'], // 禁止访问的放在最前面
                         'allow' => false,
                     ],
                     [

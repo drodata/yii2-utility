@@ -94,7 +94,7 @@ EOF;
 
 DATETIME;
             break;
-        case 'text':
+        default:
             echo <<<TEXT
         '{$column->name}',
 
