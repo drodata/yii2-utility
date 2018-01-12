@@ -82,6 +82,20 @@ LOOKUP;
 
 AMOUNT;
                 break;
+            case 'integer':
+                echo <<<EOF
+        [
+            'attribute' => '{$column->name}',
+            'format' => 'integer',
+            'headerOptions' => ['class' => 'text-right'],
+            'contentOptions' => [
+                'class' => 'text-right',
+                'style' => 'width:80px',
+            ],
+        ],
+
+EOF;
+                break;
             case 'datetime':
                 echo <<<DATETIME
         [

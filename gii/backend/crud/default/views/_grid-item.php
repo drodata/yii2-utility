@@ -56,7 +56,7 @@ LOOKUP;
         [
             'attribute' => '{$column->name}',
             'format' => 'decimal',
-            'footer' => '合计', // 自行在模型中声明方法计算总数 \$model->totalQuantity,
+            'footer' => '', // 自行在模型中声明方法计算总数 \$model->totalQuantity,
             'headerOptions' => ['class' => 'text-right'],
             'contentOptions' => [
                 'class' => 'text-right',
@@ -66,6 +66,22 @@ LOOKUP;
         ],
 
 AMOUNT;
+            break;
+        case 'integer':
+            echo <<<EOF
+        [
+            'attribute' => '{$column->name}',
+            'format' => 'integer',
+            'footer' => '', // 自行在模型中声明方法计算总数 \$model->totalQuantity,
+            'headerOptions' => ['class' => 'text-right'],
+            'contentOptions' => [
+                'class' => 'text-right',
+                'style' => 'width:80px',
+            ],
+            'footerOptions' => ['class' => 'text-right text-bold'],
+        ],
+
+EOF;
             break;
         case 'datetime':
             echo <<<DATETIME

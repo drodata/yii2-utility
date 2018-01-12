@@ -93,25 +93,41 @@ class Generator extends \yii\gii\generators\crud\Generator
     }
 
     /**
+     * 与原方法相比的不同：
+     *
+     * - 仅使用 ColumnSchema 中的 dbType 判断
+     * - 在最前面添加特殊的格式 'lookup', 表示使用字典存储的枚举类型值
+     *
      * @param \yii\db\ColumnSchema $column
      * @return string
      */
     public function generateColumnFormat($column)
     {
+        if (strpos($column->dbType, 'tinyint(1)') !== false || in_array($column->name, ['action'])) {
+            return 'lookup';
+        }
         if (strpos($column->dbType, 'date') !== false || in_array($column->name, ['created_at', 'updated_at'])) {
             return 'datetime';
         }
-        if (
-            strpos($column->dbType, 'decimal') !== false 
-            || in_array($column->name, ['amount', 'quantity', 'weight'])
-        ) {
+        if (strpos($column->dbType, 'decimal') !== false) {
             return 'decimal';
+        }
+        // '_id' 结尾的通常是外键，不需要使用 integer 格式
+        if (
+            strpos($column->dbType, 'int') !== false 
+            && stripos($column->name, '_id') === false
+            && $column->name != 'id'
+        ) {
+            return 'integer';
         }
         if (strpos($column->dbType, 'text') !== false) {
             return 'ntext';
         }
-        if (strpos($column->dbType, 'tinyint(1)') !== false || in_array($column->name, ['action'])) {
-            return 'lookup';
+        if (stripos($column->name, 'email') !== false) {
+            return 'email';
+        }
+        if (preg_match('/(\b|[_-])url(\b|[_-])/i', $column->name)) {
+            return 'url';
         }
         return 'text';
     }
