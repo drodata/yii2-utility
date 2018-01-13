@@ -28,7 +28,7 @@ foreach ($generator->getTableSchema()->columns as $column) {
         echo <<<LOOKUP
         [
             'attribute' => '{$column->name}',
-            'value' => Lookup::item('$lookupType', \$model->{$column->name});
+            'value' => Lookup::item('$lookupType', \$model->{$column->name}),
         ],
 
 LOOKUP;
