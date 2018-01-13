@@ -1,28 +1,19 @@
 <?php
 
-namespace drodata\utility\models;
+namespace drodata\models;
 
 use Yii;
-use yii\helpers\ArrayHelper;
+use yii\base\Model;
+use yii\data\ActiveDataProvider;
 
 /**
- * This is the model class for table "{{%lookup}}".
- *
- * @property integer $id
- * @property string $name
- * @property integer $code
- * @property string $type
- * @property integer $position
+ * LookupSearch represents the model behind the search form about `drodata\models\Lookup`.
  */
-class Lookup extends \yii\db\ActiveRecord
+class LookupSearch extends Lookup
 {
-	private static $_items=array();
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
+    public function attributes()
     {
-        return '{{%lookup}}';
+        return parent::attributes();
     }
 
     /**
@@ -31,41 +22,64 @@ class Lookup extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'code', 'type', 'position'], 'required'],
-            [['code', 'position'], 'integer'],
-            [['name', 'type'], 'string', 'max' => 128],
+            [['id', 'code', 'position', 'visible'], 'integer'],
+            [['name', 'type'], 'safe'],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
+    public function scenarios()
     {
-        return [
-            'id' => 'ID',
-            'name' => 'Name',
-            'code' => 'Code',
-            'type' => 'Type',
-            'position' => 'Position',
-        ];
+        // bypass scenarios() implementation in the parent class
+        return Model::scenarios();
     }
-	public static function items($type, $key='code')
-	{
-		return ArrayHelper::map(
-			self::find()->where([
-				'type' => $type,
-			])->orderBy('position')->asArray()->all(),
-			$key,
-			'name'
-		);
-	}
 
-	public static function item($type,$code)
-	{
-		return self::findOne([
-			'type' => $type,
-			'code' => $code,
-		])->name;
-	}
+    /**
+     * Creates data provider instance with search query applied
+     *
+     * @param array $params
+     *
+     * @return ActiveDataProvider
+     */
+    public function search($params)
+    {
+        $query = Lookup::find();
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $dataProvider->setSort([
+            'attributes' => [],
+            /* Warning: defaultOrder 内指定的列必须在上面的 attributes 内声明过，否则排序无效
+            'defaultOrder' => [
+                'group.name' => SORT_DESC,
+            ],
+            */
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'code' => $this->code,
+            'position' => $this->position,
+            'visible' => $this->visible,
+        ]);
+
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'type', $this->type]);
+        return $dataProvider;
+    }
 }
