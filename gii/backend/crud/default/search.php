@@ -18,7 +18,6 @@ $rules = $generator->generateSearchRules();
 $labels = $generator->generateSearchLabels();
 $searchAttributes = $generator->getSearchAttributes();
 $searchConditions = $generator->generateSearchConditions();
-
 echo "<?php\n";
 ?>
 
@@ -27,6 +26,7 @@ namespace <?= StringHelper::dirname(ltrim($generator->searchModelClass, '\\')) ?
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use drodata\validators\DateRangeValidator;
 use <?= ltrim($generator->modelClass, '\\') . (isset($modelAlias) ? " as $modelAlias" : "") ?>;
 
 /**
@@ -114,15 +114,6 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
         // grid filtering conditions
         <?= implode("\n        ", $searchConditions) ?>
             //->andFilterWhere(['LIKE', 'user_group.name', $this->getAttribute('group.name')])
-        
-        /*
-        if (!empty($this->created_at) && strpos($this->created_at, '-') !== false) {
-            list($begin, $end) = explode('-', $this->created_at);
-            $begin .= ' 00:00:00';
-            $end .= ' 23:59:59';
-            $query->andFilterWhere(['BETWEEN', '{{%income}}.created_at', strtotime($begin), strtotime($end)]);
-        }
-        */
 
         return $dataProvider;
     }

@@ -192,4 +192,103 @@ EOF;
 
         return $modelClass . implode('', $slices);
     }
+
+    /**
+     * 加入特殊的 datetime 列区间筛选
+     *
+     * @return array the generated validation rules
+     */
+    public function generateSearchRules()
+    {
+        if (($table = $this->getTableSchema()) === false) {
+            return ["[['" . implode("', '", $this->getColumnNames()) . "'], 'safe']"];
+        }
+
+        $types = [];
+
+        foreach ($table->columns as $column) {
+            // 较原代码改动开始
+            $format = $this->generateColumnFormat($column);
+            if ($format == 'datetime') {
+                $types['dateRange'][] = $column->name;
+            } elseif (in_array($format, ['lookup', 'fk', 'integer'])) {
+                $types['integer'][] = $column->name;
+            } elseif ($format == 'decimal') {
+                $types['number'][] = $column->name;
+            } else {
+                $types['safe'][] = $column->name;
+            }
+            // 较原代码改动结束
+        }
+
+        $rules = [];
+        foreach ($types as $type => $columns) {
+            if ($type == 'dateRange') {
+                $rules[] = "[['" . implode("', '", $columns) . "'], DateRangeValidator::classname()]";
+            } else {
+                $rules[] = "[['" . implode("', '", $columns) . "'], '$type']";
+            }
+        }
+
+        return $rules;
+    }
+    /**
+     * Generates search conditions
+     * @return array
+     */
+    public function generateSearchConditions()
+    {
+        $columns = [];
+        if (($table = $this->getTableSchema()) === false) {
+            $class = $this->modelClass;
+            /* @var $model \yii\base\Model */
+            $model = new $class();
+            foreach ($model->attributes() as $attribute) {
+                $columns[$attribute] = 'unknown';
+            }
+        } else {
+            foreach ($table->columns as $column) {
+                // 源代码是 name->column type 映射，这里改为 name -> format 映射
+                $columns[$column->name] = $this->generateColumnFormat($column);
+            }
+        }
+
+        $likeConditions = [];
+        $hashConditions = [];
+        $rangeConditions = [];
+        foreach ($columns as $column => $format) {
+            if ($format == 'datetime') {
+                $rangeConditions[] = <<<EOF
+->andFilterWhere(['between', '$column', empty(\$this->$column) ? '' : strtotime(explode('-', \$this->$column)[0] . ' 00:00:00'), empty(\$this->$column) ? '' : strtotime(explode('-', \$this->$column)[1] . ' 23:59:59')])
+EOF;
+            } elseif (in_array($format, ['lookup', 'fk', 'integer', 'decimal'])) {
+                $hashConditions[] = "'{$column}' => \$this->{$column},";
+            } else {
+                $likeKeyword = $this->getClassDbDriverName() === 'pgsql' ? 'ilike' : 'like';
+                $likeConditions[] = "->andFilterWhere(['{$likeKeyword}', '{$column}', \$this->{$column}])";                    
+            }
+        }
+
+        $conditions = [];
+        if (!empty($hashConditions)) {
+            $conditions[] = "\$query->andFilterWhere([\n"
+                . str_repeat(' ', 12) . implode("\n" . str_repeat(' ', 12), $hashConditions)
+                . "\n" . str_repeat(' ', 8) . "]);\n";
+        }
+        if (!empty($rangeConditions)) {
+            $conditions[] = "\$query" . implode("\n" . str_repeat(' ', 12), $rangeConditions) . ";\n";
+        }
+        if (!empty($likeConditions)) {
+            $conditions[] = "\$query" . implode("\n" . str_repeat(' ', 12), $likeConditions) . ";\n";
+        }
+
+        return $conditions;
+    }
+
+    public function printTableSchema()
+    {
+        echo "\n<pre>";
+        print_r($generator->getTableSchema());
+        echo "</pre>\n";
+    }
 }
