@@ -49,7 +49,8 @@ $this->registerJs($js);
         'inputTemplate' => '<div class="input-group"><div class="input-group-addon">$</div>{input}</div>'
         -->
 <?php foreach ($generator->getColumnNames() as $attribute) {
-    if (in_array($attribute, $safeAttributes)) {
+    // 'created_at' 等列通过 TimestampBehavior 自动填充
+    if (in_array($attribute, $safeAttributes) && !in_array($attribute, ['created_at', 'created_by', 'updated_at', 'updated_by'])) {
         echo "    <?= " . $generator->generateActiveField($attribute) . " ?>\n";
     }
 } ?>
