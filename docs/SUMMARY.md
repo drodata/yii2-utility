@@ -1,7 +1,7 @@
 # Summary
 
-* [Introduction](README.md)
-* [Gii 模板](README.md)
+* [Gii 模板](gii/README.md)
+    * [CRUD](gii/crud.md)
     * [特性](gii/feature.md)
 * [Grid](grid.md)
 * [AdminLTE](adminlte/README.md)
