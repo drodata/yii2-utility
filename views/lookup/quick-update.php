@@ -5,9 +5,9 @@ use drodata\widgets\Box;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Lookup */
-/* @var $name string 名称 */
+/* @var $label string 名称 */
 
-$this->title = '修改' . $name;
+$this->title = '修改' . $label;
 $this->params = [
     'title' => $this->title,
     'subtitle' => '',
@@ -20,7 +20,7 @@ $this->params = [
         <?= Box::widget([
             'content' => $this->render('_form-quick', [
                 'model' => $model,
-                'name' => $name,
+                'label' => $label,
             ]),
         ]) ?>
     </div>

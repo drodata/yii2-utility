@@ -72,7 +72,7 @@ class Lookup extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
+            'name' => '名称',
             'code' => 'Code',
             'type' => 'Type',
             'position' => 'Position',
