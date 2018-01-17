@@ -8,7 +8,6 @@ use backend\models\Lookup;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 echo $this->render('@drodata/views/_button');
-
 echo GridView::widget([
     'dataProvider' => $dataProvider,
     'filterModel' => $searchModel,
@@ -16,10 +15,25 @@ echo GridView::widget([
         'name',
         [
             'class' => 'drodata\grid\ActionColumn',
-            'template' => '{update}',
+            'template' => '{update} {toggle-visibility}',
             'contentOptions' => [
                 'style' => 'min-width:120px',
                 'class' => 'text-center',
+            ],
+            'buttons' => [
+                'toggle-visibility' => function ($url, $model, $key) {
+                    return Html::actionLink(
+                        $url,
+                        [
+                            'title' => $model->visible ? '隐藏' : '显示',
+                            'icon' => $model->visible ? 'toggle-on' : 'toggle-off',
+                            'color' => 'danger',
+                            'data' => [
+                                'method' => 'post',
+                            ],
+                        ]
+                    );
+                },
             ],
         ],
     ],

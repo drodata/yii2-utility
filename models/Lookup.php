@@ -58,6 +58,7 @@ class Lookup extends \yii\db\ActiveRecord
         return [
             ['visible', 'default', 'value' => 1],
             [['name', 'code', 'type', 'position'], 'required'],
+            [['code', 'position', 'visible'], 'filter', 'filter' => 'intval'],
             [['code', 'position', 'visible'], 'integer'],
             [['name'], 'string', 'max' => 50],
             [['type'], 'string', 'max' => 90],
@@ -183,6 +184,18 @@ class Lookup extends \yii\db\ActiveRecord
                     ]
                 );
                 break;
+        }
+    }
+
+    /**
+     * 改变可见性
+     */
+    public function toggleVisibility()
+    {
+        $this->visible = !$this->visible;
+
+        if (!$this->save()) {
+            throw new \yii\db\Exception('Failed to save.');
         }
     }
 
