@@ -1,5 +1,38 @@
 # Lookup
 
+配置如下：
+
+```php
+// in application configuration
+return [
+    // ...
+    'controllerMap' => [
+        'lookup' => [
+            'class' => 'drodata\controllers\LookupController',
+            'as access' => [
+                'class' => 'yii\filters\AccessControl',
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['admin'], // 只有管理员能访问
+                    ],
+                ],
+            ],
+            'as verbs' => [
+                'class' => 'yii\filters\VerbFilter',
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ],
+    ],
+];
+```
+
+被赋予 `admin` 角色的用户访问 `lookup/index` 即可管理字典。效果图：
+
+![](images/lookup-manage.png)
+
 ## Lookup Quick Management
 
 Lookup 表内存储的内容主要分两类：一种的值跟代码相关，不允许用户自定义，例如订单的状态；另一类允许用户自定义，例如报销时的分类。前者的值通过在对应模型中定义常量操作，后者的特点是仅使用 `lookup.name` 字段。后者需要一个页面来完成简单的管理操作。这类操作主要包括：新增、修改、隐藏或显示，我们把这类操作集合在 `QuickLookupController` 内。
@@ -39,4 +72,3 @@ return [
 通过上面的配置，被赋予 `accountant` 的用户访问 `expense-type/index` 即可进行报销类别的管理。效果图如下：
 
 ![](images/lookup-quick-manage.png)
-

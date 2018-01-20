@@ -25,7 +25,7 @@ echo GridView::widget([
         'code',
         'type',
         'position',
-        // 'visible',
+        'visible',
         /*
         [
             'attribute' => 'status',
