@@ -131,6 +131,21 @@ class LookupController extends Controller
     }
 
     /**
+     * 改变记录的可见性
+     *
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionToggleVisibility($id)
+    {
+        $this->findModel($id)->toggleVisibility();
+        Yii::$app->session->setFlash('success', '操作成功');
+
+        return $this->redirect(['index']);
+    }
+
+
+    /**
      * 快速新建
      */
     public function actionQuickCreate($type)

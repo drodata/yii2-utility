@@ -21,19 +21,7 @@ echo GridView::widget([
                 'class' => 'text-center',
             ],
             'buttons' => [
-                'toggle-visibility' => function ($url, $model, $key) {
-                    return Html::actionLink(
-                        $url,
-                        [
-                            'title' => $model->visible ? '隐藏' : '显示',
-                            'icon' => $model->visible ? 'toggle-on' : 'toggle-off',
-                            'color' => 'danger',
-                            'data' => [
-                                'method' => 'post',
-                            ],
-                        ]
-                    );
-                },
+                'toggle-visibility' => ['drodata\models\Lookup', 'toggleVisibilityButton'],
             ],
         ],
     ],

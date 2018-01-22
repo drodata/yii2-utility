@@ -45,21 +45,13 @@ echo GridView::widget([
         */
         [
             'class' => 'drodata\grid\ActionColumn',
-            'template' => '{view} {update} {delete}',
+            'template' => '{view} {update} {toggle-visibility} {delete}',
             'contentOptions' => [
                 'style' => 'min-width:120px',
                 'class' => 'text-center',
             ],
             'buttons' => [
-                'view' => function ($url, $model, $key) {
-                    return $model->actionLink('view');
-                },
-                'update' => function ($url, $model, $key) {
-                    return $model->actionLink('update');
-                },
-                'delete' => function ($url, $model, $key) {
-                    return $model->actionLink('delete');
-                },
+                'toggle-visibility' => ['drodata\models\Lookup', 'toggleVisibilityButton'],
             ],
         ],
     ],

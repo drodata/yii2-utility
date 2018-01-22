@@ -188,6 +188,25 @@ class Lookup extends \yii\db\ActiveRecord
     }
 
     /**
+     * 改变可见性按钮 Callback. 在 grid view 中使用
+     */
+    public function toggleVisibilityButton($url, $model, $key)
+    {
+        return Html::actionLink(
+            $url,
+            [
+                'title' => $model->visible ? '隐藏' : '显示',
+                'icon' => $model->visible ? 'toggle-on' : 'toggle-off',
+                'color' => 'danger',
+                'class' => $model->visible ? '' : 'text-muted',
+                'data' => [
+                    'method' => 'post',
+                ],
+            ]
+        );
+    }
+
+    /**
      * 改变可见性
      */
     public function toggleVisibility()
