@@ -35,8 +35,20 @@ $this->params = [
 
 DetailView 也需要做类似的配置。如果 Gii 能自动识别这些列的类型自动完成这些工作就太好了。扫一下 `crud\Generator` 代码后发现完全可行。通过 `Generator::getTableSchema()` 可以获取表格的元数据信息，包括表名、列名、列数据类型等。Generator 就是读取这些信息并生成个性化信息的。几个重要的方法包括：
 
-- `generateColumnFormat()`: 返回列的数据格式。默认情况下，返回的值对应 `DataColumn` `format` 属性的值；
-- `generateActiveField()`: 生成 `_form.php` 中表单元素。默认情况下，生成的都是文本框。需要改进的是：枚举类型就用 radioList; 数值就用 `input('number')`; 备注类就用 `textArea()`;
+- `generateColumnFormat()`: 返回列的数据格式。默认情况下，返回的值对应 `DataColumn` `format` 属性的值；可能的值有：
+    - `enum`: 数据类型为 tinyint(1);
+    - `lookup`: 数据类型为 smallint(3);
+    - `fk`: 列名以 `_id` 结尾
+    - `integer`, `decimal`: 
+    - `datetime`: 
+    - `ntext`: 
+    - `text`: 
+- `generateActiveField()`: 生成 `_form.php` 中表单元素。默认情况下，生成的都是文本框。需要根据上面 `generateColumnFormat()` 返回的值显示更准确的表单元素：
+    - `enum`: 单选框
+    - `lookup`: 下拉菜单
+    - `integer`, `decimal`: `input(`number`)`
+    - `datetime`: : `input(`date`)`
+    - `ntext`: `textArea()`
 - `generateSearchConditions()`: 生成 SearchModel 内查询过滤条件。这里最长改动的就是将日期类型改成 date range, 这里也能实现自动化；
 
 此特性的实现意味着基本可以实现“开箱即用”。

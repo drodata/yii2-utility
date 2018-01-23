@@ -96,7 +96,10 @@ class Generator extends \yii\gii\generators\crud\Generator
      * 与原方法相比的不同：
      *
      * - 仅使用 ColumnSchema 中的 dbType 判断
-     * - 添加两个特殊的格式 'lookup' and 'fk', 前者表示使用字典存储的枚举类型值; 后者表示外键，在生成表单时尝使用下拉菜单选择
+     * - 添加三个特殊的格式 'enum', 'lookup' 和 'fk', 数据格式和用途分别如下：
+     *     - 'enum': 使用字典存储的枚举类型值;
+     *     - 'lookup': 与 'enum' 类似，但允许用户自定义，个数更多。统一约定使用 `smallint(3)` 表示，在生成表单时尝使用下拉菜单选择
+     *     - 'fk': 列名通常以 '_id' 结尾;
      *
      * @param \yii\db\ColumnSchema $column
      * @return string
@@ -104,6 +107,9 @@ class Generator extends \yii\gii\generators\crud\Generator
     public function generateColumnFormat($column)
     {
         if (strpos($column->dbType, 'tinyint(1)') !== false || in_array($column->name, ['action'])) {
+            return 'enum';
+        }
+        if (strpos($column->dbType, 'smallint(3)') !== false) {
             return 'lookup';
         }
         if (stripos($column->name, '_id') !== false) {
@@ -145,9 +151,19 @@ class Generator extends \yii\gii\generators\crud\Generator
         $format = $this->generateColumnFormat($column);
 
         switch ($format) {
-            case 'lookup':
+            case 'enum':
                 $lookupType = $this->assembleLookupType($column);
                 return "\$form->field(\$model, '$attribute')->inline()->radioList(Lookup::items('$lookupType'))";
+                break;
+            case 'lookup':
+                $lookupType = $this->assembleLookupType($column);
+                return <<<EOF
+\$form->field(\$model, '$attribute')->widget(Select2::classname(), [
+        'data' => [Lookup::items('$lookupType')],
+        'options' => ['placeholder' => '请选择'],
+        'addon' => [ ],
+    ])
+EOF;
                 break;
             case 'fk':
                 return <<<EOF
@@ -211,7 +227,7 @@ EOF;
             $format = $this->generateColumnFormat($column);
             if ($format == 'datetime') {
                 $types['dateRange'][] = $column->name;
-            } elseif (in_array($format, ['lookup', 'fk', 'integer'])) {
+            } elseif (in_array($format, ['enum', 'lookup', 'fk', 'integer'])) {
                 $types['integer'][] = $column->name;
             } elseif ($format == 'decimal') {
                 $types['number'][] = $column->name;
@@ -261,7 +277,7 @@ EOF;
                 $rangeConditions[] = <<<EOF
 ->andFilterWhere(['between', '$column', empty(\$this->$column) ? '' : strtotime(explode('-', \$this->$column)[0] . ' 00:00:00'), empty(\$this->$column) ? '' : strtotime(explode('-', \$this->$column)[1] . ' 23:59:59')])
 EOF;
-            } elseif (in_array($format, ['lookup', 'fk', 'integer', 'decimal'])) {
+            } elseif (in_array($format, ['enum', 'lookup', 'fk', 'integer', 'decimal'])) {
                 $hashConditions[] = "'{$column}' => \$this->{$column},";
             } else {
                 $likeKeyword = $this->getClassDbDriverName() === 'pgsql' ? 'ilike' : 'like';

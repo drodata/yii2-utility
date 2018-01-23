@@ -1,5 +1,17 @@
 # Lookup
 
+此表用来存储字典，建立数据库中的值与显示给用户的值之间的映射。
+
+Field | Type | Null | Key | Desc
+------|------|------|-----|-----
+id | INT | NO | PRI |
+type | VARCHAR(90) | NO | |
+name | VARCHAR(50) | NO | | 显示给用户的值
+code | TINYINT | NO | | 实际存储的数值
+path | VARCHAR(50) | NO | | hashed 相对路径
+position | TINYINT | NO | | 供排序使用，默认与 code 值相同
+visible | TINYINT | NO | |
+
 配置如下：
 
 ```php

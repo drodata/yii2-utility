@@ -23,7 +23,7 @@ use backend\models\Lookup;
 <?php
 foreach ($generator->getTableSchema()->columns as $column) {
     $format = $generator->generateColumnFormat($column);
-    if ($format == 'lookup') {
+    if (in_array($format, ['enum', 'lookup'])) {
         $lookupType = $generator->assembleLookupType($column);
         echo <<<LOOKUP
         [
@@ -32,7 +32,7 @@ foreach ($generator->getTableSchema()->columns as $column) {
         ],
 
 LOOKUP;
-    } elseif ($format == 'text') {
+    } elseif (in_array($format, ['text', 'fk'])) {
         echo <<<NORMAL
         '{$column->name}',
 
