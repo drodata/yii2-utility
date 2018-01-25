@@ -81,14 +81,23 @@ class Lookup extends \yii\db\ActiveRecord
         ];
     }
 
-    public static function items($type, $key='code')
+    /**
+     * 返回指定类别下字典 map
+     *
+     * @param string $type
+     * @param string $sortColumn 排序列。默认按位置排序，也可按照名称列排序，针对汉字
+     * @return array code -> 名称的字典映射。
+     */
+    public static function items($type, $sortColumn='position')
     {
+        $orderBy = ($sortColumn == 'name') ? 'CONVERT(name USING gbk)' : $sortColumn;
+
         return ArrayHelper::map(
             self::find()->where([
                 'type' => $type,
                 'visible' => 1,
-            ])->orderBy('position')->asArray()->all(),
-            $key,
+            ])->orderBy($orderBy)->asArray()->all(),
+            'code',
             'name'
         );
     }
