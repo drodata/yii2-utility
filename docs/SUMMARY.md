@@ -1,4 +1,4 @@
-# 目录
+# Summary
 
 * [Introduction](README.md)
 * [通用模型](generic-model.md)
@@ -6,6 +6,7 @@
 * [Gii 模板](gii/README.md)
     * [CRUD](gii/crud.md)
     * [特性](gii/feature.md)
+* [Migration](migration.md)
 * [Grid](grid.md)
 * [AdminLTE](adminlte/README.md)
     * [自定义样式](adminlte/customize-css.md)
