@@ -84,3 +84,7 @@ return [
 通过上面的配置，被赋予 `accountant` 的用户访问 `expense-type/index` 即可进行报销类别的管理。效果图如下：
 
 ![](images/lookup-quick-manage.png)
+
+## Ajax Quick Create
+
+TBD

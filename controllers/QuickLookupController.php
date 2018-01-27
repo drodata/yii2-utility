@@ -128,23 +128,25 @@ class QuickLookupController extends LookupController
     /**
      * 通过 modal 快速新建 lookup
      */
-    public function actionModalCreate($type)
+    public function actionModalCreate()
     {
 		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
         $model = new Lookup([
-            'type' => $type,
-            'code' => Lookup::nextCode($type),
-            'position' => Lookup::nextCode($type),
+            'type' => $this->type,
+            'code' => Lookup::nextCode($this->type),
+            'position' => Lookup::nextCode($this->type),
         ]);
 
-        return $this->renderPartial('quick-create-modal', [
+        return $this->renderPartial('modal-quick-create', [
             'model' => $model,
-            'type' => $type,
+            'label' => $this->name,
         ]);
     }
     public function actionModalCreateSubmit()
     {
 		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
 		$d['status'] = true;
         $model = new Lookup();
         $model->load(Yii::$app->request->post());

@@ -2,25 +2,24 @@
 use yii\bootstrap\Modal;
 use drodata\helpers\Html;
 
-switch ($type) {
-    case 'DemoProduct':
-        $name = '临时商品';
-        break;
-}
+/* @var $this yii\web\View */
+/* @var $model backend\models\Lookup */
+/* @var $label string 名称 */
 
 Modal::begin([
-    'id' => $type . '-modal',
-    'header' => '新增' . $name,
+    'id' => 'quick-lookup-modal',
+    'header' => '新增' . $label,
     'headerOptions' => [
         'class' => 'h3 text-center',
+    ],
+    'options' => [
     ],
     'size' => Modal::SIZE_SMALL,
 ]);
 
 echo $this->render('_form-quick', [
     'model' => $model,
-    'type' => $type,
+    'label' => $label,
 ]);
 
 Modal::end();
-

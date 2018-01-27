@@ -108,7 +108,8 @@ function PdfUtil(url) {
                 formGroup.addClass('has-error');
             }
             for (var attribute in response.errors[model]) {
-                var ae = $('#' + model + '-' + attribute);
+                // Active form Element
+                var ae = this.find('#' + model + '-' + attribute);
                 var formGroup = ae.parents('.form-group').first();
                 formGroup.addClass('has-error');
                 formGroup.find('.help-block').empty().text(response.errors[model][attribute][0]);
@@ -402,6 +403,77 @@ $(document).on('show.bs.modal', '.modal', function () {
     setTimeout(function() {
         $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
     }, 0);
+});
+
+/**
+ * Quick Lookup  AJAX 新建事件
+ *
+ * 使用方法：
+ * 
+ * 1. 通过含有 `modal-create-quick-lookup` 类名的按钮点击触发
+ * 2. `data` 属性值：
+ *     - `controller`: 必须, quick lookup 对应控制器 ID
+ *     - `scenario` string 场景值。'dropDown' 表示在下拉菜单中，新记录创建后会向下拉菜单写入新增的 option 标签并选中
+ * ```php
+ * echo Html::button(Html::icon('plus'), [
+ *     'class' => 'btn btn-default modal-create-quick-lookup', 
+ *     'title' => '新建', 
+ *     'data' => [
+ *         'scenario' => 'dropDown',
+ *         'controller' => 'temp-product',
+ *     ],
+ * ]);
+ * ```
+ */
+$(document).on('click', '.modal-create-quick-lookup', function() {
+    var scenario = $(this).data('scenario')
+        , controller = $(this).data('controller')
+    if (scenario == 'dropDown') {
+        var $dropDown = $(this).parents('.input-group').first().find('select')
+    }
+    $.get(APP.baseUrl + controller + '/modal-create', function(response) {
+        $(response).appendTo('body');
+
+        var $modal = $('#quick-lookup-modal')
+            , selecter = '#lookup-quick-create-form'
+            , $form = $(selecter)
+            , $submitButton = $form.find('[type=submit]')
+            , $firstElement = $('#lookup-name')
+
+        $modal.modal({
+            'keyboard': false,
+            'backdrop': 'static',
+        }).on('hidden.bs.modal', function (e) {
+            $modal.remove();
+        }).on('shown.bs.modal', function (e) {
+            $firstElement.focus();
+        });
+    
+        $form.submit(function(e) {
+        	e.preventDefault();
+        	e.stopImmediatePropagation();
+
+        	$submitButton.prop('disabled',true)
+        	$.post($form.attr('action') + '-submit', $form.serialize(), function(response) {
+        		if (!response.status) {
+                    $form.displayErrors(response)
+                } else {
+                    $( response.message ).appendTo($submitButton.parent());
+
+                    if (scenario == 'dropDown') {
+                        $( response.entity ).appendTo($dropDown);
+                        $dropDown.trigger('change');
+                    }
+                
+        			setTimeout(function(){
+                        $modal.modal('hide');
+        			},1000);
+                }
+        	}).fail(ajax_fail_handler).always(function() {
+        	    $submitButton.prop('disabled',false)
+        	});
+        }); //!submit event
+    }); //!create modal fetch
 });
 
 /**

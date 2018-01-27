@@ -197,8 +197,7 @@ class LookupController extends Controller
     }
     /**
      * 通过 modal 快速新建 lookup
-     */
-    public function actionModalCreate($type)
+    public function actionModalCreate()
     {
 		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $model = new Lookup([
@@ -212,6 +211,7 @@ class LookupController extends Controller
             'type' => $type,
         ]);
     }
+     */
     public function actionModalCreateSubmit()
     {
 		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
