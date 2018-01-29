@@ -161,7 +161,18 @@ class Generator extends \yii\gii\generators\crud\Generator
 \$form->field(\$model, '$attribute')->widget(Select2::classname(), [
         'data' => [Lookup::items('$lookupType')],
         'options' => ['placeholder' => '请选择'],
-        'addon' => [ ],
+        'addon' => [
+            'append' => [
+                'content' => Html::button(Html::icon('plus'), [
+                    'class' => 'btn btn-default', 
+                    'data' => [
+                        'toggle' => 'tooltip',
+                        'title' => '新建', 
+                    ],
+                ]),
+                'asButton' => true
+            ]
+        ],
     ])
 EOF;
                 break;
@@ -170,7 +181,18 @@ EOF;
 \$form->field(\$model, '$attribute')->widget(Select2::classname(), [
         'data' => [],
         'options' => ['placeholder' => '请选择'],
-        'addon' => [ ],
+        'addon' => [
+            'append' => [
+                'content' => Html::button(Html::icon('plus'), [
+                    'class' => 'btn btn-default', 
+                    'data' => [
+                        'toggle' => 'tooltip',
+                        'title' => '新建', 
+                    ],
+                ]),
+                'asButton' => true
+            ]
+        ],
     ])
 EOF;
                 break;
@@ -280,8 +302,7 @@ EOF;
             } elseif (in_array($format, ['enum', 'lookup', 'fk', 'integer', 'decimal'])) {
                 $hashConditions[] = "'{$column}' => \$this->{$column},";
             } else {
-                $likeKeyword = $this->getClassDbDriverName() === 'pgsql' ? 'ilike' : 'like';
-                $likeConditions[] = "->andFilterWhere(['{$likeKeyword}', '{$column}', \$this->{$column}])";                    
+                $likeConditions[] = "->andFilterWhere(['like', '{$column}', \$this->{$column}])";                    
             }
         }
 
