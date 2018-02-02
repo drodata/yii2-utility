@@ -232,13 +232,30 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
                         'color' => 'danger',
                         'data' => [
                             'method' => 'post',
-                            'confirm' => '请再次确认删除操作。',
+                            'confirm' => $this->getConfirmText(),
                         ],
                         'visible' => true, // Yii::$app->user->can(''),
                         'disabled' => false,
                         'disabledHint' => '',
                     ]
                 );
+                break;
+        }
+    }
+
+    /**
+     * 获取 POST 操作前的 confirm 文本内容
+     *
+     * 模型中有很多类似删除这样的操作：没有视图文件，直接通过控制器完成操作，
+     * 操作完成后页面跳转至 referrer 而非首页。这类操作前都需要让客户再次确认。
+     *
+     * @param string $action 对应 actionLink() 中 $action 值
+     */
+    public function getConfirmText($action = 'delete')
+    {
+        switch ($action) {
+            case 'delete':
+                return "请再次确认删除操作。";
                 break;
         }
     }
@@ -277,6 +294,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         <?= $relation[0] . "\n" ?>
     }
 <?php endforeach; ?>
+
     /*
     public function getStatusLabel()
     {

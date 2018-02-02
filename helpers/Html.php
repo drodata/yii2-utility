@@ -293,6 +293,11 @@ class Html extends BaseHtml
                     ]);
                 }
             }
+
+            if ($color != 'primary') {
+                $options['class'] .= " text-$color";
+            }
+
             return static::a($text, $url, $options);
         } elseif ($type == 'button') {
             $class .= " btn btn-$color" 

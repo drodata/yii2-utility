@@ -220,7 +220,7 @@ if (count($pks) === 1) {
         $this->findModel(<?= $actionParams ?>)->delete();
         Yii::$app->session->setFlash('success', '已删除');
 
-        return $this->redirect(['index']);
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
     /**
