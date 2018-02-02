@@ -25,4 +25,52 @@ class Utility
 
         return round($randFloat, $precision);
     }
+
+    /**
+     * 判断两个浮点数是否相等
+     *
+     * ```php
+     * $a = 1.345678;
+     * $b = 1.345679;
+     * echo Utility::isFloatEqual($a, $b); // true
+     * ```
+     *
+     * @param float|string $a 要比较的第一个操作数
+     * @param float|string $b 要比较的第一个操作数
+     * @param float $precision 精度
+     * @return bool
+     *
+     */
+    public function isFloatEqual($a, $b, $precision = 0.0001) 
+    {
+        return abs(($a - $b) / $a) < $precision ;
+    }
+
+    /**
+     * 判断一个浮点数是否大于另一个浮点数
+     *
+     * @param float|string $a 要比较的第一个操作数
+     * @param float|string $b 要比较的第一个操作数
+     * @param float $precision 精度
+     * @return bool
+     *
+     */
+    public function isFloatBigger($a, $b, $precision = 0.0001) 
+    {
+        return !static::isFloatEqual($a, $b, $precision) && ($a > $b);
+    }
+
+    /**
+     * 判断一个浮点数是否小于另一个浮点数
+     *
+     * @param float|string $a 要比较的第一个操作数
+     * @param float|string $b 要比较的第一个操作数
+     * @param float $precision 精度
+     * @return bool
+     *
+     */
+    public function isFloatLess($a, $b, $precision = 0.0001) 
+    {
+        return !static::isFloatEqual($a, $b, $precision) && ($a < $b);
+    }
 }
