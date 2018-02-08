@@ -279,4 +279,33 @@ class Lookup extends \yii\db\ActiveRecord
             ],
         ]);
     }
+
+    /**
+     * 获取 Taxonomy 模型中指定类别的索引，支持层级缩进
+     * @param string $type taxonomy.type 列值
+     * @param null|integer $parent taxonomy.parent_id 列值
+     * @param integer $indent 缩进层数
+     */
+    public static function taxonomies($type, $parent = null, $indent = 0)
+    {
+        static $list = [];
+
+        // 默认使用两个中文空格显示缩进
+        $indentString = "　　";
+
+        $items = Taxonomy::find()->where([
+            'type' => $type,
+            'parent_id' => $parent,
+        ])->orderBy('CONVERT(name USING gbk)')->all();
+
+        if (!empty($items)) {
+            foreach ($items as $item) {
+                $list[$item->id] = str_repeat($indentString, $indent) . $item->name;
+        
+                static::taxonomies($type, $item->id, $indent + 1);
+            }
+        }
+
+        return $list;
+    }
 }

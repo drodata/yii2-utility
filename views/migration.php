@@ -64,7 +64,14 @@ class <?= $className ?> extends yii\db\Migration
             'updated_at' => $this->integer(),
             'updated_by' => $this->integer(),
         ], $this->tableOptions);
-        $this->addCommentOnColumn('{{%TABLE}}', 'type', '类型');
+
+        $columnComments = [
+            'type' => '类别',
+        ];
+        foreach ($columnComments as $column => $comment) {
+            $this->addCommentOnColumn('{{%TABLE}}', $column, $comment);
+        }
+
         $this->addForeignKey(
             'fk-order-customer',
             '{{%order}}', 'customer_id',
