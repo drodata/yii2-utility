@@ -49,6 +49,14 @@ use yii\filters\VerbFilter;
  */
 class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->baseControllerClass) . "\n" ?>
 {
+<?php if (!empty($generator->viewPath)): ?>
+    public function init()
+    {
+        parent::init();
+        $this->setViewPath('<?= $generator->viewPath ?>');
+    }
+<?php endif; ?>
+
     /**
      * @inheritdoc
      */
