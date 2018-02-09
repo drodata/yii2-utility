@@ -19,11 +19,6 @@ use yii\filters\VerbFilter;
 class TaxonomyController extends Controller
 {
     /**
-     * 对应 taxonomy.type 列值
-     */
-    public $type;
-
-    /**
      * 分类中文名称
      */
     public $name;
@@ -56,7 +51,8 @@ class TaxonomyController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new TaxonomySearch(['type' => $this->type]);
+        // 约定：使用控制器 ID 作为 taxonomy.type 列值
+        $searchModel = new TaxonomySearch(['type' => $this->id]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -113,7 +109,7 @@ class TaxonomyController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Taxonomy(['type' => $this->type]);
+        $model = new Taxonomy(['type' => $this->id]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', '新记录已创建');
@@ -138,7 +134,7 @@ class TaxonomyController extends Controller
         $parentId = Yii::$app->request->get('parent_id');
 
         $model = new Taxonomy([
-            'type' => $this->type,
+            'type' => $this->id,
             'parent_id' => $parentId,
         ]);
 

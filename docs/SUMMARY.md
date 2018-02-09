@@ -2,7 +2,8 @@
 
 * [Introduction](README.md)
 * [通用模型](generic-model.md)
-    * [Lookup](generic-model-lookup.md)
+    * [字典 Lookup](generic-model-lookup.md)
+    * [分类 Taxonomy](generic-model-taxonomy.md)
 * [Gii 模板](gii/README.md)
     * [CRUD](gii/crud.md)
     * [特性](gii/feature.md)

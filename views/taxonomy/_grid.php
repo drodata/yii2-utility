@@ -30,7 +30,6 @@ echo GridView::widget([
     'columns' => [
         // ['class' => 'yii\grid\SerialColumn'],
         'name',
-        'slug',
         [
             'attribute' => 'parent_id',
             'value' => function ($model, $key, $index, $column) {
