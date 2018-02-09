@@ -198,6 +198,16 @@ if (count($pks) === 1) {
     }
 
     /**
+     * AJAX 提交表单
+     */
+    public function actionAjaxSubmit()
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        return <?= $modelClass ?>::ajaxSubmit($_POST);
+    }
+
+    /**
      * Updates an existing <?= $modelClass ?> model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * <?= implode("\n     * ", $actionParamComments) . "\n" ?>

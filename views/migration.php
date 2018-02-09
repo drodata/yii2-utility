@@ -82,11 +82,12 @@ class <?= $className ?> extends yii\db\Migration
         $this->alterColumn('{{%TABLE}}', 'size', $this->smallInteger(3));
 
 
+        $this->batchInsert('{{%lookup}}', $this->lookups[0], $this->lookups[1]);
+
         // 更新已有记录值
         foreach ((new Query)->from('{{%TABLE}}')->each() as $item) {
             $this->update('{{%TABLE}}', ['note' => $item['size']], ['id' => $item['id']]);
         }
-        $this->batchInsert('{{%TABLE}}', $this->lookups[0], $this->lookups[1]);
         $this->update('{{%TABLE}}', ['size' => 1]);
         */
 
@@ -102,7 +103,7 @@ class <?= $className ?> extends yii\db\Migration
 		$this->dropTable('{{%TABLE}}');
         $this->dropColumn('{{%TABLE}}', 'stock_status');
 
-        $this->delete('{{%TABLE}}', ['type' => ['Status']]);
+        $this->delete('{{%lookup}}', ['type' => ['Status']]);
         */
 
         echo "<?= $className ?> cannot be reverted.\n";

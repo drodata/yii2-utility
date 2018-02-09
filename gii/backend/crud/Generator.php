@@ -106,7 +106,7 @@ class Generator extends \yii\gii\generators\crud\Generator
      */
     public function generateColumnFormat($column)
     {
-        if (strpos($column->dbType, 'tinyint(1)') !== false || in_array($column->name, ['action'])) {
+        if (strpos($column->dbType, 'tinyint(1)') !== false) {
             return 'enum';
         }
         if (strpos($column->dbType, 'smallint(3)') !== false) {

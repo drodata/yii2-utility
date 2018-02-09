@@ -60,6 +60,7 @@ $this->registerJs($js);
     <?= "<?php " ?>endif; <?= "?>\n" ?>
     <?= "<?php\n" ?>
     /**
+    echo $form->field($model, 'id')->label(false)->hiddenInput();
     if ($model->isNewRecord) {
         echo $form->field($common, 'images[]')->fileInput(['multiple' => true]);
     }

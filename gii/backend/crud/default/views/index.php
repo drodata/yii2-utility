@@ -42,7 +42,7 @@ $this->params = [
             'title' => '新建<?= $modelNameCn ?>',
             'icon' => 'plus',
             'color' => 'success',
-            'visible' => true, //Yii::$app->user->can(''),
+            'visible' => Yii::$app->user->can('@'),
         ]),
         Html::actionLink('/<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>/modal-search', [
             'type' => 'button',

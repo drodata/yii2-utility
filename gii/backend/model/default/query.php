@@ -31,10 +31,13 @@ namespace <?= $generator->queryNs ?>;
  */
 class <?= $className ?> extends <?= '\\' . ltrim($generator->queryBaseClass, '\\') . "\n" ?>
 {
-    /*public function active()
+    /*
+     *
+    public function active()
     {
-        return $this->andWhere('[[status]]=1');
-    }*/
+        return $this->andWhere(['id' => 1]);
+    }
+    */
 
     /**
      * @inheritdoc

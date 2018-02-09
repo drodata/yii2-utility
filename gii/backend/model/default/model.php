@@ -3,6 +3,8 @@
  * This is the template for generating the model class of a specified table.
  */
 
+use yii\helpers\Inflector;
+
 /* @var $this yii\web\View */
 /* @var $generator yii\gii\generators\model\Generator */
 /* @var $tableName string full table name */
@@ -30,7 +32,7 @@ use drodata\behaviors\BlameableBehavior;
 
 /**
  * This is the model class for table "<?= $generator->generateTableName($tableName) ?>".
- *
+ * 
 <?php foreach ($tableSchema->columns as $column): ?>
  * @property <?= "{$column->phpType} \${$column->name}\n" ?>
 <?php endforeach; ?>
@@ -195,7 +197,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
      */
     public function actionLink($action, $type = 'icon')
     {
-        $route = '/<?= $generator->generateTableName($tableName) ?>/' . $action;
+        $route = '/<?= Inflector::camel2id($generator->modelClass) ?>/' . $action;
         switch ($action) {
             case 'view':
                 return Html::actionLink(
@@ -216,7 +218,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
                         'type' => $type,
                         'title' => '修改',
                         'icon' => 'pencil',
-                        'visible' => true, // Yii::$app->user->can(''),
+                        'visible' => Yii::$app->user->can('@'),
                         'disabled' => false,
                         'disabledHint' => '',
                     ]
@@ -232,9 +234,9 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
                         'color' => 'danger',
                         'data' => [
                             'method' => 'post',
-                            'confirm' => $this->getConfirmText(),
+                            'confirm' => $this->getConfirmText($action),
                         ],
-                        'visible' => true, // Yii::$app->user->can(''),
+                        'visible' => Yii::$app->user->can('@'),
                         'disabled' => false,
                         'disabledHint' => '',
                     ]
@@ -340,22 +342,52 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     // ==== getters end ====
 
     /**
-     * Transaction block template
+     * AJAX 提交表单逻辑代码
      *
-    public function create($data)
+    public static function ajaxSubmit($post)
     {
-        $transaction = Yii::$app->db->beginTransaction();
-        try {
-            if (!$this->save()) {
-                throw new \yii\db\Exception('Failed to insert xxx.');
-            }
+        $d['status'] = true;
 
-            $transaction->commit();
-            return true;
-        } catch(\Exception $e) {
-            $transaction->rollBack();
-            throw $e;
+        if (empty($post['Spu']['id'])) {
+            $model = new Spu();
+        } else {
+            $model = Spu::findOne($post['Spu']['id']);
         }
+        $model->load($post);
+
+        // items
+        $items = [];
+        foreach ($post['PurchaseItem'] as $index => $item) {
+            $items[$index] = new PurchaseItem();
+        }
+        PurchaseItem::loadMultiple($items, $post);
+        foreach ($post['PurchaseItem'] as $index => $item) {
+            $d['status'] = $items[$index]->validate() && $d['status'];
+            if (!$items[$index]->validate()) {
+                $key = "purchaseitem-$index";
+                $d['errors'][$key] = $items[$index]->getErrors();
+            }
+        }
+
+        // all data is safe, start to submit 
+        if ($d['status']) {
+            // 根据需要调整如 status 列值
+            $model->on(self::EVENT_AFTER_INSERT, [$model, 'insertItems'], ['items' => $items]);
+
+            $model->on(self::EVENT_BEFORE_UPDATE, [$model, 'deleteItems']);
+            $model->on(self::EVENT_AFTER_UPDATE, [$model, 'insertItems'], ['items' => $items]);
+
+            if (!$model->save()) {
+                throw new \yii\db\Exception($model->stringifyErrors());
+            }
+            
+            $d['message'] = Html::tag('span', Html::icon('check') . '已保存', [
+                'class' => 'text-success',
+            ]);
+            $d['redirectUrl'] = Url::to(['/purchase/index']);
+        }
+
+        return $d;
     }
     */
 
