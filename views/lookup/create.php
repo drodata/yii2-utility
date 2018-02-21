@@ -6,12 +6,12 @@ use drodata\widgets\Box;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Lookup */
 
-$this->title = '新建';
+$this->title = "新建$label";
 $this->params = [
     'title' => $this->title,
     'subtitle' => '',
     'breadcrumbs' => [
-        ['label' => 'Lookups', 'url' => ['index']],
+        ['label' => $label , 'url' => ["/{$this->context->id}"]],
         $this->title,
     ],
 ];

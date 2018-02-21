@@ -206,7 +206,7 @@ class Lookup extends \yii\db\ActiveRecord
             [
                 'title' => $model->visible ? '隐藏' : '显示',
                 'icon' => $model->visible ? 'toggle-on' : 'toggle-off',
-                'color' => 'danger',
+                'color' => 'primary',
                 'class' => $model->visible ? '' : 'text-muted',
                 'data' => [
                     'method' => 'post',

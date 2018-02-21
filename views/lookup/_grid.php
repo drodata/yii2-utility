@@ -10,42 +10,12 @@ use backend\models\Lookup;
 
 echo GridView::widget([
     'dataProvider' => $dataProvider,
-    /* `afterRow` has the same signature
-    'rowOptions' => function ($model, $key, $index, $grid) {
-        return [
-            'class' => ($model->status == Product::DISABLED) ? 'bg-danger' : '',
-        ];
-    },
-    */
     'filterModel' => $searchModel,
     'columns' => [
-        // ['class' => 'yii\grid\SerialColumn'],
-        'id',
         'name',
-        'code',
-        'type',
-        'position',
-        'visible',
-        /*
-        [
-            'attribute' => 'status',
-            'filter' => Lookup::items('UserStatus'),
-            'value' => function ($model, $key, $index, $column) {
-                return Lookup::item('UserStatus', $model->status);
-            },
-            'contentOptions' => ['width' => '80px'],
-        ],
-        [
-            'label' => '',
-            'format' => 'raw',
-            'value' => function ($model, $key, $index, $column) {
-                return $model->rolesString;
-            },
-        ],
-        */
         [
             'class' => 'drodata\grid\ActionColumn',
-            'template' => '{view} {update} {toggle-visibility} {delete}',
+            'template' => '{update} {toggle-visibility}',
             'contentOptions' => [
                 'style' => 'min-width:120px',
                 'class' => 'text-center',

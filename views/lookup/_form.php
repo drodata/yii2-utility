@@ -7,6 +7,7 @@ use common\models\Lookup;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Lookup */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $label string 中文名称 */
 
 /*
 $js = <<<JS
@@ -18,27 +19,13 @@ $this->registerJs($js);
 <div class="lookup-form">
 
     <?php $form = ActiveForm::begin(); ?>
-        <!--
-        <div class="row">
-            <div class="col-lg-6 col-md-12">
-            </div>
-        </div>
-
-        'inputTemplate' => '<div class="input-group"><div class="input-group-addon">$</div>{input}</div>'
-        -->
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'code')->textInput() ?>
-
-    <?= $form->field($model, 'type')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'position')->textInput() ?>
-
-    <?= $form->field($model, 'visible')->textInput() ?>
-
+    <?= $form->field($model, 'name')->label($label . '名称')->textInput(['autoFocus' => true]) ?>
+    <?= $form->field($model, 'type')->label(false)->hiddenInput() ?>
+    <?= $form->field($model, 'code')->label(false)->hiddenInput() ?>
+    <?= $form->field($model, 'position')->label(false)->hiddenInput() ?>
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? '新建' : '保存', [
-            'class' => ($model->isNewRecord ? 'btn btn-success' : 'btn btn-primary') . ' submit-once',
+            'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary',
         ]) ?>
     </div>
 

@@ -17,6 +17,11 @@ use drodata\helpers\Html;
  */
 class LookupController extends Controller
 {
+    /**
+     * 所属分类中文名称
+     */
+    public $name;
+
     public function init()
     {
         parent::init();
@@ -39,18 +44,21 @@ class LookupController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
     /**
      * Lists all Lookup models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new LookupSearch();
+        // 约定：使用控制器 ID 作为 lookup.type 列值
+        $searchModel = new LookupSearch(['type' => $this->id]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'label' => $this->name,
         ]);
     }
     /**
@@ -60,7 +68,11 @@ class LookupController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Lookup();
+        $model = new Lookup([
+            'type' => $this->id,
+            'code' => Lookup::nextCode($this->id),
+            'position' => Lookup::nextCode($this->id),
+        ]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', '新记录已创建');
@@ -69,6 +81,7 @@ class LookupController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'label' => $this->name,
         ]);
     }
     /**
@@ -113,6 +126,7 @@ class LookupController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'label' => $this->name,
         ]);
     }
 
@@ -140,81 +154,31 @@ class LookupController extends Controller
     {
         $this->findModel($id)->toggleVisibility();
         Yii::$app->session->setFlash('success', '操作成功');
-
         return $this->redirect(['index']);
     }
 
-
-    /**
-     * 快速新建
-     */
-    public function actionQuickCreate($type)
-    {
-        $model = new Lookup([
-            'type' => $type,
-            'code' => Lookup::nextCode($type),
-            'position' => Lookup::nextCode($type),
-        ]);
-        switch ($type) {
-            case 'DemoProduct':
-                $name = '临时商品';
-                $redirectRoute = '/demo/manage-product';
-                break;
-        }
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', $name . '已创建');
-            return $this->redirect($redirectRoute);
-        }
-
-        return $this->render('quick-create', [
-            'model' => $model,
-            'name' => $name,
-        ]);
-    }
-    /**
-     * 快速修改（仅修改名称）
-     */
-    public function actionQuickUpdate($id)
-    {
-        $model = $this->findModel($id);
-        switch ($model->type) {
-            case 'DemoProduct':
-                $name = '临时商品';
-                $redirectRoute = '/demo/manage-product';
-                break;
-        }
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', $name . '已修改');
-            return $this->redirect($redirectRoute);
-        }
-
-        return $this->render('quick-update', [
-            'model' => $model,
-            'name' => $name,
-        ]);
-    }
     /**
      * 通过 modal 快速新建 lookup
+     */
     public function actionModalCreate()
     {
 		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
         $model = new Lookup([
-            'type' => $type,
-            'code' => Lookup::nextCode($type),
-            'position' => Lookup::nextCode($type),
+            'type' => $this->type,
+            'code' => Lookup::nextCode($this->type),
+            'position' => Lookup::nextCode($this->type),
         ]);
 
-        return $this->renderPartial('quick-create-modal', [
+        return $this->renderPartial('modal-quick-create', [
             'model' => $model,
-            'type' => $type,
+            'label' => $this->name,
         ]);
     }
-     */
     public function actionModalCreateSubmit()
     {
 		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
 		$d['status'] = true;
         $model = new Lookup();
         $model->load(Yii::$app->request->post());
