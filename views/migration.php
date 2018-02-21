@@ -99,8 +99,8 @@ class <?= $className ?> extends yii\db\Migration
     public function safeDown()
     {
         /*
-		$this->dropForeignKey('fk-order-customer', '{{%TABLE}}');
-		$this->dropTable('{{%TABLE}}');
+        $this->dropForeignKey('fk-order-customer', '{{%TABLE}}');
+        $this->dropTable('{{%TABLE}}');
         $this->dropColumn('{{%TABLE}}', 'stock_status');
 
         $this->delete('{{%lookup}}', ['type' => ['Status']]);
