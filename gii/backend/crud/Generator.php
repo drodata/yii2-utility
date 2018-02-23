@@ -205,6 +205,9 @@ EOF;
             case 'decimal':
                 return "\$form->field(\$model, '$attribute')->input('number', ['step' => 0.01])";
                 break;
+            case 'email':
+                return "\$form->field(\$model, '$attribute')->input('email')";
+                break;
             case 'ntext':
                 return "\$form->field(\$model, '$attribute')->textArea(['rows' => 3, 'placeholder' => '选填'])";
                 break;
@@ -217,18 +220,16 @@ EOF;
     /**
      * 根据模型名称和列明拼装出对应的 `lookup.type` 值
      * GridView, DetailView 等都需要该值. 假设表名是 order, 列名是 'payment_way',
-     * 经过此方法返回的字符串是 'OrderPaymentWay', 对应订单结算方式存储在字典表内的 type 列。
+     * 经过此方法返回的字符串是 'order-payment-way', 对应订单结算方式存储在字典表内的 type 列。
      *
      * @param \yii\db\ColumnSchema $column
      * @return string
      */
     public function assembleLookupType($column)
     {
-        $modelClass = StringHelper::basename($this->modelClass);
-        $slices = explode('_', $column->name);
-        $slices = array_map('ucfirst', $slices);
+        $slices = explode('_', strtolower($column->name));
 
-        return $modelClass . implode('', $slices);
+        return $this->controllerID . '-' . implode('-', $slices);
     }
 
     /**
