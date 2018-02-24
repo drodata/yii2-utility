@@ -52,16 +52,30 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
     }
 } else {
     foreach ($tableSchema->columns as $column) {
+        $lookupType = $generator->assembleLookupType($column);
         switch ($generator->generateColumnFormat($column)) {
+            case 'enum':
+                echo <<<ENUM
+        [
+            'attribute' => '{$column->name}',
+            'filter' => Lookup::items('$lookupType'),
+            'format' => 'raw',
+            'value' => function (\$model, \$key, \$index, \$column) {
+                return Lookup::item('$lookupType', \$model->{$column->name});
+            },
+            'contentOptions' => ['style' => 'width:80px'],
+        ],
+
+ENUM;
+                break;
             case 'lookup':
-                $lookupType = $generator->assembleLookupType($column);
                 echo <<<LOOKUP
         [
             'attribute' => '{$column->name}',
-            'filter' => Lookup::items($lookupType),
+            'filter' => Lookup::items('$lookupType'),
             'format' => 'raw',
             'value' => function (\$model, \$key, \$index, \$column) {
-                return \$model->{$column->name};
+                return Lookup::item('$lookupType', \$model->{$column->name});
             },
             'contentOptions' => ['style' => 'width:80px'],
         ],
