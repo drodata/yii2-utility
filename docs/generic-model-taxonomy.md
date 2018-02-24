@@ -8,7 +8,7 @@ id | BIGINT | NO | PRI |
 type | VARCHAR(50) | NO | | 约定使用 'aa-bb' 格式
 name | VARCHAR(50) | NO | |
 slug | VARCHAR(50) | YES | | 用于生成易读的 url 
-parent_id | BIGINT | NO | MUL |
+parent_id | BIGINT | YES | MUL |
 visible | TINYINT | NO | |
 
 ## Quick Start
