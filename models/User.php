@@ -33,9 +33,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     const STATUS_FROZEN = 0;
     const STATUS_ACTIVE = 1;
 
-    // const SCENARIO_ = '';
-    // 单独上传附件事件
-    const EVENT_UPLOAD = 'upload';
+    const EVENT_AFTER_LOGIN = 'after-login';
 
     public function init()
     {
