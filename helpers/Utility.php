@@ -14,7 +14,7 @@ class Utility
     /**
      * Generate a random float number
      */
-    public function randFloat($min = 0, $max = 1, $precision = 2) 
+    public static function randFloat($min = 0, $max = 1, $precision = 2) 
     {
         if ($min > $max) {
             return false;
@@ -41,7 +41,7 @@ class Utility
      * @return bool
      *
      */
-    public function isFloatEqual($a, $b, $precision = 0.0001) 
+    public static function isFloatEqual($a, $b, $precision = 0.0001) 
     {
         return abs(($a - $b) / $a) < $precision ;
     }
@@ -55,7 +55,7 @@ class Utility
      * @return bool
      *
      */
-    public function isFloatBigger($a, $b, $precision = 0.0001) 
+    public static function isFloatBigger($a, $b, $precision = 0.0001) 
     {
         return !static::isFloatEqual($a, $b, $precision) && ($a > $b);
     }
@@ -69,7 +69,7 @@ class Utility
      * @return bool
      *
      */
-    public function isFloatLess($a, $b, $precision = 0.0001) 
+    public static function isFloatLess($a, $b, $precision = 0.0001) 
     {
         return !static::isFloatEqual($a, $b, $precision) && ($a < $b);
     }
