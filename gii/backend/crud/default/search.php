@@ -99,7 +99,7 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
             ],
             // Warning: defaultOrder 内指定的列必须在上面的 attributes 内声明过，否则排序无效
             'defaultOrder' => [
-                'id' => SORT_DESC,
+                //'id' => SORT_DESC,
             ],
         ]);
 
