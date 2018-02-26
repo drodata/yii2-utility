@@ -3,7 +3,7 @@
 /**
  * Class m180127_083129_create_basic_tables
  *
- * 新建表格： lookup, taxonomy, user
+ * 新建表格： lookup, taxonomy, user, extension, option
  */
 class m180127_083129_create_basic_tables extends yii\db\Migration
 {
@@ -103,6 +103,55 @@ class m180127_083129_create_basic_tables extends yii\db\Migration
         );
 
         $this->batchInsert('{{%lookup}}', $this->lookups[0], $this->lookups[1]);
+
+        /**
+         * 选项表
+         *
+         * type: 'conf', 'pref'
+         * scope: 'app', 'user', 'plugin
+         * format: 'integer', 'decimal', 'boolean', 'array', 'json'
+         */
+        $this->createTable('{{%option}}', [
+            'id' => $this->primaryKey(),
+
+            'scope' => $this->string(10)->notNull(),
+            'user_id' => $this->integer(),
+            'plugin_id' => $this->integer(),
+
+            'type' => $this->string(5)->notNull(),
+            'name' => $this->string()->notNull()->unique(),
+            'directive' => $this->string(100)->notNull()->unique()->comment('指令符'),
+            'format' => $this->string(20)->notNull(),
+            'value' => $this->string()->notNull(),
+            'description' => $this->text(),
+        ], $this->tableOptions);
+
+        /**
+         * 插件表
+         *
+         */
+        $this->createTable('{{%plugin}}', [
+            'id' => $this->primaryKey(),
+            'type' => $this->boolean()->notNull(),
+            'name' => $this->string(100)->notNull()->unique(),
+            'directive' => $this->string(100)->notNull()->unique()->comment('指令符'),
+            'description' => $this->text(),
+            'visible' => $this->boolean()->notNull()->defaultValue(1),
+            'status' => $this->boolean()->notNull()->defaultValue(1),
+        ], $this->tableOptions);
+
+        $this->addForeignKey(
+            'fk-option-user',
+            '{{%option}}', 'user_id',
+            '{{%user}}', 'id',
+            'NO ACTION', 'NO ACTION'
+        );
+        $this->addForeignKey(
+            'fk-option-plugin',
+            '{{%option}}', 'plugin_id',
+            '{{%plugin}}', 'id',
+            'NO ACTION', 'NO ACTION'
+        );
     }
 
     /**
@@ -112,6 +161,12 @@ class m180127_083129_create_basic_tables extends yii\db\Migration
     {
 		$this->dropForeignKey('fk-taxonomy-parent', '{{%taxonomy}}');
 		$this->dropTable('{{%taxonomy}}');
+
+		$this->dropForeignKey('fk-option-user', '{{%option}}');
+		$this->dropForeignKey('fk-option-plugin', '{{%option}}');
+		$this->dropTable('{{%option}}');
+
+		$this->dropTable('{{%plugin}}');
 		$this->dropTable('{{%lookup}}');
 		$this->dropTable('{{%user}}');
     }

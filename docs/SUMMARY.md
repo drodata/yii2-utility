@@ -6,6 +6,7 @@
     * [分类 Taxonomy](generic-model-taxonomy.md)
     * [用户 User](generic-model-user.md)
     * [货币和汇率](generic-model-currency-rate.md)
+    * [选项和插件](generic-model-option-plugin.md)
 * [Gii 模板](gii/README.md)
     * [CRUD](gii/crud.md)
     * [特性](gii/feature.md)
