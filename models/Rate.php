@@ -101,7 +101,7 @@ class Rate extends \yii\db\ActiveRecord
         return [
             [['date', 'currency', 'value'], 'required'],
             [['date'], 'safe'],
-            [['value'], 'number'],
+            [['value'], 'number', 'min' => 0.0001],
             [['currency'], 'string', 'max' => 3],
             [['date', 'currency'], 'unique', 'targetAttribute' => ['date', 'currency']],
         ];
@@ -159,7 +159,7 @@ class Rate extends \yii\db\ActiveRecord
         switch ($action) {
             case 'view':
                 return Html::actionLink(
-                    [$route, 'id' => $this->id],
+                    [$route, 'date' => $this->date, 'currency' => $this->currency],
                     [
                         'type' => $type,
                         'title' => '详情',
@@ -171,7 +171,7 @@ class Rate extends \yii\db\ActiveRecord
                 break;
             case 'update':
                 return Html::actionLink(
-                    [$route, 'id' => $this->id],
+                    [$route, 'date' => $this->date, 'currency' => $this->currency],
                     [
                         'type' => $type,
                         'title' => '修改',
@@ -184,7 +184,7 @@ class Rate extends \yii\db\ActiveRecord
                 break;
             case 'delete':
                 return Html::actionLink(
-                    [$route, 'id' => $this->id],
+                    [$route, 'date' => $this->date, 'currency' => $this->currency],
                     [
                         'type' => $type,
                         'title' => '删除',
@@ -203,6 +203,33 @@ class Rate extends \yii\db\ActiveRecord
         }
     }
 
+    /**
+     * 返回货币对象。注意：rate.currency 存储的是 `currency.code` 值
+     * @return drodata\models\Currency or null
+     */
+    public function getCurrency()
+    {
+        return Currency::findOne(['code' => $this->currency]);
+    }
+
+    /**
+     * 返回货币名称
+     *
+     * @return string or null
+     */
+    public function getCurrencyName()
+    {
+        return empty($this->getCurrency()) ? null : $this->getCurrency()->name;
+    }
+    /**
+     * 返回货币符号
+     *
+     * @return string or null
+     */
+    public function getCurrencySymbol()
+    {
+        return empty($this->getCurrency()) ? null : $this->getCurrency()->symbol;
+    }
     /**
      * 获取 POST 操作前的 confirm 文本内容
      *
