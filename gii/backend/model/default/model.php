@@ -105,17 +105,23 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     public function behaviors()
     {
         return [
-            /*
+<?php if (in_array('created_at', $tableSchema->columnNames)): ?>
             'timestamp' => [
                 'class' => TimestampBehavior::className(),
+<?php if (!in_array('updated_at', $tableSchema->columnNames)): ?>
                 'updatedAtAttribute' => false,
             ],
+<?php endif; ?>
+<?php endif; ?>
+<?php if (in_array('created_by', $tableSchema->columnNames)): ?>
             'blameable' => [
                 'class' => BlameableBehavior::className(),
+<?php if (!in_array('updated_by', $tableSchema->columnNames)): ?>
                 'updatedByAttribute' => false,
                 'humanReadAttribute' => 'display_name',
+<?php endif; ?>
             ],
-            */
+<?php endif; ?>
         ];
     }
 
