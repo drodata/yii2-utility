@@ -201,7 +201,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         switch ($action) {
             case 'view':
                 return Html::actionLink(
-                    <?= $generator->generateActionLinkRoute() ?>,
+                    [$route, <?= $generator->generatePrimayKeyParamString($tableName) ?>],
                     [
                         'type' => $type,
                         'title' => '详情',
@@ -213,7 +213,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
                 break;
             case 'update':
                 return Html::actionLink(
-                    <?= $generator->generateActionLinkRoute() ?>,
+                    [$route, <?= $generator->generatePrimayKeyParamString($tableName) ?>],
                     [
                         'type' => $type,
                         'title' => '修改',
@@ -226,7 +226,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
                 break;
             case 'delete':
                 return Html::actionLink(
-                    <?= $generator->generateActionLinkRoute() ?>,
+                    [$route, <?= $generator->generatePrimayKeyParamString($tableName) ?>],
                     [
                         'type' => $type,
                         'title' => '删除',

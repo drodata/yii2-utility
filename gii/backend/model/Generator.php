@@ -26,19 +26,19 @@ use yii\base\NotSupportedException;
 class Generator extends \yii\gii\generators\model\Generator
 {
     /**
-     * 根据主键生成 actionLink() 中的路由字符串
+     * 生成 AR::actionLink() 中路由所需的主键参数字符串。例如，对使用 'id' 作为主键的表来说，返回值为 `'id' => $this->id`; 
+     * 对使用 `date` 和 `currency` 复合主键来说，返回 `'date' => $this->id, 'currency' => $this->currency`
+     *
+     * @return string
      */
-    public function generateActionLinkRoute()
+    public function generatePrimayKeyParamString($tableName)
     {
-        $class = $this->ns . '\\' . $this->modelClass;
-        $pks = $class::primaryKey();
-
+        $schema = $this->getDbConnection()->getTableSchema($tableName);
         $slices = [];
-        foreach ($pks as $key) {
+        foreach ($schema->primaryKey as $key) {
             $slices[] = "'$key' => \$this->$key";
         }
-        $str = implode(', ', $slices);
 
-        return "[\$route, $str]";
+        return implode(', ', $slices);
     }
 }
