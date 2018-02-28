@@ -3,7 +3,7 @@
 /**
  * Class m180127_083129_create_basic_tables
  *
- * 新建表格： lookup, taxonomy, user, extension, option
+ * 新建表格： lookup, taxonomy, map, attachment, activity, user, extension, option
  */
 class m180127_083129_create_basic_tables extends yii\db\Migration
 {
@@ -105,6 +105,43 @@ class m180127_083129_create_basic_tables extends yii\db\Migration
         $this->batchInsert('{{%lookup}}', $this->lookups[0], $this->lookups[1]);
 
         /**
+         * Map 多对多映射
+         */
+        $this->createTable('{{%map}}', [
+            'id' => $this->bigPrimaryKey(),
+            'type' => $this->string(50)->notNull(),
+            'source' => $this->bigInteger()->notNull(),
+            'destination' => $this->bigInteger()->notNull(),
+        ], $this->tableOptions);
+
+        /**
+         * 附件
+         */
+        $this->createTable('{{%attachment}}', [
+            'id' => $this->bigPrimaryKey(),
+            'type' => $this->string(50)->notNull()->comment('类别'),
+            'format' => $this->string(10)->notNull()->comment('格式'),
+            'path' => $this->string(50)->notNull()->comment('hashed 相对路径'),
+            'name' => $this->string(100)->comment('原始文件名'),
+            'visible' => $this->boolean()->notNull()->defaultValue(1),
+            'created_at' => $this->integer(),
+            'created_by' => $this->integer(),
+        ], $this->tableOptions);
+
+        /**
+         * 活动记录
+         */
+        $this->createTable('{{%activity}}', [
+            'id' => $this->bigPrimaryKey(),
+            'type' => $this->string(50)->notNull()->comment('类别'),
+            'reference' => $this->bigInteger()->comment('参考模型ID'),
+            'action' => $this->string(100)->notNull()->comment('动作'),
+            'note' => $this->text(),
+            'created_at' => $this->integer(),
+            'created_by' => $this->integer(),
+        ], $this->tableOptions);
+
+        /**
          * 选项表
          *
          * type: 'conf', 'pref'
@@ -168,6 +205,9 @@ class m180127_083129_create_basic_tables extends yii\db\Migration
 
 		$this->dropTable('{{%plugin}}');
 		$this->dropTable('{{%lookup}}');
+		$this->dropTable('{{%map}}');
+		$this->dropTable('{{%attachment}}');
+		$this->dropTable('{{%activity}}');
 		$this->dropTable('{{%user}}');
     }
 }
