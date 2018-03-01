@@ -165,17 +165,29 @@ class LookupController extends Controller
 		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
         $model = new Lookup([
-            'type' => $this->type,
-            'code' => Lookup::nextCode($this->type),
-            'position' => Lookup::nextCode($this->type),
+            'type' => $this->id,
+            'code' => Lookup::nextCode($this->id),
+            'position' => Lookup::nextCode($this->id),
         ]);
 
-        return $this->renderPartial('modal-quick-create', [
+        $content = $this->renderPartial('_form', [
             'model' => $model,
-            'label' => $this->name,
+        ]);
+        return $this->renderPartial('@drodata/views/_modal', [
+            'configs' => [
+                'id' => 'lookup-modal',
+                'header' => '新增' . $this->name,
+                'headerOptions' => [
+                    'class' => 'h3 text-center',
+                ],
+                'options' => [
+                ],
+                'size' => 'modal-sm',
+            ],
+            'content' => $content, 
         ]);
     }
-    public function actionModalCreateSubmit()
+    public function actionModalSubmit()
     {
 		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
@@ -191,8 +203,8 @@ class LookupController extends Controller
         if ($d['status']) {
             $model->save();
             $d['message'] = '<span class="text-success">已创建</span>';
-            $d['entity'] = Html::tag('option', $model->name, [
-                'value' => $model->id,
+            $d['option'] = Html::tag('option', $model->name, [
+                'value' => $model->code,
                 'selected' => true,
             ]);
         }

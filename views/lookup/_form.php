@@ -18,7 +18,9 @@ $this->registerJs($js);
 
 <div class="lookup-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'id' => 'lookup-form',
+    ]); ?>
     <?= $form->field($model, 'name')->label($label . '名称')->textInput(['autoFocus' => true]) ?>
     <?= $form->field($model, 'type')->label(false)->hiddenInput() ?>
     <?= $form->field($model, 'code')->label(false)->hiddenInput() ?>
