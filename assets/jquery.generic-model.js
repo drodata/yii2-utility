@@ -2,12 +2,15 @@ $(function(){
     $(document).on('click', '.modal-create-lookup', function(e) {
         var dropDown = $(this).closest('.form-group').find('select')
             , type = $(this).data('type')
-            , $modal = $('#lookup-modal')
             , createUrl =  '/' + type + '/modal-create'
             , submitUrl =  '/' + type + '/modal-submit'
 
         $.get(createUrl, function(response) {
             $(response).appendTo('body');
+
+            var $modal = $('#lookup-modal')
+                , form = $('#lookup-form')
+                , submitBtn = form.find('[type=submit]')
 
             $modal.modal({
                 'keyboard': false,
@@ -17,8 +20,6 @@ $(function(){
             }).on('shown.bs.modal', function (e) {
                 $('#lookup-name').focus();
             });
-            var form = $('#lookup-form')
-                , submitBtn = form.find('[type=submit]')
 
             form.submit(function(e){
                 e.preventDefault();
