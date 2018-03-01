@@ -142,6 +142,28 @@ class m180127_083129_create_basic_tables extends yii\db\Migration
         ], $this->tableOptions);
 
         /**
+         * Money
+         */
+        $this->createTable('{{%money}}', [
+            'id' => $this->bigPrimaryKey(),
+            'type' => $this->string(50)->notNull()->comment('类别'),
+            'user_id' => $this->integer()->notNull(),
+            'action' => $this->string(100)->notNull()->comment('动作'),
+            'is_post' => $this->boolean()->notNull(),
+            'amount' => $this->decimal(10, 2)->notNull()->comment('金额'),
+            'note' => $this->text(),
+            'created_at' => $this->integer(),
+            'created_by' => $this->integer(),
+        ], $this->tableOptions);
+
+        $this->addForeignKey(
+            'fk-money-user',
+            '{{%money}}', 'user_id',
+            '{{%user}}', 'id',
+            'NO ACTION', 'NO ACTION'
+        );
+
+        /**
          * 选项表
          *
          * type: 'conf', 'pref'
@@ -202,6 +224,9 @@ class m180127_083129_create_basic_tables extends yii\db\Migration
 		$this->dropForeignKey('fk-option-user', '{{%option}}');
 		$this->dropForeignKey('fk-option-plugin', '{{%option}}');
 		$this->dropTable('{{%option}}');
+
+        $this->dropForeignKey('fk-money-user', '{{%money}}');
+		$this->dropTable('{{%money}}');
 
 		$this->dropTable('{{%plugin}}');
 		$this->dropTable('{{%lookup}}');

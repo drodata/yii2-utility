@@ -10,6 +10,7 @@
     * [多对多映射 Map](generic-model-map.md)
     * [附件 Attachment](generic-model-attachment.md)
     * [活动记录 Activity](generic-model-activity.md)
+    * [应付/预付 Money](generic-model-money.md)
 * [Gii 模板](gii/README.md)
     * [CRUD](gii/crud.md)
     * [特性](gii/feature.md)
