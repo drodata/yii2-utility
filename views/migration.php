@@ -32,6 +32,8 @@ if (!empty($namespace)) {
 }
 ?>
 
+use yii\db\Query;
+
 /**
  * Class <?= $className . "\n" ?>
  */
