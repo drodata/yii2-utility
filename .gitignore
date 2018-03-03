@@ -3,3 +3,4 @@ _book/
 docs/_book/
 # Vim's session files
 *.vim-session
+*.swp
