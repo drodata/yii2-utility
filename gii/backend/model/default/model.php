@@ -53,7 +53,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     public function init()
     {
         parent::init();
-        //$this->on(self::EVENT_AFTER_INSERT, [$this, 'handlerName']);
+        //$this->on(self::EVENT_BEFORE_DELETE, [$this, 'deleteItems']);
     }
 
     /**

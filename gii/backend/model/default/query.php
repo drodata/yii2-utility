@@ -24,6 +24,7 @@ echo "<?php\n";
 
 namespace <?= $generator->queryNs ?>;
 
+use Yii;
 /**
  * This is the ActiveQuery class for [[<?= $modelFullClassName ?>]].
  *
@@ -31,13 +32,10 @@ namespace <?= $generator->queryNs ?>;
  */
 class <?= $className ?> extends <?= '\\' . ltrim($generator->queryBaseClass, '\\') . "\n" ?>
 {
-    /*
-     *
-    public function active()
+    public function mine()
     {
-        return $this->andWhere(['id' => 1]);
+        return $this->andWhere(['{{%cash}}.created_by' => Yii::$app->user->id]);
     }
-    */
 
     /**
      * @inheritdoc
