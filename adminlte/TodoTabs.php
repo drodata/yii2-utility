@@ -15,12 +15,12 @@ use drodata\helpers\Html;
  * echo \drodata\adminlte\TodoTabs::widget([
  *     'configs' => [
  *         [
- *             'unpaid', 'Unpaid', '/order/_grid-tab',
+ *             'unpaid', 'Unpaid', '/order/_grid-tab', [],
  *             Order::find()->unpaid(),
  *             true
  *         ],
  *         [
- *             'paid', 'Paid', '/order/_grid-tab',
+ *             'paid', 'Paid', '/order/_grid-tab', ['tab' => 'paid'],
  *             Order::find()->paid(),
  *             true
  *         ],
@@ -53,7 +53,7 @@ class TodoTabs extends \yii\bootstrap\Widget
         }
 
         foreach ($this->configs as $list) {
-            list($tab, $label, $view, $query, $visible) = $list;
+            list($tab, $label, $view, $viewParams, $query, $visible) = $list;
             if (!$visible) {
                 continue;
             }
@@ -63,13 +63,16 @@ class TodoTabs extends \yii\bootstrap\Widget
                 'sort' => false,
             ]);
             $badge = Html::tag('span', $dp->totalCount == 0 ? '' : $dp->totalCount, ['class' => 'badge']);
+
+            $viewParams = ArrayHelper::merge($viewParams, [
+                'dataProvider' => $dp,
+            ]);
+
             $items[] = [
                 'label' => $label . $badge,
                 'encode' => false,
                 'active' => $_GET['tab'] == $tab ? true : false,
-                'content' => $this->render($view, [
-                    'dataProvider' => $dp,
-                ]),
+                'content' => $this->render($view, $viewParams),
                 'visible' => $visible,
             ];
         }
