@@ -136,7 +136,6 @@ TEXT;
             'template' => '{view} {update} {delete}',
             'contentOptions' => [
                 'style' => 'min-width:120px',
-                'class' => 'text-center',
             ],
             'buttons' => [
                 'view' => function ($url, $model, $key) {

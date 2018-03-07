@@ -121,8 +121,7 @@ TEXT;
             'class' => 'drodata\grid\ActionColumn',
             'template' => '{view}',
             'contentOptions' => [
-                'style' => 'min-width:120px',
-                'class' => 'text-center',
+                'style' => 'min-width:60px',
             ],
             'buttons' => [
                 'view' => function ($url, $model, $key) {
