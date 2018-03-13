@@ -8,12 +8,15 @@ use yii\base\Model;
  */
 class CommonForm extends Model
 {
+    public $user_id;
     public $password;
     public $passwordRepeat;
     public $roles;
 
     const SCENARIO_CREATE_USER = 'create-user';
     const SCENARIO_UPDATE_USER = 'update-user';
+    // switch user via switchIdentity()
+    const SCENARIO_SWITCH_USER = 'switch-user';
     /**
      * @inheritdoc
      */
@@ -22,6 +25,8 @@ class CommonForm extends Model
         return [
             [['roles', 'password'], 'required', 'on' => self::SCENARIO_CREATE_USER],
             [['roles'], 'required', 'on' => self::SCENARIO_UPDATE_USER],
+
+            [['user_id'], 'required', 'on' => self::SCENARIO_SWITCH_USER],
 
             [['password'], 'string', 'min' => 6],
             [['passwordRepeat'], 'compare', 'compareAttribute' => 'password'],
@@ -77,12 +82,29 @@ class CommonForm extends Model
             return false;
         }
     }
+
+    /**
+     * 直接切换用户身份
+     */
+    public function switchUser()
+    {
+        if (!$this->validate()) {
+            return false;
+        }
+
+        $user = User::findIdentity($this->user_id);
+        Yii::$app->user->switchIdentity($user);
+
+        return true;
+    }
+
     /**
      * @inheritdoc
      */
     public function attributeLabels()
     {
         return [
+            'user_id' => '用户',
             'password' => '密码',
             'passwordRepeat' => '重复密码',
             'roles' => '角色',

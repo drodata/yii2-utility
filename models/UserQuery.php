@@ -9,13 +9,10 @@ namespace drodata\models;
  */
 class UserQuery extends \yii\db\ActiveQuery
 {
-    /*
-     *
     public function active()
     {
-        return $this->andWhere(['id' => 1]);
+        return $this->andWhere(['{{%user}}.status' => User::STATUS_ACTIVE]);
     }
-    */
 
     /**
      * @inheritdoc

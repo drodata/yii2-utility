@@ -34,3 +34,7 @@ return [
     ],
 ];
 ```
+
+## Controller
+
+`user/switch` action 用于在开发阶段快速切换用户身份，省去了很多用户名和密码的录入操作。

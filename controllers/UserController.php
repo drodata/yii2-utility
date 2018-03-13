@@ -251,4 +251,24 @@ class UserController extends Controller
             'common' => $common,
         ]);
     }
+
+    /**
+     * 开发环境下为方便调试，快速切换当前用户身份
+     */
+    public function actionSwitch()
+    {
+        if (!YII_DEV) {
+            throw new ForbiddenHttpException('Only allowed in dev environment.');
+        }
+
+        $model = new CommonForm(['scenario' => CommonForm::SCENARIO_SWITCH_USER]);
+        if ($model->load(Yii::$app->request->post()) && $model->switchUser()) {
+            return $this->goHome();
+        }
+
+        return $this->render('switch', [
+            'model' => $model,
+            'map' => User::map(),
+        ]);
+    }
 }

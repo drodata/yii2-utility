@@ -435,6 +435,14 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return Lookup::item($type, $code);
     }
 
+    /**
+     * 所有用户map
+     */
+    public static function map()
+    {
+        return ArrayHelper::map(static::find()->active()->asArray()->all(), 'id', 'username');
+    }
+
     // ==== getters start ====
 
     /**
