@@ -36,7 +36,7 @@ class m180224_082756_init_sku_module extends yii\db\Migration
             'id' => $this->primaryKey(),
             'name' => $this->string()->notNull()->unique()->comment('名称'),
             'alias' => $this->string()->unique()->comment('别名'),
-            'visible' => $this->boolean()->notNull()->defaultValue(1),
+            'visible' => $this->boolean()->notNull()->defaultValue(1)->comment('是否可见'),
         ], $this->tableOptions);
 
         $this->createTable('{{%currency}}', [
@@ -134,6 +134,24 @@ class m180224_082756_init_sku_module extends yii\db\Migration
             'NO ACTION', 'NO ACTION'
         );
 
+        $this->createTable('{{%sku_specification}}', [
+            'id' => $this->bigPrimaryKey(),
+            'sku_id' => $this->bigInteger()->notNull(),
+            'specification_id' => $this->bigInteger()->notNull(),
+        ], $this->tableOptions);
+        $this->addForeignKey(
+            'fk-sku_specification-sku',
+            '{{%sku_specification}}', 'sku_id',
+            '{{%sku}}', 'id',
+            'NO ACTION', 'NO ACTION'
+        );
+        $this->addForeignKey(
+            'fk-sku_specification-specification',
+            '{{%sku_specification}}', 'specification_id',
+            '{{%specification}}', 'id',
+            'NO ACTION', 'NO ACTION'
+        );
+
         $this->batchInsert('{{%lookup}}', $this->lookups[0], $this->lookups[1]);
         $this->batchInsert('{{%taxonomy}}', $this->properties[0], $this->properties[1]);
     }
@@ -143,6 +161,10 @@ class m180224_082756_init_sku_module extends yii\db\Migration
      */
     public function safeDown()
     {
+		$this->dropForeignKey('fk-sku_specification-sku', '{{%sku_specification}}');
+		$this->dropForeignKey('fk-sku_specification-specification', '{{%sku_specification}}');
+		$this->dropTable('{{%sku_specification}}');
+
 		$this->dropForeignKey('fk-sku-spu', '{{%sku}}');
 		$this->dropTable('{{%sku}}');
 

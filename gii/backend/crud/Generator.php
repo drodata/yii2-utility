@@ -218,7 +218,7 @@ EOF;
     }
 
     /**
-     * 根据模型名称和列明拼装出对应的 `lookup.type` 值
+     * 根据模型名称和列名拼装出对应的 `lookup.type` 值
      * GridView, DetailView 等都需要该值. 假设表名是 order, 列名是 'payment_way',
      * 经过此方法返回的字符串是 'order-payment-way', 对应订单结算方式存储在字典表内的 type 列。
      *
@@ -227,6 +227,11 @@ EOF;
      */
     public function assembleLookupType($column)
     {
+        // 'visible' 列直接使用全局 'boolean' 字典值
+        if ($column->name === 'visible') {
+            return 'boolean';
+        }
+
         $slices = explode('_', strtolower($column->name));
 
         return $this->controllerID . '-' . implode('-', $slices);
