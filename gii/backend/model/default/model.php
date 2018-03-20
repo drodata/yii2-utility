@@ -106,7 +106,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     public function behaviors()
     {
         return [
-            'humanRead' => [
+            'lookup' => [
                 'class' => LookupBehavior::className(),
                 'labelMap' => [
                     /*

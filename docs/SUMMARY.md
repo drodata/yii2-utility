@@ -2,6 +2,8 @@
 
 * [Introduction](README.md)
 * [公用视图](view.md)
+* [行为](behavior.md)
+    * [LookupBehavior](behavior-lookup.md)
 * [通用模型](generic-model.md)
     * [字典 Lookup](generic-model-lookup.md)
     * [分类 Taxonomy](generic-model-taxonomy.md)

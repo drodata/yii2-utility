@@ -61,7 +61,7 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
             'filter' => Lookup::items('$lookupType'),
             'format' => 'raw',
             'value' => function (\$model, \$key, \$index, \$column) {
-                return Lookup::item('$lookupType', \$model->{$column->name});
+                return \$model->lookup('{$column->name}');
             },
             'contentOptions' => ['style' => 'width:80px'],
         ],
@@ -75,7 +75,7 @@ ENUM;
             'filter' => Lookup::items('$lookupType'),
             'format' => 'raw',
             'value' => function (\$model, \$key, \$index, \$column) {
-                return Lookup::item('$lookupType', \$model->{$column->name});
+                return \$model->lookup('{$column->name}');
             },
             'contentOptions' => ['style' => 'width:80px'],
         ],
