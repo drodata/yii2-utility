@@ -121,8 +121,8 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
                 'class' => TimestampBehavior::className(),
 <?php if (!in_array('updated_at', $tableSchema->columnNames)): ?>
                 'updatedAtAttribute' => false,
-            ],
 <?php endif; ?>
+            ],
 <?php endif; ?>
 <?php if (in_array('created_by', $tableSchema->columnNames)): ?>
             'blameable' => [
