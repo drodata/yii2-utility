@@ -151,10 +151,9 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return static::findOne([
+        return static::find()->active()->andWhere([
             'id' => $id,
-            'status' => [self::STATUS_ACTIVE],
-        ]);
+        ])->one();
     }
     /**
      * @inheritdoc
@@ -171,7 +170,9 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        return static::findOne(['username' => $username]);
+        return static::find()->active()->andWhere([
+            'username' => $username,
+        ])->one();
     }
     /**
      * Finds user by password reset token
@@ -184,10 +185,9 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         if (!static::isPasswordResetTokenValid($token)) {
             return null;
         }
-        return static::findOne([
+        return static::find()->active()->andWhere([
             'password_reset_token' => $token,
-            'status' => self::STATUS_ACTIVE,
-        ]);
+        ])->one();
     }
     /**
      * Finds out if password reset token is valid
