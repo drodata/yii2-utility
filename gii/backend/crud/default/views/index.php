@@ -83,19 +83,8 @@ $this->params = [
     <!-- visible on phone -->
     <div class="col-xs-12 visible-xs-block">
         <?= "<?= " ?>$this->render('@drodata/views/_button') <?= "?>\n" ?>
-        <?= "<?= " ?>$this->render('_search', [
-            'model' => $searchModel,
-        ]) <?= "?>\n" ?>
-        <?= "<?= " ?>ListView::widget([
-            'dataProvider' => $dataProvider,
-            'options' => ['class' => 'row'],
-            'itemOptions' => ['class' => 'col-xs-12'],
-            'summaryOptions' => ['class' => 'col-xs-12'],
-            'emptyTextOptions' => ['class' => 'col-xs-12'],
-            'layout' => "{summary}\n{items}\n<div class=\"col-xs-12\">{pager}</div>",
-            'pager' => ['maxButtonCount' => 5],
-            'itemView' => '_list-view',
-        ]) ?>
+        <?= "<?= " ?>$this->render('_search', ['model' => $searchModel]) <?= "?>\n" ?>
+        <?= "<?= " ?>$this->render('_list', ['dataProvider' => $dataProvider]) <?= "?>\n" ?>
     </div>
 <?php else: ?>
     <div class="col-xs-12">
@@ -113,18 +102,8 @@ $this->params = [
 <?php else: ?>
     <div class="col-xs-12">
         <?= "<?= " ?>$this->render('@drodata/views/_button') <?= "?>\n" ?>
-        <?= "<?= " ?>$this->render('_search', [
-            'model' => $searchModel,
-        ]) <?= "?>\n" ?>
-        <?= "<?= " ?>ListView::widget([
-            'dataProvider' => $dataProvider,
-            'options' => ['class' => 'row'],
-            'itemOptions' => ['class' => 'col-sm-12 col-md-6 col-lg-4'],
-            'summaryOptions' => ['class' => 'col-xs-12'],
-            'emptyTextOptions' => ['class' => 'col-xs-12'],
-            'layout' => "{summary}\n{items}\n<div class=\"col-xs-12\">{pager}</div>",
-            'itemView' => '_list-view',
-        ]) ?>
+        <?= "<?= " ?>$this->render('_search', ['model' => $searchModel]) <?= "?>\n" ?>
+        <?= "<?= " ?>$this->render('_list', ['dataProvider' => $dataProvider]) <?= "?>\n" ?>
     </div>
 <?php endif; ?>
 <?= $generator->enablePjax ? "    <?php Pjax::end(); ?>\n" : "" ?>

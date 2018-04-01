@@ -33,19 +33,3 @@ use backend\models\Lookup;
     <tfoot>
     </tfoot>
 </table>
-<!--
-<table class="table table-condensed">
-    <thead>
-        <tr>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td class="text-center"></td>
-        </tr>
-    </tbody>
-    <tfoot>
-    </tfoot>
-</table>
--->
