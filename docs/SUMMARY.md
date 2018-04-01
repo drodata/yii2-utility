@@ -10,7 +10,6 @@
     * [用户 User](generic-model-user.md)
     * [货币和汇率](generic-model-currency-rate.md)
     * [选项和插件](generic-model-option-plugin.md)
-    * [多对多映射 Map](generic-model-map.md)
     * [附件 Attachment](generic-model-attachment.md)
     * [活动记录 Activity](generic-model-activity.md)
     * [应付/预付 Money](generic-model-money.md)
