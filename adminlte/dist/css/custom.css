@@ -9,6 +9,7 @@
 .grid-view .open > .dropdown-menu {left: auto; right: 0; }
 
 .table-hover > tbody > tr:hover { background-color: #d9ead3; }
+.table-nowrap td {white-space: nowrap}
 .input-group .input-group-addon {
     background-color: #eee;
 }

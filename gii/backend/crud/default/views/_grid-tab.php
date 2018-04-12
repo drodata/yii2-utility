@@ -49,7 +49,6 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
             'value' => function (\$model, \$key, \$index, \$column) {
                 return \$model->lookup('{$column->name}');
             },
-            'contentOptions' => ['style' => 'width:80px'],
         ],
 
 ENUM;
@@ -63,7 +62,6 @@ ENUM;
             'value' => function (\$model, \$key, \$index, \$column) {
                 return \$model->lookup('{$column->name}');
             },
-            'contentOptions' => ['style' => 'width:80px'],
         ],
 
 LOOKUP;
@@ -76,7 +74,6 @@ LOOKUP;
             'headerOptions' => ['class' => 'text-right'],
             'contentOptions' => [
                 'class' => 'text-right',
-                'style' => 'width:80px',
             ],
         ],
 
@@ -90,7 +87,6 @@ AMOUNT;
             'headerOptions' => ['class' => 'text-right'],
             'contentOptions' => [
                 'class' => 'text-right',
-                'style' => 'width:80px',
             ],
         ],
 
@@ -102,7 +98,6 @@ EOF;
             'attribute' => '{$column->name}',
             'format' => 'datetime',
             'filter' => Lookup::dateRangeFilter(\$searchModel, '{$column->name}'),
-            'contentOptions' => ['style' => 'width:150px'],
         ],
 
 DATETIME;
@@ -120,9 +115,6 @@ TEXT;
         [
             'class' => 'drodata\grid\ActionColumn',
             'template' => '{view}',
-            'contentOptions' => [
-                'style' => 'min-width:60px',
-            ],
             'buttons' => [
                 'view' => function ($url, $model, $key) {
                     return $model->actionLink('view');

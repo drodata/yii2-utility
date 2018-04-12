@@ -46,7 +46,6 @@ foreach ($tableSchema->columns as $column) {
             'value' => function (\$model, \$key, \$index, \$column) {
                 return \$model->{$column->name};
             },
-            'contentOptions' => ['style' => 'width:80px'],
         ],
 
 LOOKUP;
@@ -60,7 +59,6 @@ LOOKUP;
             'headerOptions' => ['class' => 'text-right'],
             'contentOptions' => [
                 'class' => 'text-right',
-                'style' => 'width:80px',
             ],
             'footerOptions' => ['class' => 'text-right text-bold'],
         ],
@@ -76,7 +74,6 @@ AMOUNT;
             'headerOptions' => ['class' => 'text-right'],
             'contentOptions' => [
                 'class' => 'text-right',
-                'style' => 'width:80px',
             ],
             'footerOptions' => ['class' => 'text-right text-bold'],
         ],
@@ -89,7 +86,6 @@ EOF;
             'attribute' => '{$column->name}',
             'format' => 'datetime',
             'filter' => Lookup::dateRangeFilter(\$searchModel, '{$column->name}'),
-            'contentOptions' => ['style' => 'width:150px'],
         ],
 
 DATETIME;
