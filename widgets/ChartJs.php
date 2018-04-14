@@ -23,9 +23,6 @@ class ChartJs extends Widget
     public function init()
     {
         parent::init();
-        if ($this->type === null) {
-            throw new InvalidConfigException("The 'type' option is required");
-        }
         if (!isset($this->options['id'])) {
             $this->options['id'] = $this->getId();
         }
