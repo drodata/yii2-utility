@@ -25,14 +25,11 @@ use backend\models\Lookup;
 if (empty(Yii::$app->request->get('<?= $searchModelClass ?>'))) {
     $caption = '';
 } else {
-    $sum = 0;
-    foreach ($dataProvider->models as $model) {
-        $sum += $model->amount;
-    }
+    $sum = (int) $dataProvider->query->sum('amount');;
     $badge = Html::tag('span', Yii::$app->formatter->asDecimal($sum), [
         'class' => 'badge',
     ]);
-    $caption = Html::tag('p', "筛选金额累计 $badge");
+    $caption = Html::tag('p', "筛选累计 $badge");
 }
  */
 echo GridView::widget([
