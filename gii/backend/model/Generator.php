@@ -25,6 +25,7 @@ use yii\base\NotSupportedException;
  */
 class Generator extends \yii\gii\generators\model\Generator
 {
+    public $baseClass = 'drodata\db\ActiveRecord';
     /**
      * 生成 AR::actionLink() 中路由所需的主键参数字符串。例如，对使用 'id' 作为主键的表来说，返回值为 `'id' => $this->id`; 
      * 对使用 `date` 和 `currency` 复合主键来说，返回 `'date' => $this->id, 'currency' => $this->currency`
