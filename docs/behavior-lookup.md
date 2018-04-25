@@ -37,3 +37,57 @@ public function behaviors()
     // ...
 ],
 ```
+
+### 自定义标签文字内容
+
+`label()` 默认读取字典中的默认值，有的时候，我们可能在显示时简化标签内容。假设有一个“客户类型”列，值分别是“新客户”和“老客户”。为了简单起见，我们希望在 GridView 中仅显示“新”和“老”。可以做如下配置：
+
+```php
+// in Customer model
+public function behaviors()
+{
+    return [
+        'lookup' => [
+            'class' => \drodata\behaviors\LookupBehavior::className(), 
+            'labelMap' => [
+                'type' => ['customer-type', [
+                    self::TYPE_NEW => [
+                        'color' => 'success',
+                        'text' => '新',
+                    ],
+                    self::TYPE_OLD => [
+                        'color' => 'default',
+                        'text' => '旧',
+                    ],
+                ]],
+            ],
+        ],
+    ];
+}
+```
+
+## `icon()` 显示带有 Tooltip 的 icon
+
+在 GridView 中，有时一个图标比文字内容更加生动。仿照 `label()` 创建了 `icon()`, 仍以上面的新老客户列为例，这次我们使用字体图标表示：新客户用绿色旗帜表示，老客户用红色旗帜表示。基本配置如下：
+
+```php
+// in Customer model
+public function behaviors()
+{
+    return [
+        'lookup' => [
+            'class' => \drodata\behaviors\LookupBehavior::className(), 
+            'iconMap' => [
+                'type' => ['customer-type', 'flag', [
+                    self::TYPE_NEW => 'success',
+                    // 老客户我们使用了更个性化的图标和 tooltip
+                    self::TYPE_OLD => [
+                        'color' => 'default',
+                        'tooltip' => 'This is an old customer!',
+                    ],
+                ]],
+            ],
+        ],
+    ];
+}
+```
