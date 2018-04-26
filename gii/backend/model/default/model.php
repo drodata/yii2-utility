@@ -401,6 +401,9 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
      * 由 self::EVENT_BEFORE_DELETE 触发
     public function deleteImages($event)
     {
+        if (empty($this->images)) {
+            return;
+        }
         foreach ($this->images as $image) {
             if (!$image->delete()) {
                 throw new \yii\db\Exception('Failed to flush image.');
