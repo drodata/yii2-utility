@@ -263,6 +263,24 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     }
 
     /**
+     * 返回执行 $action 时的禁止操作提示信息
+     *
+     * @param string $action 对应 actionLink() 中 $action 值
+     * @return string|null 允许执行时返回 null, 否则返回对应的提示信息
+     *
+     */
+    public function getDisabledHint($action)
+    {
+        switch ($action) {
+            case 'delete':
+                if ($this->isPaid) {
+                    return 'already paid';
+                }
+                return null;
+                break;
+        }
+    }
+    /**
      * 获取 POST 操作前的 confirm 文本内容
      *
      * 模型中有很多类似删除这样的操作：没有视图文件，直接通过控制器完成操作，
