@@ -236,8 +236,8 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
                         'title' => '修改',
                         'icon' => 'pencil',
                         'visible' => true, //Yii::$app->user->can(''),
-                        'disabled' => false,
-                        'disabledHint' => '',
+                        'disabled' => fasle, //$this->disabledHint($action),
+                        'disabledHint' => $this->disabledHint($action),
                     ]
                 );
                 break;
@@ -251,11 +251,11 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
                         'color' => 'danger',
                         'data' => [
                             'method' => 'post',
-                            'confirm' => $this->getConfirmText($action),
+                            'confirm' => $this->confirmText($action),
                         ],
                         'visible' => true, //Yii::$app->user->can(''),
-                        'disabled' => false,
-                        'disabledHint' => '',
+                        'disabled' => fasle, //$this->disabledHint($action),
+                        'disabledHint' => $this->disabledHint($action),
                     ]
                 );
                 break;
@@ -269,13 +269,16 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
      * @return string|null 允许执行时返回 null, 否则返回对应的提示信息
      *
      */
-    public function getDisabledHint($action)
+    public function disabledHint($action)
     {
         switch ($action) {
             case 'delete':
                 if ($this->isPaid) {
                     return 'already paid';
                 }
+                return null;
+                break;
+            default:
                 return null;
                 break;
         }
@@ -288,7 +291,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
      *
      * @param string $action 对应 actionLink() 中 $action 值
      */
-    public function getConfirmText($action = 'delete')
+    public function confirmText($action = 'delete')
     {
         switch ($action) {
             case 'delete':
