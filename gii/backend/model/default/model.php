@@ -273,15 +273,13 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     {
         switch ($action) {
             case 'delete':
-                if ($this->isPaid) {
+                if (0) {
                     return 'already paid';
                 }
-                return null;
-                break;
-            default:
-                return null;
                 break;
         }
+
+        return null;
     }
     /**
      * 获取 POST 操作前的 confirm 文本内容
