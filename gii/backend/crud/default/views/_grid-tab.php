@@ -115,6 +115,9 @@ TEXT;
         [
             'class' => 'drodata\grid\ActionColumn',
             'template' => '{view}',
+            'contentOptions' => [
+                'style' => 'min-width:120px',
+            ],
             'buttons' => [
                 'view' => function ($url, $model, $key) {
                     return $model->actionLink('view');

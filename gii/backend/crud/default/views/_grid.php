@@ -115,7 +115,17 @@ DATETIME;
                 break;
             default:
                 echo <<<TEXT
-        '{$column->name}',
+        [
+            'attribute' => '{$column->name}',
+            'format' => 'raw',
+            'value' => function (\$model, \$key, \$index, \$column) {
+                return \$model->{$column->name};
+            },
+            'visible' => true,
+            'contentOptions' => [
+                'style' => 'min-width:120px',
+            ],
+        ],
 
 TEXT;
                 break;
@@ -126,6 +136,9 @@ TEXT;
         [
             'class' => 'drodata\grid\ActionColumn',
             'template' => '{view} {update} {delete}',
+            'contentOptions' => [
+                'style' => 'min-width:120px',
+            ],
             'buttons' => [
                 'view' => function ($url, $model, $key) {
                     return $model->actionLink('view');

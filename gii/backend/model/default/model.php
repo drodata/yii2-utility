@@ -127,9 +127,9 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
 <?php if (in_array('created_by', $tableSchema->columnNames)): ?>
             'blameable' => [
                 'class' => BlameableBehavior::className(),
+                'humanReadAttribute' => 'display_name',
 <?php if (!in_array('updated_by', $tableSchema->columnNames)): ?>
                 'updatedByAttribute' => false,
-                'humanReadAttribute' => 'display_name',
 <?php endif; ?>
             ],
 <?php endif; ?>
@@ -236,7 +236,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
                         'title' => '修改',
                         'icon' => 'pencil',
                         'visible' => true, //Yii::$app->user->can(''),
-                        'disabled' => fasle, //$this->disabledHint($action),
+                        'disabled' => $this->disabledHint($action),
                         'disabledHint' => $this->disabledHint($action),
                     ]
                 );
@@ -254,7 +254,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
                             'confirm' => $this->confirmText($action),
                         ],
                         'visible' => true, //Yii::$app->user->can(''),
-                        'disabled' => fasle, //$this->disabledHint($action),
+                        'disabled' => $this->disabledHint($action),
                         'disabledHint' => $this->disabledHint($action),
                     ]
                 );
@@ -272,6 +272,11 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     public function disabledHint($action)
     {
         switch ($action) {
+            case 'update':
+                if (0) {
+                    return 'already paid';
+                }
+                break;
             case 'delete':
                 if (0) {
                     return 'already paid';
