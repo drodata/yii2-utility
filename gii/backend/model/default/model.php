@@ -210,41 +210,43 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
      * @param string $type link type, 'icon' and 'button' are available,
      * the former is used in action column in grid view, while the latter
      * is use in list view.
+     * @param array $configs 动态配置数组。内容参见 Html::actionLink(). 例如 'view' 动作默认的 title 为 '详情',
+     * 我想改成 "查看订单": `Html::actionLink('view', 'icon', ['title' => '查看订单'])
      * @return mixed the link html content
      */
-    public function actionLink($action, $type = 'icon')
+    public function actionLink($action, $type = 'icon', $configs = [])
     {
         $route = '/<?= Inflector::camel2id($generator->modelClass) ?>/' . $action;
         switch ($action) {
             case 'view':
                 return Html::actionLink(
                     [$route, <?= $generator->generatePrimayKeyParamString($tableName) ?>],
-                    [
+                    ArrayHelper::merge([
                         'type' => $type,
                         'title' => '详情',
                         'icon' => 'eye',
                         // comment the next line if you don't want to view model in modal.
                         'class' => 'modal-view',
-                    ]
+                    ], $configs)
                 );
                 break;
             case 'update':
                 return Html::actionLink(
                     [$route, <?= $generator->generatePrimayKeyParamString($tableName) ?>],
-                    [
+                    ArrayHelper::merge([
                         'type' => $type,
                         'title' => '修改',
                         'icon' => 'pencil',
                         'visible' => true, //Yii::$app->user->can(''),
                         'disabled' => $this->disabledHint($action),
                         'disabledHint' => $this->disabledHint($action),
-                    ]
+                    ], $configs)
                 );
                 break;
             case 'delete':
                 return Html::actionLink(
                     [$route, <?= $generator->generatePrimayKeyParamString($tableName) ?>],
-                    [
+                    ArrayHelper::merge([
                         'type' => $type,
                         'title' => '删除',
                         'icon' => 'trash',
@@ -256,7 +258,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
                         'visible' => true, //Yii::$app->user->can(''),
                         'disabled' => $this->disabledHint($action),
                         'disabledHint' => $this->disabledHint($action),
-                    ]
+                    ], $configs)
                 );
                 break;
         }
