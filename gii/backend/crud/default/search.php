@@ -90,7 +90,10 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
         $dataProvider->setSort([
             'attributes' => [
                 /*
-                'office_phone',
+                'company.x' => [
+                    'asc'  => ['{{%company}}.x USING gbk)' => SORT_ASC],
+                    'desc' => ['{{%company}}.x USING gbk)' => SORT_DESC],
+                ],
                 'company.name' => [
                     'asc'  => ['CONVERT({{%company}}.full_name USING gbk)' => SORT_ASC],
                     'desc' => ['CONVERT({{%company}}.full_name USING gbk)' => SORT_DESC],
@@ -99,7 +102,7 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
             ],
             // Warning: defaultOrder 内指定的列必须在上面的 attributes 内声明过，否则排序无效
             'defaultOrder' => [
-                //'id' => SORT_DESC,
+                //'created_at' => SORT_DESC,
             ],
         ]);
 
@@ -113,7 +116,7 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
 
         // grid filtering conditions
         <?= implode("\n        ", $searchConditions) ?>
-            //->andFilterWhere(['LIKE', 'user_group.name', $this->getAttribute('group.name')])
+            //->andFilterWhere(['like', '{{%t}}.c', $this->getAttribute('t.c')]);
 
         return $dataProvider;
     }

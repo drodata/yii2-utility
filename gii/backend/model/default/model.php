@@ -316,6 +316,14 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
 <?php endforeach; ?>
 
     /**
+     * @return User|null
+    public function getCreator()
+    {
+        return $this->hasOne(User::className(), ['id' => 'created_by']);
+    }
+     */
+
+    /**
      * 无需 sort 和 pagination 的 data provider
      *
     public function getItemsDataProvider()

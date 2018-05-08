@@ -95,6 +95,9 @@ AMOUNT;
         [
             'attribute' => '{$column->name}',
             'format' => 'integer',
+            'value' => function (\$model, \$key, \$index, \$column) {
+                return \$model->{$column->name};
+            },
             'headerOptions' => ['class' => 'text-right'],
             'contentOptions' => [
                 'class' => 'text-right',
@@ -115,17 +118,7 @@ DATETIME;
                 break;
             default:
                 echo <<<TEXT
-        [
-            'attribute' => '{$column->name}',
-            'format' => 'raw',
-            'value' => function (\$model, \$key, \$index, \$column) {
-                return \$model->{$column->name};
-            },
-            'visible' => true,
-            'contentOptions' => [
-                'style' => 'min-width:120px',
-            ],
-        ],
+        '{$column->name}',
 
 TEXT;
                 break;
