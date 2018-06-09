@@ -102,13 +102,15 @@ class Lookup extends \yii\db\ActiveRecord
         );
     }
 
-    public static function item($type,$code)
+    public static function item($type, $code)
     {
-        return self::findOne([
+        $item = self::findOne([
             'type' => $type,
             'code' => $code,
             'visible' => 1,
-        ])->name;
+        ]);
+        
+        return empty($item) ? '' : $item->name;
     }
 
     /**
