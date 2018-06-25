@@ -41,9 +41,16 @@ class TodoTabs extends \yii\bootstrap\Widget
     {
         $items = $this->generateItems();
 
+        if (empty($items)) {
+            return '';
+        }
+
         return Html::tag('div', Tabs::widget([ 'items' => $items]), ['class' => 'nav-tabs-custom']);
     }
 
+    /**
+     * @return array 有可能是空数组
+     */
     protected function generateItems()
     {
         $items = [];
@@ -77,7 +84,7 @@ class TodoTabs extends \yii\bootstrap\Widget
             ];
         }
         
-        if (!$_GET['tab']) {
+        if (count($items) > 0 && !$_GET['tab']) {
             $items[0]['active'] = true;
         }
 
