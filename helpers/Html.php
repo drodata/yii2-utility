@@ -224,6 +224,7 @@ class Html extends BaseHtml
      *     - `icon` (optional): string, fa icon name
      *     - `hideIcon` (optional, defaults to `false`): bool, whether to use only the `title` option as link text
      *     - `size` (optional): string, button size, 'sm' (D), 'lg' etc,
+     *     - `block` (optional): bool, whether is block button (.btn-block), `false` by default, only works when `type` is `button`
      *     - `color` (optional): string, button color, 'primary' (D) and others, add colorfull class name (e.g. `'class' => 'text-red'`)
      *       to generate a colorful action link.
      * 
@@ -265,6 +266,7 @@ class Html extends BaseHtml
         $icon = ArrayHelper::remove($options, 'icon');
         $hideIcon = ArrayHelper::remove($options, 'hideIcon', false);
         $size = ArrayHelper::remove($options, 'size', 'sm');
+        $block = ArrayHelper::remove($options, 'block');
         $color = ArrayHelper::remove($options, 'color', 'primary');
 
         $class = ArrayHelper::getValue($options, 'class', '');
@@ -302,6 +304,7 @@ class Html extends BaseHtml
         } elseif ($type == 'button') {
             $class .= " btn btn-$color" 
                 . ($size ? " btn-$size" : '')
+                . ($block ? " btn-block" : '')
                 . ($disabled ? " disabled" : '');
             if ($disabled) {
                 $options['title'] = $disabledHint;
