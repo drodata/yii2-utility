@@ -40,8 +40,11 @@ $this->registerJs($js);
 
 <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-form">
     <?= "<?php " ?>$form = ActiveForm::begin([
-        // 如果表单需要上传文件，去掉下面一行的注释
-        // 'options' => ['enctype' => 'multipart/form-data'],
+        'options' => [
+            'class' => 'prevent-duplicate-submission',
+            // 如果表单需要上传文件，去掉下面一行的注释
+            //'enctype' => 'multipart/form-data',
+        ],
         // 如果表单需要通过 AJAX 提交，去掉下面两行的注释
         // 'id' => '<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-form',
         // 'action' => 'ajax-submit',
