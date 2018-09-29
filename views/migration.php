@@ -42,7 +42,7 @@ class <?= $className ?> extends yii\db\Migration
     public $lookups = [
         ['type', 'code', 'position', 'name'],
         [
-            ['Status', 1, 1, ''],
+            ['status', 1, 1, ''],
         ],
     ];
 
@@ -56,41 +56,38 @@ class <?= $className ?> extends yii\db\Migration
         /*
         $this->createTable('{{%TABLE}}', [
             'id' => $this->bigPrimaryKey(),
-            'type' => $this->smallInteger(3)->notNull(),
-            'amount' => $this->decimal(10,2)->notNull(),
-            'status' => $this->boolean()->notNull(),
-            'seller_id' => $this->integer(),
-            'note' => $this->string(),
-            'created_at' => $this->integer(),
-            'created_by' => $this->integer(),
-            'updated_at' => $this->integer(),
-            'updated_by' => $this->integer(),
+            'type' => $this->smallInteger(3)->notNull()->comment(''),
+            'amount' => $this->decimal(10,2)->notNull()->comment(''),
+            'seller_id' => $this->integer()->comment(''),
+
+            'status' => $this->boolean()->notNull()->comment('状态'),
+            'note' => $this->string()->comment('备注'),
+            'created_at' => $this->integer()->comment('创建时间'),
+            'created_by' => $this->integer()->comment('申请人'),
+            'updated_at' => $this->integer()->comment('修改时间'),
+            'updated_by' => $this->integer()->comment('修改人'),
         ], $this->tableOptions);
 
-        $columnComments = [
-            'type' => '类别',
-        ];
-        foreach ($columnComments as $column => $comment) {
-            $this->addCommentOnColumn('{{%TABLE}}', $column, $comment);
-        }
-
+        $this->addPrimaryKey('pk-xxx', '{{%tablename}}', []);
         $this->addForeignKey(
             'fk-order-customer',
             '{{%order}}', 'customer_id',
             '{{%customer}}', 'id',
             'NO ACTION', 'NO ACTION'
         );
+
         $this->addColumn('{{%TABLE}}', 'stock_status', $this->boolean()->notNull()->defaultValue(1)->after('status'));
         $this->alterColumn('{{%TABLE}}', 'size', $this->smallInteger(3));
 
 
-        $this->batchInsert('{{%lookup}}', $this->lookups[0], $this->lookups[1]);
 
         // 更新已有记录值
         foreach ((new Query)->from('{{%TABLE}}')->each() as $item) {
             $this->update('{{%TABLE}}', ['note' => $item['size']], ['id' => $item['id']]);
         }
         $this->update('{{%TABLE}}', ['size' => 1]);
+
+        $this->batchInsert('{{%lookup}}', $this->lookups[0], $this->lookups[1]);
         */
 
     }

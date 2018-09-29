@@ -217,6 +217,8 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     public function actionLink($action, $type = 'icon', $configs = [])
     {
         $route = '/<?= Inflector::camel2id($generator->modelClass) ?>/' . $action;
+        list($visible, $hint, $confirm) = $this->getActionOptions($action);
+
         switch ($action) {
             case 'view':
                 return Html::actionLink(
@@ -237,9 +239,9 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
                         'type' => $type,
                         'title' => '修改',
                         'icon' => 'pencil',
-                        'visible' => true, //Yii::$app->user->can(''),
-                        'disabled' => $this->disabledHint($action),
-                        'disabledHint' => $this->disabledHint($action),
+                        'visible' => $visible,
+                        'disabled' => $hint,
+                        'disabledHint' => $hint,
                     ], $configs)
                 );
                 break;
@@ -253,11 +255,11 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
                         'color' => 'danger',
                         'data' => [
                             'method' => 'post',
-                            'confirm' => $this->confirmText($action),
+                            'confirm' => $confirm,
                         ],
-                        'visible' => true, //Yii::$app->user->can(''),
-                        'disabled' => $this->disabledHint($action),
-                        'disabledHint' => $this->disabledHint($action),
+                        'visible' => $visible,
+                        'disabled' => $hint,
+                        'disabledHint' => $hint,
                     ], $configs)
                 );
                 break;
@@ -265,44 +267,40 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     }
 
     /**
-     * 返回执行 $action 时的禁止操作提示信息
+     * 返回 $action 常见的选项
      *
      * @param string $action 对应 actionLink() 中 $action 值
-     * @return string|null 允许执行时返回 null, 否则返回对应的提示信息
+     * @see actionLink()
+     *
+     * @return array 三个元素依次表示：按钮可见性、禁用提示和确认提示
      *
      */
-    public function disabledHint($action)
+    public function getActionOptions($action)
     {
+        $visible = true;
+        $hint = null;
+        $confirm = null;
+
         switch ($action) {
             case 'update':
+                $visible = $visible && true;
+
                 if (0) {
-                    return 'already paid';
+                    $hint = 'already paid';
                 }
                 break;
             case 'delete':
-                if (0) {
-                    return 'already paid';
+                $visible = $visible && true;
+
+                if (false) {
+                    $hint = 'already paid';
                 }
+
+                $confirm = '请再次确认';
                 break;
         }
 
-        return null;
-    }
-    /**
-     * 获取 POST 操作前的 confirm 文本内容
-     *
-     * 模型中有很多类似删除这样的操作：没有视图文件，直接通过控制器完成操作，
-     * 操作完成后页面跳转至 referrer 而非首页。这类操作前都需要让客户再次确认。
-     *
-     * @param string $action 对应 actionLink() 中 $action 值
-     */
-    public function confirmText($action = 'delete')
-    {
-        switch ($action) {
-            case 'delete':
-                return "请再次确认删除操作。";
-                break;
-        }
+        return [$visible, $hint, $confirm];
     }
 
     // ==== getters start ====
