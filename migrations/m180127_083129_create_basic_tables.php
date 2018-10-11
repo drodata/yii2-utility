@@ -3,7 +3,7 @@
 /**
  * Class m180127_083129_create_basic_tables
  *
- * 新建表格： lookup, taxonomy, map, attachment, activity, user, extension, option
+ * 新建表格： lookup, taxonomy, meaid, activity, user, extension, option
  */
 class m180127_083129_create_basic_tables extends yii\db\Migration
 {
@@ -29,28 +29,17 @@ class m180127_083129_create_basic_tables extends yii\db\Migration
          */
         $this->createTable('{{%user}}', [
             'id' => $this->primaryKey(),
-            'username' => $this->string()->notNull()->unique(),
-            'mobile_phone' => $this->string(11)->unique(),
+            'username' => $this->string()->notNull()->unique()->comment('用户名'),
+            'mobile_phone' => $this->string(11)->unique()->comment('手机号'),
             'auth_key' => $this->string(32)->notNull(),
             'password_hash' => $this->string()->notNull(),
             'password_reset_token' => $this->string()->unique(),
             'access_token' => $this->string()->unique(),
-            'email' => $this->string()->unique(),
-            'status' => $this->boolean()->notNull()->defaultValue(1),
-            'created_at' => $this->integer()->notNull(),
+            'email' => $this->string()->unique()->comment('邮箱地址'),
+            'status' => $this->boolean()->notNull()->defaultValue(1)->comment('状态'),
+            'created_at' => $this->integer()->notNull()->comment('创建时间'),
             'updated_at' => $this->integer()->notNull(),
         ], $this->tableOptions);
-
-        $columnComments = [
-            'username' => '用户名',
-            'mobile_phone' => '手机号',
-            'email' => '邮箱地址',
-            'status' => '状态',
-            'created_at' => '创建时间',
-        ];
-        foreach ($columnComments as $column => $comment) {
-            $this->addCommentOnColumn('{{%user}}', $column, $comment);
-        }
 
         // 导入测试账户信息，默认密码：123456
         $this->insert('{{%user}}', [
@@ -72,28 +61,19 @@ class m180127_083129_create_basic_tables extends yii\db\Migration
             'position' => $this->smallInteger()->notNull(),
             'visible' => $this->boolean()->notNull()->defaultValue(1),
         ], $this->tableOptions);
+        $this->batchInsert('{{%lookup}}', $this->lookups[0], $this->lookups[1]);
 
         /**
          * Taxonomy
          */
         $this->createTable('{{%taxonomy}}', [
             'id' => $this->bigPrimaryKey(),
-            'type' => $this->string(50)->notNull(),
-            'name' => $this->string(50)->notNull(),
+            'type' => $this->string(50)->notNull()->comment('类别'),
+            'name' => $this->string(50)->notNull()->comment('名称'),
             'slug' => $this->string(50),
-            'parent_id' => $this->bigInteger(),
-            'visible' => $this->boolean()->notNull()->defaultValue(1),
+            'parent_id' => $this->bigInteger()->comment('上级目录'),
+            'visible' => $this->boolean()->notNull()->defaultValue(1)->comment('是否可见'),
         ], $this->tableOptions);
-
-        $columnComments = [
-            'type' => '类别',
-            'name' => '名称',
-            'parent_id' => '上级目录',
-            'visible' => '是否可见',
-        ];
-        foreach ($columnComments as $column => $comment) {
-            $this->addCommentOnColumn('{{%taxonomy}}', $column, $comment);
-        }
 
         $this->addForeignKey(
             'fk-taxonomy-parent',
@@ -102,25 +82,12 @@ class m180127_083129_create_basic_tables extends yii\db\Migration
             'NO ACTION', 'NO ACTION'
         );
 
-        $this->batchInsert('{{%lookup}}', $this->lookups[0], $this->lookups[1]);
-
         /**
-         * Map 多对多映射
+         * 媒体
          */
-        $this->createTable('{{%map}}', [
+        $this->createTable('{{%media}}', [
             'id' => $this->bigPrimaryKey(),
-            'type' => $this->string(50)->notNull(),
-            'source' => $this->bigInteger()->notNull(),
-            'destination' => $this->bigInteger()->notNull(),
-        ], $this->tableOptions);
-
-        /**
-         * 附件
-         */
-        $this->createTable('{{%attachment}}', [
-            'id' => $this->bigPrimaryKey(),
-            'type' => $this->string(50)->notNull()->comment('类别'),
-            'format' => $this->string(10)->notNull()->comment('格式'),
+            'format' => $this->string(10)->notNull()->comment('文件格式'),
             'path' => $this->string(50)->notNull()->comment('hashed 相对路径'),
             'name' => $this->string(100)->comment('原始文件名'),
             'visible' => $this->boolean()->notNull()->defaultValue(1),
@@ -142,26 +109,18 @@ class m180127_083129_create_basic_tables extends yii\db\Migration
         ], $this->tableOptions);
 
         /**
-         * Money
+         * 插件表
          */
-        $this->createTable('{{%money}}', [
-            'id' => $this->bigPrimaryKey(),
-            'type' => $this->string(50)->notNull()->comment('类别'),
-            'user_id' => $this->integer()->notNull(),
-            'action' => $this->string(100)->notNull()->comment('动作'),
-            'is_post' => $this->boolean()->notNull(),
-            'amount' => $this->decimal(10, 2)->notNull()->comment('金额'),
-            'note' => $this->text(),
-            'created_at' => $this->integer(),
-            'created_by' => $this->integer(),
+        $this->createTable('{{%plugin}}', [
+            'id' => $this->primaryKey(),
+            'type' => $this->boolean()->notNull(),
+            'name' => $this->string(100)->notNull()->unique(),
+            'directive' => $this->string(100)->notNull()->unique()->comment('指令符'),
+            'description' => $this->text(),
+            'visible' => $this->boolean()->notNull()->defaultValue(1),
+            'status' => $this->boolean()->notNull()->defaultValue(1),
         ], $this->tableOptions);
 
-        $this->addForeignKey(
-            'fk-money-user',
-            '{{%money}}', 'user_id',
-            '{{%user}}', 'id',
-            'NO ACTION', 'NO ACTION'
-        );
 
         /**
          * 选项表
@@ -185,20 +144,6 @@ class m180127_083129_create_basic_tables extends yii\db\Migration
             'description' => $this->text(),
         ], $this->tableOptions);
 
-        /**
-         * 插件表
-         *
-         */
-        $this->createTable('{{%plugin}}', [
-            'id' => $this->primaryKey(),
-            'type' => $this->boolean()->notNull(),
-            'name' => $this->string(100)->notNull()->unique(),
-            'directive' => $this->string(100)->notNull()->unique()->comment('指令符'),
-            'description' => $this->text(),
-            'visible' => $this->boolean()->notNull()->defaultValue(1),
-            'status' => $this->boolean()->notNull()->defaultValue(1),
-        ], $this->tableOptions);
-
         $this->addForeignKey(
             'fk-option-user',
             '{{%option}}', 'user_id',
@@ -211,6 +156,7 @@ class m180127_083129_create_basic_tables extends yii\db\Migration
             '{{%plugin}}', 'id',
             'NO ACTION', 'NO ACTION'
         );
+
     }
 
     /**
@@ -230,8 +176,7 @@ class m180127_083129_create_basic_tables extends yii\db\Migration
 
 		$this->dropTable('{{%plugin}}');
 		$this->dropTable('{{%lookup}}');
-		$this->dropTable('{{%map}}');
-		$this->dropTable('{{%attachment}}');
+		$this->dropTable('{{%media}}');
 		$this->dropTable('{{%activity}}');
 		$this->dropTable('{{%user}}');
     }

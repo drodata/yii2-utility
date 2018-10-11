@@ -13,10 +13,9 @@ use drodata\behaviors\TimestampBehavior;
 use drodata\behaviors\BlameableBehavior;
 
 /**
- * This is the model class for table "{{%attachment}}".
+ * This is the model class for table "{{%media}}".
  * 
  * @property integer $id
- * @property string $type
  * @property string $format
  * @property string $path
  * @property string $name
@@ -24,7 +23,7 @@ use drodata\behaviors\BlameableBehavior;
  * @property integer $created_at
  * @property integer $created_by
  */
-class Attachment extends \yii\db\ActiveRecord
+class Media extends \yii\db\ActiveRecord
 {
     public function init()
     {
@@ -36,7 +35,7 @@ class Attachment extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%attachment}}';
+        return '{{%media}}';
     }
 
 
@@ -133,7 +132,7 @@ class Attachment extends \yii\db\ActiveRecord
      */
     public function actionLink($action, $type = 'icon')
     {
-        $route = '/attachment/' . $action;
+        $route = '/media/' . $action;
         switch ($action) {
             case 'view':
                 return Html::actionLink(
