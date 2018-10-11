@@ -25,6 +25,7 @@ use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use yii\base\InvalidParamException;
 use yii\data\ActiveDataProvider;
+use yii\db\Exception;
 use drodata\helpers\Html;
 use drodata\helpers\Utility;
 use drodata\behaviors\TimestampBehavior;
@@ -353,7 +354,20 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         
     }
      */
+
     // ==== getters end ====
+
+    /**
+     * CODE TEMPLATE
+     *
+    public function sign()
+    {
+        $this->status = 3;
+        if (!$this->save()) {
+            throw new Exception('Failed to save.');
+        }
+    }
+     */
 
     /**
      * AJAX 提交表单逻辑代码
@@ -392,7 +406,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
             $model->on(self::EVENT_AFTER_UPDATE, [$model, 'insertItems'], ['items' => $items]);
 
             if (!$model->save()) {
-                throw new \yii\db\Exception($model->stringifyErrors());
+                throw new Exception($model->stringifyErrors());
             }
             
             $d['message'] = Html::tag('span', Html::icon('check') . '已保存', [
@@ -438,7 +452,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         }
         foreach ($this->images as $image) {
             if (!$image->delete()) {
-                throw new \yii\db\Exception('Failed to flush image.');
+                throw new Exception('Failed to flush image.');
             }
         }
     }

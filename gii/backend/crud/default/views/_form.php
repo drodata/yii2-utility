@@ -62,8 +62,11 @@ $this->registerJs($js);
     <?= "<?php " ?>if ($model->isNewRecord): <?= "?>\n" ?>
     <?= "<?php " ?>endif; <?= "?>\n" ?>
     <?= "<?php\n" ?>
+
+    // uncomment next line when using ajax submiting
+    // echo $form->field($model, 'id')->label(false)->hiddenInput();
+
     /**
-    echo $form->field($model, 'id')->label(false)->hiddenInput();
     if ($model->isNewRecord) {
         echo $form->field($common, 'images[]')->fileInput(['multiple' => true]);
     }
