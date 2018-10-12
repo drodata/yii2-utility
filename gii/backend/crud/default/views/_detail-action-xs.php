@@ -11,8 +11,6 @@ $urlParams = $generator->generateUrlParams();
 echo "<?php\n";
 ?>
 
-/* action buttons in detail view on Mobile */
-
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 <?= "?>\n" ?>

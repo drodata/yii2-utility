@@ -19,6 +19,7 @@ echo "<?php\n";
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
+
 use yii\grid\GridView;
 use drodata\helpers\Html;
 use backend\models\Lookup;

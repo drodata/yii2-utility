@@ -13,11 +13,11 @@ $modelNameCn = empty($generator->modelNameCn)
 echo "<?php\n";
 ?>
 
-use drodata\helpers\Html;
-use drodata\widgets\Box;
-
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
+
+use drodata\helpers\Html;
+use drodata\widgets\Box;
 
 $this->title = '新建<?= $modelNameCn ?>';
 $this->params = [
@@ -38,7 +38,7 @@ $this->params = [
     ],
     */
 ];
-?>
+<?= "?>\n" ?>
 <div class="row <?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-create">
     <div class="col-md-12 col-lg-6 col-lg-offset-3">
         <?= "<?= " ?>Box::widget([

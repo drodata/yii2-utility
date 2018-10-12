@@ -12,12 +12,12 @@ $columnNames = $generator->tableSchema->columnNames;
 echo "<?php\n";
 ?>
 
-use drodata\helpers\Html;
-use backend\models\Lookup;
-
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
-?>
+
+use drodata\helpers\Html;
+use backend\models\Lookup;
+<?= "?>\n" ?>
 
 <table class="table table-bordered">
     <thead>

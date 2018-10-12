@@ -16,14 +16,14 @@ if (empty($safeAttributes)) {
 echo "<?php\n";
 ?>
 
-use drodata\helpers\Html;
-use drodata\widgets\Box;
-use kartik\select2\Select2;
-
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 /* @var $common backend\models\CommonForm */
+
+use drodata\helpers\Html;
+use drodata\widgets\Box;
+use kartik\select2\Select2;
 <?= "?>\n" ?>
 <div class="row">
     <div class="col-lg-12">

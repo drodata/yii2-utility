@@ -9,14 +9,14 @@ use yii\helpers\StringHelper;
 echo "<?php\n";
 ?>
 
-use yii\bootstrap\ActiveForm;
-use drodata\helpers\Html;
-use backend\models\Lookup;
-
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->searchModelClass, '\\') ?> */
 /* @var $form yii\widgets\ActiveForm */
-?>
+
+use yii\bootstrap\ActiveForm;
+use drodata\helpers\Html;
+use backend\models\Lookup;
+<?= "?>\n" ?>
 
 <?= "<?php " ?>$form = ActiveForm::begin([
     'action' => ['index'],

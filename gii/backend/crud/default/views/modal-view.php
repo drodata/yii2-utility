@@ -15,13 +15,13 @@ $modelNameCn = empty($generator->modelNameCn)
 echo "<?php\n";
 ?>
 
+/* @var $this yii\web\View */
+/* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
+
 use yii\bootstrap\Modal;
 use drodata\helpers\Html;
 use drodata\widgets\Box;
 use backend\models\Lookup;
-
-/* @var $this yii\web\View */
-/* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 
 Modal::begin([
     'id' => 'view-modal',

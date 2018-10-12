@@ -15,6 +15,10 @@ $modelNameCn = empty($generator->modelNameCn)
 echo "<?php\n";
 ?>
 
+/* @var $this yii\web\View */
+<?= !empty($generator->searchModelClass) ? "/* @var \$searchModel " . ltrim($generator->searchModelClass, '\\') . " */\n" : '' ?>
+/* @var $dataProvider yii\data\ActiveDataProvider */
+
 <?php if ($generator->indexWidgetType === 'grid'): ?>
 use yii\widgets\ListView;
 <?php endif; ?>
@@ -24,9 +28,6 @@ use common\models\Lookup;
 use <?= $generator->indexWidgetType === 'grid' ? "yii\\grid\\GridView" : "yii\\widgets\\ListView" ?>;
 <?= $generator->enablePjax ? "use yii\widgets\Pjax;\n" : '' ?>
 
-/* @var $this yii\web\View */
-<?= !empty($generator->searchModelClass) ? "/* @var \$searchModel " . ltrim($generator->searchModelClass, '\\') . " */\n" : '' ?>
-/* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = "<?= $modelNameCn ?>";
 $this->params = [

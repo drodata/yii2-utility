@@ -11,11 +11,11 @@ $urlParams = $generator->generateUrlParams();
 echo "<?php\n";
 ?>
 
-use yii\bootstrap\Modal;
-use drodata\helpers\Html;
-
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
+
+use yii\bootstrap\Modal;
+use drodata\helpers\Html;
 
 Modal::begin([
     'id' => 'search-modal',

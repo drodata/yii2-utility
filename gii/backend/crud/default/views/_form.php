@@ -12,22 +12,17 @@ $safeAttributes = $model->safeAttributes();
 if (empty($safeAttributes)) {
     $safeAttributes = $model->attributes();
 }
-/*
-echo '<pre>';
-print_r($generator->getTableSchema());
-echo '</pre>';
-*/
 echo "<?php\n";
 ?>
+
+/* @var $this yii\web\View */
+/* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
+/* @var $form yii\bootstrap\ActiveForm */
 
 use drodata\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use backend\models\Lookup;
 use kartik\select2\Select2;
-
-/* @var $this yii\web\View */
-/* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
-/* @var $form yii\bootstrap\ActiveForm */
 
 /*
 $js = <<<JS

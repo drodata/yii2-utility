@@ -12,13 +12,13 @@ $searchModelClass = StringHelper::basename($generator->searchModelClass);
 echo "<?php\n";
 ?>
 
-use yii\grid\GridView;
-use drodata\helpers\Html;
-use backend\models\Lookup;
-
 /* @var $this yii\web\View */
 <?= !empty($generator->searchModelClass) ? "/* @var \$searchModel " . ltrim($generator->searchModelClass, '\\') . " */\n" : '' ?>
 /* @var $dataProvider yii\data\ActiveDataProvider */
+
+use yii\grid\GridView;
+use drodata\helpers\Html;
+use backend\models\Lookup;
 
 /**
  * 借助 'caption' 属性显示筛选数据累计金额

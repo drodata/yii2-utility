@@ -14,11 +14,13 @@ echo "<?php\n";
 /**
  * 用在首页 Tabs widget 内，用来实现“待办事项”
  */
+
+/* @var $this yii\web\View */
+
 use yii\grid\GridView;
 use drodata\helpers\Html;
 use backend\models\Lookup;
 
-/* @var $this yii\web\View */
 <?= !empty($generator->searchModelClass) ? "/* @var \$searchModel " . ltrim($generator->searchModelClass, '\\') . " */\n" : '' ?>
 /* @var $dataProvider yii\data\ActiveDataProvider */
 

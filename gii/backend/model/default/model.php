@@ -47,15 +47,10 @@ use drodata\behaviors\LookupBehavior;
  */
 class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
 {
-    // const STATUS_ = 1;
-    // const SCENARIO_ = '';
-    // 单独上传附件事件
-    const EVENT_UPLOAD = 'upload';
-
     public function init()
     {
         parent::init();
-        //$this->on(self::EVENT_BEFORE_DELETE, [$this, 'deleteItems']);
+        // custom code follows
     }
 
     /**
@@ -139,34 +134,14 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
 
     /**
      * @inheritdoc
-     *
-    public function fields()
-    {
-        $fields = parent::fields();
-        
-        // 删除涉及敏感信息的字段
-        //unset($fields['auth_key']);
-        
-        // 增加自定义字段
-        return ArrayHelper::merge($fields, [
-            'time' => function () {
-                return $this->readableCreateTime;
-            },
-            'creator' => function () {
-                return $this->readableCreator;
-            },
-        ]);
-    }
-    */
-
-    /**
-     * @inheritdoc
      */
     public function rules()
     {
         return [<?= "\n            " . implode(",\n            ", $rules) . ",\n        " ?>];
-        //['passwordOld', 'inlineV'],
-        /*
+        /**
+         * CODE TEMPLATE
+         *
+            ['passwordOld', 'inlineV'],
             [
                 'billing_period', 'required', 
                 'when' => function ($model, $attribute) {
@@ -180,7 +155,9 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         */
     }
 
-    /* inline validator
+    /**
+     * CODE TEMPLATE inline validator
+     *
     public function inlineV($attribute, $params, $validator)
     {
         if ($this->$attribute != 'a') {
@@ -317,6 +294,8 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
 <?php endforeach; ?>
 
     /**
+     * CODE TEMPLATE
+     *
      * @return User|null
     public function getCreator()
     {
@@ -325,6 +304,8 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
      */
 
     /**
+     * CODE TEMPLATE
+     *
      * 无需 sort 和 pagination 的 data provider
      *
     public function getItemsDataProvider()
@@ -336,7 +317,10 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         ]);
     }
     */
+
     /**
+     * CODE TEMPLATE
+     *
      * 搭配 getItemsDataProvider() 使用，
      * 计算累计值，可用在 grid footer 内
     public function getItemsSum()
@@ -370,6 +354,8 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
      */
 
     /**
+     * CODE TEMPLATE
+     *
      * AJAX 提交表单逻辑代码
      *
     public static function ajaxSubmit($post)
@@ -422,6 +408,8 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     // ==== event-handlers begin ====
 
     /**
+     * CODE TEMPLATE
+     *
      * 保存附件。
      *
      * 可由 self::EVENT_AFTER_INSERT, self::EVENT_UPLOAD 等触发
@@ -442,6 +430,8 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
      */
 
     /**
+     * CODE TEMPLATE
+     *
      * 删除文件
      *
      * 由 self::EVENT_BEFORE_DELETE 触发

@@ -10,15 +10,12 @@ $urlParams = $generator->generateUrlParams();
 
 echo "<?php\n";
 ?>
-/**
- * detail view on non-mobile device
- */
+
+/* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 
 use yii\widgets\DetailView;
 use drodata\helpers\Html;
 use backend\models\Lookup;
-
-/* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 
 <?= "echo " ?>DetailView::widget([
     'model' => $model,

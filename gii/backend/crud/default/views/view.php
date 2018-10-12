@@ -15,13 +15,13 @@ $modelNameCn = empty($generator->modelNameCn)
 echo "<?php\n";
 ?>
 
+/* @var $this yii\web\View */
+/* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
+
 use yii\widgets\DetailView;
 use drodata\helpers\Html;
 use drodata\widgets\Box;
 use common\models\Lookup;
-
-/* @var $this yii\web\View */
-/* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 
 $this->title = '<?= $modelNameCn ?>详情';
 $this->params = [
@@ -31,7 +31,7 @@ $this->params = [
         ['label' =>'<?= $modelNameCn ?>' , 'url' => ['index']],
     ],
 ];
-?>
+<?= "?>\n" ?>
 <div class="row <?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-view">
 <?php if ($generator->enableResponsive): ?>
     <div class="col-xs-12 visible-xs-block">
