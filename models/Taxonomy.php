@@ -142,6 +142,19 @@ class Taxonomy extends \drodata\db\ActiveRecord
         ];
     }
 
+    public static function items($type, $parent = null)
+    {
+		return ArrayHelper::map(static::find()->where([
+			'type' => $type,
+			'parent_id' => $parent,
+		])->asArray()->all(), 'id', 'name');
+    }
+
+    public static function item($id)
+    {
+        return static::findOne($id)->name;
+    }
+
     /**
      * Render a specified action link, which is usually used in 
      * GridView or ListView.

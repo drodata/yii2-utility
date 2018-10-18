@@ -60,6 +60,16 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     /**
      * @inheritdoc
      */
+    public function actions()
+    {
+        return [
+            // put standalone actions configuration here
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return [
