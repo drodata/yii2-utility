@@ -30,7 +30,8 @@ class Taxonomy extends \drodata\db\ActiveRecord
     public function init()
     {
         parent::init();
-        //$this->on(self::EVENT_AFTER_INSERT, [$this, 'handlerName']);
+
+        $this->on(self::EVENT_AFTER_UPDATE, [$this, 'doAfterUpdate']);
     }
 
     /**
@@ -282,5 +283,14 @@ class Taxonomy extends \drodata\db\ActiveRecord
         }
 
         return $d;
+    }
+
+    /**
+     * 修改后执行，子类可以重写此方法实现事务内的操作
+     *
+     * @param yii\db\AfterSaveEvent $event
+     */
+    public function doAfterUpdate($event)
+    {
     }
 }

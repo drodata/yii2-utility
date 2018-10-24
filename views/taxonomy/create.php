@@ -32,6 +32,7 @@ $this->params = [
         <?= Box::widget([
             'content' => $this->render('_form', [
                 'model' => $model,
+                'hideParent' => $this->context->isLite,
             ]),
         ]) ?>
     </div>

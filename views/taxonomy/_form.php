@@ -8,28 +8,15 @@ use kartik\select2\Select2;
 /* @var $this yii\web\View */
 /* @var $model drodata\models\Taxonomy */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $hideParent bool|null 是否隐藏 parent_id 元素 */
-
-/*
-$js = <<<JS
-JS;
-$this->registerJs($js);
-*/
+/* @var $hideParent bool 是否隐藏 parent_id 元素 */
 ?>
 
 <?= $this->render('@drodata/views/_alert') ?>
 
 <div class="taxonomy-form">
     <?php $form = ActiveForm::begin([
-        // 如果表单需要上传文件，去掉下面一行的注释
-        // 'options' => ['enctype' => 'multipart/form-data'],
-        // 如果表单需要通过 AJAX 提交，去掉下面两行的注释
         'id' => 'taxonomy-form',
-        // 'action' => 'ajax-submit',
     ]); ?>
-        <!--
-        'inputTemplate' => '<div class="input-group"><div class="input-group-addon">$</div>{input}</div>'
-        -->
     <?= $form->field($model, 'id')->label(false)->hiddenInput() ?>
     <?= $form->field($model, 'type')->label(false)->hiddenInput() ?>
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>

@@ -14,16 +14,6 @@ $this->params = [
     'breadcrumbs' => [
         ['label' => $label , 'url' => ["/{$this->context->id}"]],
     ],
-    /*
-    'alerts' => [
-        [
-            'options' => ['class' => 'alert-info'],
-            'body' => 'hello',
-            'closeButton' => false,
-            'visible' => true, //Yii::$app->user->can(''),
-        ], 
-    ],
-    */
 ];
 ?>
 <div class=row "taxonomy-update">
@@ -31,6 +21,7 @@ $this->params = [
         <?= Box::widget([
             'content' => $this->render('_form', [
                 'model' => $model,
+                'hideParent' => $this->context->isLite,
             ]),
         ]) ?>
     </div>

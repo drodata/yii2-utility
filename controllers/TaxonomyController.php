@@ -3,8 +3,6 @@
 namespace drodata\controllers;
 
 use Yii;
-use backend\models\CommonForm;
-use drodata\models\Taxonomy;
 use drodata\models\TaxonomySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -18,10 +16,16 @@ use yii\filters\VerbFilter;
  */
 class TaxonomyController extends Controller
 {
+    public $modelClass = 'drodata\models\Taxonomy';
     /**
      * 分类中文名称
      */
     public $name;
+
+    /**
+     * 简化模式开关
+     */
+    public $isLite = false;
 
     public function init()
     {
@@ -39,7 +43,8 @@ class TaxonomyController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Taxonomy::findOne($id)) !== null) {
+        $modelClass = $this->modelClass;
+        if (($model = $modelClass::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -109,7 +114,8 @@ class TaxonomyController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Taxonomy(['type' => $this->id]);
+        $modelClass = $this->modelClass;
+        $model = new $modelClass(['type' => $this->id]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', '新记录已创建');
@@ -133,7 +139,8 @@ class TaxonomyController extends Controller
         $hideParent = (bool) Yii::$app->request->get('hide_parent');
         $parentId = Yii::$app->request->get('parent_id');
 
-        $model = new Taxonomy([
+        $modelClass = $this->modelClass;
+        $model = new $modelClass([
             'type' => $this->id,
             'parent_id' => $parentId,
         ]);
@@ -186,31 +193,4 @@ class TaxonomyController extends Controller
         return $this->redirect(Yii::$app->request->referrer);
     }
 
-    /**
-     * 为 Taxonomy 模型上传附件 
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionUpload($id)
-    {
-        $model = $this->findModel($id);
-        // 根据需要修改场景值
-        $common = new CommonForm(['scenario' => CommonForm::SCENARIO_XXX]);
-
-        if ($common->load(Yii::$app->request->post())) {
-            $common->images = UploadedFile::getInstances($common, 'images');
-            if ($common->validate()) {
-                $model->on(Taxonomy::EVENT_UPLOAD, [$model, 'insertImages'], $common->images);
-                $model->trigger(Taxonomy::EVENT_UPLOAD);
-                Yii::$app->session->setFlash('success', '图片已上传。');
-
-                return $this->redirect('index');
-            }
-        }
-
-        return $this->render('upload', [
-            'model' => $model,
-            'common' => $common,
-        ]);
-    }
 }
