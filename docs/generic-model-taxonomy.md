@@ -120,3 +120,42 @@ $('.blabla').on('select2:select', function (e, item) {
 ### Widget Solution
 
 以上方案将 JS 代码单独放在一个文件内，还需要注册 Asset, 不太方便。另一种方法是新建一个诸如 `ModalTaxonomyButton` 的 widget, 并在 widget 内注册 JS 代码，但考虑到**通过 AJAX 传输带 asset 的 widget 还有难度/不太方便(参照 SPU 结构中选择属性后生成规格下拉菜单场景)**, 暂时放弃此方案。
+
+## 扩展
+
+### 对修改事件作出响应
+
+应用场景重现： EBP 中使用通用分类表存储了产品属性和规格。商品名称有产品名称、品牌和规格等值自动拼接而成，我们想达到的效果是：当修改商品规格后，所有相关的 SKU 名称能自动更新，这里的“自动更新”操作可以绑定到 `Taxonomy::EVENT_AFTER_UPDATE` 上。因此在 `TaxonomyController` 内引入 `modelClass` 属性，指明使用具体应用内的分类模型，简单演示如下：
+
+控制器配置
+
+```php
+    'controllerMap' => [
+        'spu-specification' => [
+            'class' => 'drodata\controllers\TaxonomyController',
+            'modelClass' => 'backend\models\Taxonomy', // 这里不再使用默认的分类模型
+            'name' => '商品规格',
+            'isLite' => true,
+        ],
+    ],
+```
+
+自己的分类模型：
+
+```php
+class Taxonomy extends \drodata\models\Taxonomy
+{
+    public function init()
+    {
+        parent::init();
+
+        // 绑定自动组装 sku 名称代码
+        $this->on(self::EVENT_AFTER_UPDATE, [$this, 'reassembleSkuName']);
+    }
+
+    public function reassembleSkuName($event)
+    {
+        // 再次具体实现业务逻辑
+    }
+}
+```
