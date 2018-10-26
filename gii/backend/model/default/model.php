@@ -199,7 +199,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
      * @return array 两个个元素依次表示：action route, action link options
      *
      */
-    protected function getActionOptions($action)
+    public function getActionOptions($action)
     {
         // reset control options
         $visible = true;
@@ -208,6 +208,12 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         $route = ["/<?= Inflector::camel2id($generator->modelClass) ?>/$action", <?= $generator->generatePrimayKeyParamString($tableName) ?>];
 
         switch ($action) {
+            case 'view':
+                $options = [
+                    'title' => '查看',
+                    'icon' => 'eye',
+                ];
+                break;
             case 'update':
                 $options = [
                     'title' => '修改',
