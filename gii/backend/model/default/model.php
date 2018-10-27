@@ -212,6 +212,8 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
                 $options = [
                     'title' => '查看',
                     'icon' => 'eye',
+                    // disable modal view feature by commenting the following line.
+                    'class' => 'modal-view',
                 ];
                 break;
             case 'update':

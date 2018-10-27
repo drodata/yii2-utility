@@ -19,8 +19,8 @@ echo "<?php\n";
     <div class="col-xs-12">
         <div class="operation-group text-right">
             <?= "<?php\n" ?>
-            echo $model->actionLink('update', 'button');
-            echo $model->actionLink('delete', 'button');
+            echo $model->actionLink('update', ['type' => 'button']);
+            echo $model->actionLink('delete', ['type' => 'button']);
             <?= "?>\n" ?>
         </div>
     </div>
