@@ -163,18 +163,6 @@ class Taxonomy extends \drodata\db\ActiveRecord
     {
         $route = '/taxonomy/' . $action;
         switch ($action) {
-            case 'view':
-                return Html::actionLink(
-                    [$route, 'id' => $this->id],
-                    [
-                        'type' => $type,
-                        'title' => '详情',
-                        'icon' => 'eye',
-                        // comment the next line if you don't want to view model in modal.
-                        'class' => 'modal-view',
-                    ]
-                );
-                break;
             case 'update':
                 return Html::actionLink(
                     [$route, 'id' => $this->id],
@@ -200,9 +188,7 @@ class Taxonomy extends \drodata\db\ActiveRecord
                             'method' => 'post',
                             'confirm' => $this->getConfirmText(),
                         ],
-                        'visible' => true, // Yii::$app->user->can(''),
-                        'disabled' => false,
-                        'disabledHint' => '',
+                        'visible' => true,
                     ]
                 );
                 break;
@@ -225,6 +211,17 @@ class Taxonomy extends \drodata\db\ActiveRecord
                 break;
         }
     }
+    /**
+     * 返回硬删除的提示信息，此信息将显示在删除按钮上。
+     * 默认可以硬删除，若需要额外检查，请自行在子类中覆盖此方法
+     *
+     * @return string|null null 表示可以硬删除
+     */
+    public function getHardDeleteHint()
+    {
+        return null;
+    }
+
 
     // ==== getters start ====
 

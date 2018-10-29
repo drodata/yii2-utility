@@ -30,11 +30,6 @@ echo GridView::widget([
                 'style' => 'min-width:120px',
                 'class' => 'text-center',
             ],
-            'buttons' => [
-                'view' => function ($url, $model, $key) {
-                    return $model->actionLink('view');
-                },
-            ],
         ],
     ],
 ]); ?>

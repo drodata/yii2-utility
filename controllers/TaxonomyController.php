@@ -35,6 +35,21 @@ class TaxonomyController extends Controller
     }
 
     /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
+
+    /**
      * Finds the Taxonomy model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
@@ -155,7 +170,8 @@ class TaxonomyController extends Controller
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-        return Taxonomy::ajaxSubmit($_POST);
+        $modelClass = $this->modelClass;
+        return $modelClass::ajaxSubmit($_POST);
     }
 
     /**
@@ -187,8 +203,15 @@ class TaxonomyController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-        Yii::$app->session->setFlash('success', '已删除');
+        $model = $this->findModel($id);
+        $hint = $model->getHardDeleteHint();
+
+        if ($hint) {
+            Yii::$app->session->setFlash('warning', $hint);
+        } else {
+            $model->delete();
+            Yii::$app->session->setFlash('success', '已删除');
+        }
 
         return $this->redirect(Yii::$app->request->referrer);
     }
