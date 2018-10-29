@@ -270,26 +270,24 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     }
      */
 
+<?php if ($generator->hasItems): ?>
     /**
-     * CODE TEMPLATE
-     *
      * 无需 sort 和 pagination 的 data provider
      *
+     */
     public function getItemsDataProvider()
     {
         return new ActiveDataProvider([
-            'query' => static::find(),
+            'query' => $this->getItems(),
             'pagination' => false,
             'sort' => false,
         ]);
     }
-    */
 
     /**
-     * CODE TEMPLATE
-     *
      * 搭配 getItemsDataProvider() 使用，
      * 计算累计值，可用在 grid footer 内
+     */
     public function getItemsSum()
     {
         $amount = 0;
@@ -302,9 +300,8 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         }
 
         return $amount;
-        
     }
-     */
+<?php endif; ?>
 
     // ==== getters end ====
 
@@ -320,11 +317,12 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     }
      */
 
+<?php if ($generator->ajaxSubmit): ?>
     /**
-     * CODE TEMPLATE
      *
      * AJAX 提交表单逻辑代码
      *
+     */
     public static function ajaxSubmit($post)
     {
         $d['status'] = true;
@@ -370,49 +368,42 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
 
         return $d;
     }
-    */
+<?php endif; ?>
 
     // ==== event-handlers begin ====
 
+<?php if ($generator->hasItems): ?>
     /**
-     * CODE TEMPLATE
-     *
-     * 保存附件。
-     *
-     * 可由 self::EVENT_AFTER_INSERT, self::EVENT_UPLOAD 等触发
-     *
-     * @param yii\web\UploadedFile $event->data 承兑图片
-    public function insertImages($event)
-    {
-        $images = $event->data;
-
-        Media::store([
-            'files' => $images,
-            'referenceId' => $this->id,
-            'type' => Media::TYPE_IMAGE,
-            'category' => Media::CATEGORY_ACCEPTANCE,
-            'from2to' => Mapping::ACCEPTANCE2MEDIA,
-        ]);
-    }
+     * 保存子条目。由 self::EVENT_AFTER_INSERT 触发
      */
+    public function insertItems($event)
+    {
+        $items = $event->data;
+
+        foreach ($this->items as $item) {
+            if (!$item->save()) {
+                throw new Exception($item->stringifyErrors());
+            }
+        }
+
+    }
 
     /**
-     * CODE TEMPLATE
-     *
-     * 删除文件
+     * 删除子条目
      *
      * 由 self::EVENT_BEFORE_DELETE 触发
-    public function deleteImages($event)
+     */
+    public function deleteItems($event)
     {
-        if (empty($this->images)) {
+        if (empty($this->items)) {
             return;
         }
-        foreach ($this->images as $image) {
-            if (!$image->delete()) {
-                throw new Exception('Failed to flush image.');
+        foreach ($this->items as $item) {
+            if (!$item->delete()) {
+                throw new Exception($item->stringifyErrors());
             }
         }
     }
-     */
+<?php endif; ?>
     // ==== event-handlers end ====
 }

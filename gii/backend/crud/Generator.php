@@ -38,6 +38,11 @@ class Generator extends \yii\gii\generators\crud\Generator
     public $enableResponsive = false;
 
     /**
+     * @var boolean 使用采用 ajax submit 方式提交表单，true 时将自动插入一段 ajaxSubmit 代码模板
+     */
+    public $ajaxSubmit = false;
+
+    /**
      * @var string 模型中文名称
      */
     public $modelNameCn;
@@ -66,7 +71,7 @@ class Generator extends \yii\gii\generators\crud\Generator
     {
         return array_merge(parent::rules(), [
             [['modelNameCn'], 'filter', 'filter' => 'trim'],
-            [['enableResponsive'], 'boolean'],
+            [['enableResponsive', 'ajaxSubmit'], 'boolean'],
         ]);
     }
 
@@ -89,6 +94,7 @@ class Generator extends \yii\gii\generators\crud\Generator
         return array_merge(parent::hints(), [
             'enableResponsive' => '哈哈哈',
             'modelNameCn' => '类似 table comment 功能',
+            'ajaxSubmit' => '是否采用 ajax 方式提交表单',
         ]);
     }
 

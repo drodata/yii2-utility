@@ -16,4 +16,5 @@ echo $form->field($generator, 'indexWidgetType')->dropDownList([
 echo $form->field($generator, 'enableI18N')->checkbox();
 echo $form->field($generator, 'enablePjax')->checkbox();
 echo $form->field($generator, 'enableResponsive')->checkbox();
+echo $form->field($generator, 'ajaxSubmit')->checkbox();
 echo $form->field($generator, 'messageCategory');

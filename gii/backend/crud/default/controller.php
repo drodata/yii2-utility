@@ -205,6 +205,7 @@ if (count($pks) === 1) {
         ]);
     }
 
+<?php if ($generator->ajaxSubmit): ?>
     /**
      * AJAX 提交表单
      */
@@ -214,6 +215,7 @@ if (count($pks) === 1) {
 
         return <?= $modelClass ?>::ajaxSubmit($_POST);
     }
+<?php endif; ?>
 
     /**
      * Updates an existing <?= $modelClass ?> model.
