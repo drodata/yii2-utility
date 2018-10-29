@@ -38,12 +38,6 @@ return [
                     ],
                 ],
             ],
-            'as verbs' => [
-                'class' => 'yii\filters\VerbFilter',
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
         ],
     ],
 ];
@@ -159,3 +153,7 @@ class Taxonomy extends \drodata\models\Taxonomy
     }
 }
 ```
+
+### 防止错误的硬删除
+
+仍拿上面的商品规格为例，有的表格将 taxonomy.id 作为外键存储，在删除分类记录时将会出现数据库一致性错误。为了让此流程更加友好，在 `drodata\models\Taxonomy` 中引入 `getHardDeleteHint()` 方法。`actionDelete()` 在执行硬删除前，会调用 `getHardDeleteHint()` 返回友好的提示信息，我们可以在项目中继承 `drodata\models\Taxonomy` 并覆盖 `getHardDeleteHint()` 来自定义错误提示信息。
