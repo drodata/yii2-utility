@@ -3,7 +3,7 @@
 /**
  * Class m180127_083129_create_basic_tables
  *
- * 新建表格： lookup, taxonomy, meaid, activity, user, extension, option
+ * 新建表格： lookup, taxonomy, meaid, activity, user, directive, option
  */
 class m180127_083129_create_basic_tables extends yii\db\Migration
 {
@@ -83,19 +83,6 @@ class m180127_083129_create_basic_tables extends yii\db\Migration
         );
 
         /**
-         * 媒体
-         */
-        $this->createTable('{{%media}}', [
-            'id' => $this->bigPrimaryKey(),
-            'format' => $this->string(10)->notNull()->comment('文件格式'),
-            'path' => $this->string(50)->notNull()->comment('hashed 相对路径'),
-            'name' => $this->string(100)->comment('原始文件名'),
-            'visible' => $this->boolean()->notNull()->defaultValue(1),
-            'created_at' => $this->integer(),
-            'created_by' => $this->integer(),
-        ], $this->tableOptions);
-
-        /**
          * 活动记录
          */
         $this->createTable('{{%activity}}', [
@@ -109,39 +96,29 @@ class m180127_083129_create_basic_tables extends yii\db\Migration
         ], $this->tableOptions);
 
         /**
-         * 插件表
+         * 指令表
+         * category: 'app', 'user', 'plugin
+         * format: 'integer', 'decimal', 'switch', 'array', 'json'
          */
-        $this->createTable('{{%plugin}}', [
-            'id' => $this->primaryKey(),
-            'type' => $this->boolean()->notNull(),
-            'name' => $this->string(100)->notNull()->unique(),
-            'directive' => $this->string(100)->notNull()->unique()->comment('指令符'),
-            'description' => $this->text(),
+        $this->createTable('{{%directive}}', [
+            'code' => $this->string(45)->notNull()->comment('指令符'),
+            'name' => $this->string(100)->notNull()->comment('名称'),
+            'category' => $this->string(45)->notNull()->comment('类别'),
+            'format' => $this->string(10)->notNull()->comment('值格式'),
+            'description' => $this->text()->comment('说明'),
+            'position' => $this->boolean()->notNull()->comment('位置排序'),
             'visible' => $this->boolean()->notNull()->defaultValue(1),
             'status' => $this->boolean()->notNull()->defaultValue(1),
         ], $this->tableOptions);
-
-
+        $this->addPrimaryKey('pk-directive', '{{%directive}}', 'code');
         /**
          * 选项表
-         *
-         * type: 'conf', 'pref'
-         * scope: 'app', 'user', 'plugin
-         * format: 'integer', 'decimal', 'boolean', 'array', 'json'
          */
         $this->createTable('{{%option}}', [
-            'id' => $this->primaryKey(),
-
-            'scope' => $this->string(10)->notNull(),
-            'user_id' => $this->integer(),
-            'plugin_id' => $this->integer(),
-
-            'type' => $this->string(5)->notNull(),
-            'name' => $this->string()->notNull()->unique(),
-            'directive' => $this->string(100)->notNull()->unique()->comment('指令符'),
-            'format' => $this->string(20)->notNull(),
+            'id' => $this->bigPrimaryKey(),
+            'directive_code' => $this->string(45)->notNull(),
             'value' => $this->string()->notNull(),
-            'description' => $this->text(),
+            'user_id' => $this->integer(),
         ], $this->tableOptions);
 
         $this->addForeignKey(
@@ -151,9 +128,9 @@ class m180127_083129_create_basic_tables extends yii\db\Migration
             'NO ACTION', 'NO ACTION'
         );
         $this->addForeignKey(
-            'fk-option-plugin',
-            '{{%option}}', 'plugin_id',
-            '{{%plugin}}', 'id',
+            'fk-option-directive',
+            '{{%option}}', 'directive_code',
+            '{{%directive}}', 'code',
             'NO ACTION', 'NO ACTION'
         );
 
@@ -164,20 +141,16 @@ class m180127_083129_create_basic_tables extends yii\db\Migration
      */
     public function safeDown()
     {
-		$this->dropForeignKey('fk-taxonomy-parent', '{{%taxonomy}}');
-		$this->dropTable('{{%taxonomy}}');
+        $this->dropForeignKey('fk-taxonomy-parent', '{{%taxonomy}}');
+        $this->dropTable('{{%taxonomy}}');
 
-		$this->dropForeignKey('fk-option-user', '{{%option}}');
-		$this->dropForeignKey('fk-option-plugin', '{{%option}}');
-		$this->dropTable('{{%option}}');
+        $this->dropForeignKey('fk-option-user', '{{%option}}');
+        $this->dropForeignKey('fk-option-directive', '{{%option}}');
+        $this->dropTable('{{%option}}');
+        $this->dropTable('{{%directive}}');
 
-        $this->dropForeignKey('fk-money-user', '{{%money}}');
-		$this->dropTable('{{%money}}');
-
-		$this->dropTable('{{%plugin}}');
-		$this->dropTable('{{%lookup}}');
-		$this->dropTable('{{%media}}');
-		$this->dropTable('{{%activity}}');
-		$this->dropTable('{{%user}}');
+        $this->dropTable('{{%lookup}}');
+        $this->dropTable('{{%activity}}');
+        $this->dropTable('{{%user}}');
     }
 }

@@ -195,7 +195,7 @@ if (count($pks) === 1) {
         $model = new <?= $modelClass ?>();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', '新记录已创建');
+            Yii::$app->session->setFlash('success', '<?= $generator->modelNameCn ?>已创建');
             return $this->redirect('index');
             //return $this->redirect(['view', <?= $urlParams ?>]);
         }
