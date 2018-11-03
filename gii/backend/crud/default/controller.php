@@ -79,7 +79,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
                         'allow' => false,
                     ],
                     [
-                        //'actions' => ['create', 'view', 'update', 'delete'],
+                        'actions' => ['create', 'view', 'modal-view', 'update', 'delete'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
