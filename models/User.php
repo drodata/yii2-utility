@@ -87,7 +87,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'status'], 'required'],
+            [['username'], 'required'],
             [['status', 'created_at', 'updated_at'], 'integer'],
             [['username', 'password_hash', 'password_reset_token', 'access_token', 'email'], 'string', 'max' => 255],
             [['mobile_phone'], 'string', 'max' => 11],
@@ -454,6 +454,10 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             $role = $auth->getRole($roleName);
             $auth->assign($role, $this->id);
         }
+    }
+    public function aa()
+    {
+        return 'aa';
     }
     // ==== event-handlers end ====
 }
