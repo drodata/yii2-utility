@@ -455,9 +455,5 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             $auth->assign($role, $this->id);
         }
     }
-    public function aa()
-    {
-        return 'aa';
-    }
     // ==== event-handlers end ====
 }
