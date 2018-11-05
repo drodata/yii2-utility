@@ -37,10 +37,9 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
 {
     public function attributes()
     {
-        return parent::attributes();
-
-        // add related fields to searchable attributes
-        // return array_merge(parent::attributes(), ['author.name']);
+        return array_merge(parent::attributes(), [
+            // add related fields to searchable attributes
+        ]);
     }
     /**
      * @inheritdoc

@@ -90,6 +90,9 @@ class Contact extends \drodata\db\ActiveRecord
     public function rules()
     {
         return [
+            [['is_lite'], 'default', 'value' => 1],
+            [['is_main'], 'default', 'value' => 0],
+
             [['category', 'name', 'phone', 'address'], 'required'],
             [['category', 'is_lite', 'is_main', 'visible', 'user_id', 'province_id', 'city_id', 'district_id'], 'integer'],
             [['name'], 'string', 'max' => 45],
@@ -259,8 +262,20 @@ class Contact extends \drodata\db\ActiveRecord
     {
         return $this->hasOne(Region::className(), ['id' => 'province_id']);
     }
-    public function bb()
+
+    /**
+     * 返回联系方式详情
+     *
+     * @return string
+     */
+    public function getDetail()
     {
-        return 'bb';
+        $slices = [
+            $this->name,
+            $this->phone,
+            $this->address,
+        ];
+
+        return implode(', ', $slices);
     }
 }

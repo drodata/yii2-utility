@@ -8,7 +8,7 @@ use drodata\helpers\Html;
 ?>
 <div class="row">
     <div class="col-lg-6 col-lg-12">
-        <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'name')->textInput(['autofocus' => true, 'maxlength' => true]) ?>
     </div>
     <div class="col-lg-6 col-lg-12">
         <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
