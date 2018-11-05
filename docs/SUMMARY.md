@@ -13,6 +13,8 @@
     * [附件 Attachment](generic-model-attachment.md)
     * [活动记录 Activity](generic-model-activity.md)
     * [应付/预付 Money](generic-model-money.md)
+* [通用功能模块](generic-collection.md)
+    * [联系方式](generic-collection-contact.md)
 * [Gii 模板](gii/README.md)
     * [CRUD](gii/crud.md)
     * [特性](gii/feature.md)
