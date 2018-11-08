@@ -42,6 +42,9 @@ $this->params = [
 <?= "?>\n" ?>
 <div class=row "<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-update">
     <div class="col-md-12 col-lg-6 col-lg-offset-3">
+
+        <?= "<?= " ?>$this->render('@drodata/views/_alert')<?= " ?>\n" ?>
+
         <?= "<?= " ?>Box::widget([
             'content' => $this->render('_form', [
                 'model' => $model,

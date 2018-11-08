@@ -31,8 +31,6 @@ $this->registerJs($js);
 */
 ?>
 
-<?= "<?= " ?>$this->render('@drodata/views/_alert')<?= " ?>\n" ?>
-
 <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-form">
     <?= "<?php " ?>$form = ActiveForm::begin([
         'options' => [
