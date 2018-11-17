@@ -351,10 +351,10 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         // all data is safe, start to submit 
         if ($d['status']) {
             // 根据需要调整如 status 列值
-            $model->on(self::EVENT_AFTER_INSERT, [$model, 'insertItems'], ['items' => $items]);
+            $model->on(self::EVENT_AFTER_INSERT, [$model, 'insertItems'], $items);
 
             $model->on(self::EVENT_BEFORE_UPDATE, [$model, 'deleteItems']);
-            $model->on(self::EVENT_AFTER_UPDATE, [$model, 'insertItems'], ['items' => $items]);
+            $model->on(self::EVENT_AFTER_UPDATE, [$model, 'insertItems'], $items);
 
             if (!$model->save()) {
                 throw new Exception($model->stringifyErrors());
@@ -380,7 +380,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     {
         $items = $event->data;
 
-        foreach ($this->items as $item) {
+        foreach ($items as $item) {
             if (!$item->save()) {
                 throw new Exception($item->stringifyErrors());
             }
