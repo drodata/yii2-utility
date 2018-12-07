@@ -287,19 +287,22 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     /**
      * 搭配 getItemsDataProvider() 使用，
      * 计算累计值，可用在 grid footer 内
+     *
+     * @param bool $format 是否格式化
+     * @return number | string $format 为 true 时返回字符串
      */
-    public function getItemsSum()
+    public function getItemsSum($format = false)
     {
-        $amount = 0;
-
         if (empty($this->itemsDataProvider->models)) {
-            return $amount;
+            return 0;
         }
+
+        $amount = 0;
         foreach ($this->itemsDataProvider->models as $item) {
             $amount += $item->quantity;
         }
 
-        return $amount;
+        return $format ? Yii::$app->formatter->asInteger($amount) : $amount;
     }
 <?php endif; ?>
 

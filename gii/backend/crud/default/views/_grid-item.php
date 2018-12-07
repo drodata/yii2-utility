@@ -71,7 +71,7 @@ AMOUNT;
         [
             'attribute' => '{$column->name}',
             'format' => 'integer',
-            'footer' => '', // 自行在模型中声明方法计算总数 \$model->totalQuantity,
+            'footer' => '', // 自行在模型中声明方法计算总数 \$model->getItemsSum(\$format = true),
             'headerOptions' => ['class' => 'text-right'],
             'contentOptions' => [
                 'class' => 'text-right',
