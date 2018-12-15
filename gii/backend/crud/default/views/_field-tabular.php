@@ -36,7 +36,7 @@ $this->registerJs($js);
                 <tbody id="item-wrapper">
                     <?= "<?php" ?> if (!$model->isNewRecord): <?= "?>\n" ?>
                     <?= "<?=" ?> $this->render('_tabular-input', [
-                        'model' => $model,
+                        'items' => $model->items,
                         'form' => $form,
                     ]) <?= "?>\n" ?>
                     <?= "<?php" ?> endif; <?= "?>\n" ?>
