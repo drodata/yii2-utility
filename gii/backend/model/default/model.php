@@ -221,6 +221,10 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
                     'title' => '修改',
                     'icon' => 'pencil',
                 ];
+                //$visible = Yii::$app->user->can('x');
+                if (0) {
+                    $hint = 'xx';
+                }
                 break;
 
             case 'delete':
@@ -233,6 +237,10 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
                         'confirm' => '确定要执行删除操作吗？',
                     ],
                 ];
+                //$visible = Yii::$app->user->can('x');
+                if (0) {
+                    $hint = 'xx';
+                }
                 break;
 
             default:

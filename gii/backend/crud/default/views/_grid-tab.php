@@ -116,13 +116,19 @@ TEXT;
 ?>
         [
             'class' => 'drodata\grid\ActionColumn',
-            'template' => '{view}',
+            'template' => '{view} {update} {delete}',
             'contentOptions' => [
                 'style' => 'min-width:120px',
             ],
             'buttons' => [
                 'view' => function ($url, $model, $key) {
                     return $model->actionLink('view');
+                },
+                'update' => function ($url, $model, $key) {
+                    return $model->actionLink('update');
+                },
+                'delete' => function ($url, $model, $key) {
+                    return $model->actionLink('delete');
                 },
             ],
         ],
