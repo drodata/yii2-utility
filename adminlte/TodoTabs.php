@@ -78,13 +78,13 @@ class TodoTabs extends \yii\bootstrap\Widget
             $items[] = [
                 'label' => $label . $badge,
                 'encode' => false,
-                'active' => $_GET['tab'] == $tab ? true : false,
+                'active' => isset($_GET['tab']) && $_GET['tab'] == $tab ? true : false,
                 'content' => $this->render($view, $viewParams),
                 'visible' => $visible,
             ];
         }
         
-        if (count($items) > 0 && !$_GET['tab']) {
+        if (count($items) > 0 && !isset($_GET['tab'])) {
             $items[0]['active'] = true;
         }
 
