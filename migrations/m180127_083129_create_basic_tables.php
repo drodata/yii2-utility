@@ -97,13 +97,15 @@ class m180127_083129_create_basic_tables extends yii\db\Migration
 
         /**
          * 指令表
-         * category: 'app', 'user', 'plugin
+         * scope: 'app', 'user'
+         * category:
          * format: 'integer', 'decimal', 'switch', 'array', 'json'
          */
         $this->createTable('{{%directive}}', [
             'code' => $this->string(45)->notNull()->comment('指令符'),
-            'name' => $this->string(100)->notNull()->comment('名称'),
-            'category' => $this->string(45)->notNull()->comment('类别'),
+            'name' => $this->string(45)->notNull()->comment('名称'),
+            'scope' => $this->string(10)->notNull()->comment('作用范围'),
+            'category' => $this->string(45)->null()->comment('类别'),
             'format' => $this->string(10)->notNull()->comment('值格式'),
             'description' => $this->text()->comment('说明'),
             'position' => $this->boolean()->notNull()->comment('位置排序'),
