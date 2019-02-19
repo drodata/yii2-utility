@@ -30,6 +30,10 @@ echo "<?php\n";
 namespace <?= StringHelper::dirname(ltrim($generator->controllerClass, '\\')) ?>;
 
 use Yii;
+use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use <?= ltrim($generator->modelClass, '\\') ?>;
 <?php if (!empty($generator->searchModelClass)): ?>
 use <?= ltrim($generator->searchModelClass, '\\') . (isset($searchModelAlias) ? " as $searchModelAlias" : "") ?>;
@@ -37,10 +41,6 @@ use <?= ltrim($generator->searchModelClass, '\\') . (isset($searchModelAlias) ? 
 use yii\data\ActiveDataProvider;
 <?php endif; ?>
 use <?= ltrim($generator->baseControllerClass, '\\') ?>;
-use yii\web\NotFoundHttpException;
-use yii\web\ForbiddenHttpException;
-use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
 
 /**
  * <?= $controllerClass ?> implements the CRUD actions for <?= $modelClass ?> model.
@@ -75,11 +75,12 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['xxx'], // 禁止访问的放在最前面
-                        'allow' => false,
+                        'actions' => ['create', 'update', 'delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['create', 'view', 'modal-view', 'update', 'delete'],
+                        'actions' => ['index', 'view', 'modal-view'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
