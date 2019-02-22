@@ -28,6 +28,10 @@ class Generator extends \yii\gii\generators\model\Generator
     public $baseClass = 'drodata\db\ActiveRecord';
 
     /**
+     * @var boolean 是否是关联模型。true 时将插入特有的代码
+     */
+    public $isJunction = false;
+    /**
      * @var boolean 是否有子条目，true 时将自动插入 getItemsDataProvider() 等代码模板
      */
     public $hasItems = false;
@@ -59,7 +63,7 @@ class Generator extends \yii\gii\generators\model\Generator
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['hasItems', 'ajaxSubmit'], 'boolean'],
+            [['hasItems', 'ajaxSubmit', 'isJunction'], 'boolean'],
         ]);
     }
     /**
@@ -69,6 +73,7 @@ class Generator extends \yii\gii\generators\model\Generator
     {
         return array_merge(parent::attributeLabels(), [
             'hasItems' => '模型内包含子条目',
+            'isJunction' => '关联表模型',
             'ajaxSubmit' => 'Ajax submit',
         ]);
     }
@@ -81,6 +86,7 @@ class Generator extends \yii\gii\generators\model\Generator
         return array_merge(parent::hints(), [
             'hasItems' => '勾选将自动生成相关代码模板',
             'ajaxSubmit' => '通过 ajax submit 方式提交表单',
+            'isJunction' => '勾选将自动生成关联模型特有的代码（例如 deleteJunctionModel()）',
         ]);
     }
 }

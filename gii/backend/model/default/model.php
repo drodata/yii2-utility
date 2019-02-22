@@ -51,6 +51,9 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     {
         parent::init();
         // custom code follows
+<?php if ($generator->isJunction): ?>
+        $this->on(self::EVENT_AFTER_DELETE, [$this, 'deleteJunctionModel']);
+<?php endif; ?>
     }
 
     /**
@@ -414,6 +417,22 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
                 throw new Exception($item->stringifyErrors());
             }
         }
+    }
+<?php endif; ?>
+<?php if ($generator->isJunction): ?>
+    /**
+     * Delete the junction record before deleting
+     *
+     * Triggered by self::EVENT_AFTER_DELETE
+     */
+    public function deleteJunctionModel($event)
+    {
+        /** NOTE: Uncomment and implement
+         *
+        if (!$this->analysis->delete()) {
+            throw new \yii\db\Exception('Failed to delete.');
+        }
+         */
     }
 <?php endif; ?>
     // ==== event-handlers end ====

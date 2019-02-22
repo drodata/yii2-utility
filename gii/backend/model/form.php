@@ -15,6 +15,7 @@ echo $form->field($generator, 'useTablePrefix')->checkbox();
 
 echo $form->field($generator, 'hasItems')->checkbox();
 echo $form->field($generator, 'ajaxSubmit')->checkbox();
+echo $form->field($generator, 'isJunction')->checkbox();
 
 echo $form->field($generator, 'generateRelations')->dropDownList([
     Generator::RELATIONS_NONE => 'No relations',
