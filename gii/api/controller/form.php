@@ -4,5 +4,6 @@
 /* @var $generator yii\gii\generators\controller\Generator */
 
 echo $form->field($generator, 'controllerClass');
+echo $form->field($generator, 'modelClass');
 echo $form->field($generator, 'actions');
 echo $form->field($generator, 'baseClass');

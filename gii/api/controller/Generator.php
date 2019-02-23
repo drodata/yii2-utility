@@ -12,6 +12,7 @@ use yii\gii\CodeFile;
 use yii\helpers\Html;
 use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
+use yii\helpers\Markdown;
 
 /**
  * This generator will generate a controller and one or a few action view files.
@@ -29,7 +30,7 @@ class Generator extends \yii\gii\Generator
     /**
      * @var string the controller class name
      */
-    public $controllerClass;
+    public $controllerClass = 'api\controllers\\';
     /**
      * @var string the base class of the controller
      */
@@ -38,6 +39,10 @@ class Generator extends \yii\gii\Generator
      * @var string list of action IDs separated by commas or spaces
      */
     public $actions = '';
+    /**
+     * @var string 对应的 ActiveRecord 模型类
+     */
+    public $modelClass = 'backend\models\\';
 
 
     /**
@@ -63,11 +68,11 @@ class Generator extends \yii\gii\Generator
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['controllerClass', 'actions', 'baseClass'], 'filter', 'filter' => 'trim'],
-            [['controllerClass', 'baseClass'], 'required'],
+            [['controllerClass', 'actions', 'baseClass', 'modelClass'], 'filter', 'filter' => 'trim'],
+            [['controllerClass', 'baseClass', 'modelClass'], 'required'],
             ['controllerClass', 'match', 'pattern' => '/^[\w\\\\]*Controller$/', 'message' => 'Only word characters and backslashes are allowed, and the class name must end with "Controller".'],
             ['controllerClass', 'validateNewClass'],
-            ['baseClass', 'match', 'pattern' => '/^[\w\\\\]*$/', 'message' => 'Only word characters and backslashes are allowed.'],
+            [['baseClass', 'modelClass'], 'match', 'pattern' => '/^[\w\\\\]*$/', 'message' => 'Only word characters and backslashes are allowed.'],
             ['actions', 'match', 'pattern' => '/^[a-z][a-z0-9\\-,\\s]*$/', 'message' => 'Only a-z, 0-9, dashes (-), spaces and commas are allowed.'],
         ]);
     }
@@ -80,6 +85,7 @@ class Generator extends \yii\gii\Generator
         return [
             'baseClass' => 'Base Class',
             'controllerClass' => 'Controller Class',
+            'modelClass' => 'Model Class',
             'actions' => 'Action IDs',
         ];
     }
@@ -112,6 +118,7 @@ class Generator extends \yii\gii\Generator
                 provide a fully qualified namespaced class (e.g. <code>app\controllers\PostController</code>),
                 and class name should be in CamelCase ending with the word <code>Controller</code>. Make sure the class
                 is using the same namespace as specified by your application\'s controllerNamespace property.',
+            'modelClass' => 'Related ActiveRecord class',
             'actions' => 'Provide one or multiple action IDs to generate empty action method(s) in the controller. Separate multiple action IDs with commas or spaces.
                 Action IDs should be in lower case. For example:
                 <ul>
@@ -130,15 +137,14 @@ class Generator extends \yii\gii\Generator
      */
     public function successMessage()
     {
-        $actions = $this->getActionIDs();
-        if (in_array('index', $actions)) {
-            $route = $this->getControllerID() . '/index';
-        } else {
-            $route = $this->getControllerID() . '/' . reset($actions);
-        }
-        $link = Html::a('try it now', Yii::$app->getUrlManager()->createUrl($route), ['target' => '_blank']);
+        $message = <<<MSG
+控制器已创建，接下来，到 `config/main.php` 内配置 `urlManager` 组件，增加类似下面的规则：
 
-        return "The controller has been generated successfully. You may $link.";
+```
+['class' => 'yii\rest\UrlRule', 'controller' => 'brand'],
+```
+MSG;
+        return Markdown::process($message);
     }
 
     /**
@@ -192,14 +198,5 @@ class Generator extends \yii\gii\Generator
     {
         $name = StringHelper::basename($this->controllerClass);
         return ltrim(substr($this->controllerClass, 0, - (strlen($name) + 1)), '\\');
-    }
-
-    /**
-     * @return string 根据控制器的命名推算出对应的模型名称
-     */
-    public function getControllerModel()
-    {
-        $name = StringHelper::basename($this->controllerClass);
-        return substr($name, 0, -10);
     }
 }

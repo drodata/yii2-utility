@@ -18,11 +18,11 @@ use Yii;
 use yii\rest\ActiveController;
 use yii\data\ActiveDataProvider;
 use yii\filters\auth\QueryParamAuth;
-use backend\models\<?= StringHelper::basename($generator->controllerModel) ?>;
+use <?= trim($generator->modelClass) ?>;
 
 class <?= StringHelper::basename($generator->controllerClass) ?> extends <?= '\\' . trim($generator->baseClass, '\\') . "\n" ?>
 {
-    public $modelClass = 'backend\models\<?= StringHelper::basename($generator->controllerModel) ?>';
+    public $modelClass = '<?= trim($generator->modelClass) ?>';
 
     public function behaviors()
     {
@@ -44,6 +44,14 @@ class <?= StringHelper::basename($generator->controllerClass) ?> extends <?= '\\
     
         // customize the data provider preparation with the "prepareDataProvider()" method
         //$actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
+
+        /**
+         * Uncomment to add your own standalone actions.
+         *
+        $actions['create'] = [
+            'class' => 'api\actions\<?= StringHelper::basename($generator->modelClass) ?>CreateAction',
+        ];
+        */
     
         return $actions;
     }
@@ -52,7 +60,7 @@ class <?= StringHelper::basename($generator->controllerClass) ?> extends <?= '\\
      * 覆盖默认的 index action dataprovider
     public function prepareDataProvider()
     {
-        $query = <?= StringHelper::basename($generator->controllerModel) ?>::find();
+        $query = <?= StringHelper::basename($generator->modelClass) ?>::find();
         return new ActiveDataProvider([
             'query' => $query,
         ]);
