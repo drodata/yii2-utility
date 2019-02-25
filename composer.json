@@ -19,8 +19,8 @@
 
     "require": {
         "yiisoft/yii2": "*",
-        "fortawesome/font-awesome": "*",
-		"bower-asset/bootstrap": "3.3.* | 3.2.* | 3.1.*",
+        "fortawesome/font-awesome": "4.7.0",
+        "bower-asset/bootstrap": "3.3.* | 3.2.* | 3.1.*",
         "npm-asset/bootstrap-tagsinput": "0.7.1"
     },
 
