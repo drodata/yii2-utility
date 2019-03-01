@@ -281,20 +281,31 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     }
      */
 
-<?php if ($generator->hasItems): ?>
     /**
-     * 无需 sort 和 pagination 的 data provider
-     *
+     * 通用的、无需 sort 和 pagination 的 data provider
+     * @param string $key 
      */
-    public function getItemsDataProvider()
+    public function getDataProvider($key)
     {
+        switch ($key) {
+<?php if ($generator->hasItems): ?>
+            case 'items':
+                $query = $this->getItems();
+                break;
+<?php endif; ?>
+            default:
+                $query = null;
+                break;
+        }
+
         return new ActiveDataProvider([
-            'query' => $this->getItems(),
+            'query' => $query,
             'pagination' => false,
             'sort' => false,
         ]);
     }
 
+<?php if ($generator->hasItems): ?>
     /**
      * 搭配 getItemsDataProvider() 使用，
      * 计算累计值，可用在 grid footer 内

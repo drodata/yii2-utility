@@ -23,6 +23,7 @@ echo "<?php\n";
     'itemOptions' => ['class' => 'col-sm-12 col-md-6 col-lg-4'],
     'summary' => '',
     'summaryOptions' => ['class' => 'col-xs-12'],
+    'emptyText' => null,
     'emptyTextOptions' => ['class' => 'col-xs-12'],
     'layout' => "{summary}\n{items}\n<div class=\"col-xs-12\">{pager}</div>",
 ]) ?>
