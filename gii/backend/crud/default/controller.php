@@ -195,11 +195,13 @@ if (count($pks) === 1) {
     {
         $model = new <?= $modelClass ?>();
 
+<?php if (!$generator->ajaxSubmit): ?>
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', '<?= $generator->modelNameCn ?>已创建');
             return $this->redirect('index');
             //return $this->redirect(['view', <?= $urlParams ?>]);
         }
+<?php endif; ?>
 
         return $this->render('create', [
             'model' => $model,
@@ -228,10 +230,12 @@ if (count($pks) === 1) {
     {
         $model = $this->findModel(<?= $actionParams ?>);
 
+<?php if (!$generator->ajaxSubmit): ?>
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', '修改已保存');
             return $this->redirect('index');
         }
+<?php endif; ?>
 
         return $this->render('update', [
             'model' => $model,

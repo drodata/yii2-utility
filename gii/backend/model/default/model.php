@@ -51,6 +51,9 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     {
         parent::init();
         // custom code follows
+<?php if ($generator->hasItems): ?>
+        $this->on(self::EVENT_BEFORE_DELETE, [$this, 'deleteItems']);
+<?php endif; ?>
 <?php if ($generator->isJunction): ?>
         $this->on(self::EVENT_AFTER_DELETE, [$this, 'deleteJunctionModel']);
 <?php endif; ?>
@@ -307,24 +310,60 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
 
 <?php if ($generator->hasItems): ?>
     /**
-     * 搭配 getItemsDataProvider() 使用，
-     * 计算累计值，可用在 grid footer 内
+     * Return quantity sum of items
      *
-     * @param bool $format 是否格式化
-     * @return number | string $format 为 true 时返回字符串
+     * @param string|false $format 'integer', 'decimal' etc, raw number is returned when $format is false
+     * @return number|string string is returned when $format is true
      */
-    public function getItemsSum($format = false)
+    public function getQuantity($format = false)
     {
-        if (empty($this->itemsDataProvider->models)) {
+        return $this->getItemsSum('quantity', $format);
+    }
+    /**
+     * Return charge sum of items
+     *
+     * @param string|false $format 'integer', 'decimal' etc, raw number is returned when $format is false
+     * @return number|string string is returned when $format is true
+     */
+    public function getCharge($format = false)
+    {
+        return $this->getItemsSum('charge', $format);
+    }
+
+    /**
+     * Caculate items sum.
+     *
+     * @param string $key 'quantity' or 'charge'
+     * @param string|false $format 'integer', 'decimal' etc, raw number is returned when $format is false
+     * @return number|string string is returned when $format is true
+     */
+    protected function getItemsSum($key, $format)
+    {
+        if (empty($this->getDataProvider('items')->models)) {
             return 0;
         }
 
-        $amount = 0;
-        foreach ($this->itemsDataProvider->models as $item) {
-            $amount += $item->quantity;
+        $sum = 0;
+        foreach ($this->getDataProvider('items')->models as $item) {
+            if ($key == 'quantity') {
+                $sum += $item->quantity;
+            } elseif ($key == 'charge') {
+                $sum += $item->price * $item->quantity;
+            }
         }
 
-        return $format ? Yii::$app->formatter->asInteger($amount) : $amount;
+        if (!$format) {
+            return $sum;
+        }
+
+        switch ($format) {
+            case 'integer':
+                return Yii::$app->formatter->asInteger($sum);
+                break;
+            case 'decimal':
+                return Yii::$app->formatter->asDecimal($sum);
+                break;
+        }
     }
 <?php endif; ?>
 
