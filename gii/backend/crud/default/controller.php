@@ -255,4 +255,24 @@ if (count($pks) === 1) {
 
         return $this->redirect(Yii::$app->request->referrer);
     }
+
+    /**
+     * ACTION TEMPLATE. Make changes as your need.
+     * Operate an existing <?= $modelClass ?> model.
+     *
+     * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
+     * @return mixed
+     */
+    public function actionDo(<?= $actionParams ?>)
+    {
+        if (Yii::$app->request->isGet) {
+            Yii::$app->session->set('redirectUrl', Yii::$app->request->referrer);
+        }
+
+        list($success, $hint) = $this->findModel(<?= $actionParams ?>)->do();
+
+        Yii::$app->session->setFlash($success ? 'success' : 'warning', $hint);
+
+        return $this->redirect(Yii::$app->session->get('redirectUrl');
+    }
 }

@@ -53,19 +53,26 @@ $this->registerJs($js);
 
 ?>
 <div class="row <?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-form">
-    <div class="col-md-12 col-lg-6">
-        <?= "<?php " ?>Box::begin([
-        ]); <?= "?>\n" ?>
-            <?= "<?php " ?>$form = ActiveForm::begin(); ?>
+    <div class="col-md-12 col-lg-6 col-lg-offset-3">
+    <?= "<?= " ?>$this->render('@drodata/views/_alert') <?= " ?>\n" ?>
+    <?= "<?php " ?>Box::begin([
+        'title' => $this->title,
+    ]); <?= "?>\n" ?>
+            <?= "<?php " ?>$form = ActiveForm::begin([
+                'options' => [
+                    'class' => 'prevent-duplicate-submission',
+                    // 如果表单需要上传文件，去掉下面一行的注释
+                    //'enctype' => 'multipart/form-data',
+                ],
+            ]); ?>
                 <!--
                 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">$</div>{input}</div>'
-                echo $form->field($model, 'type')->radioList(Lookup::items('AdjustType'));
                 -->
+                <?= "<?= " ?>$form->field($model, 'type')->radioList(Lookup::items('type')) ?>
                 <div class="form-group">
                     <?= "<?= " ?>Html::submitButton('保存', ['class' => 'btn btn-primary']) ?>
                 </div>
             <?= "<?php " ?>ActiveForm::end(); ?>
-        <?= "<?php " ?>Box::end(); ?>
-        <?= "<?= " ?>$this->render('@drodata/views/_alert') <?= " ?>\n" ?>
+    <?= "<?php " ?>Box::end(); ?>
     </div>
 </div>
