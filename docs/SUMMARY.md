@@ -3,6 +3,7 @@
 * [Introduction](README.md)
 * [公用视图](view.md)
 * [行为](behavior.md)
+    * [BlameableBehavior](behavior-blameable.md)
     * [LookupBehavior](behavior-lookup.md)
 * [通用模型](generic-model.md)
     * [字典 Lookup](generic-model-lookup.md)
