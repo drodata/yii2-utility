@@ -14,7 +14,7 @@ use backend\models\Lookup;
 
 <?= "<?php" ?> foreach ($items as $token => $item): <?= "?>\n" ?>
 <tr class="itemRow" data-key="<?= "<?=" ?> $token <?= "?>" ?>">
-    <td><?= "<?=" ?> $token + 1 <?= "?>" ?></td>
+    <td class="serial-number"><?= "<?=" ?> $token + 1 <?= "?>" ?></td>
     <td>
         <?= "<?=" ?> $form->field($item, "[$token]recipe_id")->label(false)->dropDownList(Lookup::recipes(), [
             'style' => 'min-width:420px',
