@@ -273,6 +273,6 @@ if (count($pks) === 1) {
 
         Yii::$app->session->setFlash($success ? 'success' : 'warning', $hint);
 
-        return $this->redirect(Yii::$app->session->get('redirectUrl');
+        return $this->redirect(Yii::$app->session->get('redirectUrl'));
     }
 }

@@ -3,7 +3,7 @@
 use yii\db\Query;
 
 /**
- * 通用的地址模组
+ * 通用的地址模组 包括 contact 和 region 两个表
  */
 class m181102_014003_create_table_region_and_contact extends yii\db\Migration
 {

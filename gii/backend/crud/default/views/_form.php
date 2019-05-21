@@ -23,6 +23,7 @@ use drodata\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use backend\models\Lookup;
 use kartik\select2\Select2;
+?>
 
 <?= "<?= " ?>$this->render('_uex', ['model' => $model]) ?>
 
