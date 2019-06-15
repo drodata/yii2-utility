@@ -47,8 +47,16 @@ class SubmitAction extends \yii\base\Action
             $column => Yii::$app->request->post($column),
         ]);
 
+        $output = null;
+
+        if ($lookup === '1') {
+            $output = $record->lookup($column);
+        } elseif (method_exists($record, 'getReadableAttribute')) {
+            $output = $record->getReadableAttribute($column);
+        }
+
         return [
-            'output' => $lookup === '1' ? $record->lookup($column) : null,
+            'output' => $output,
             'message' => '',
         ];
     }
