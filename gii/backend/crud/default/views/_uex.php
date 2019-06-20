@@ -57,10 +57,12 @@ $(document).on('click', '.delete-row', function(){
 af.submit(function(e) {
     e.preventDefault();
     e.stopImmediatePropagation();
+    submitBtn.prop('disabled', true);
 
     $.post(APP.baseUrl + '<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>/ajax-submit', af.serialize(), function(response) {
         if (!response.status) {
             af.displayErrors(response)
+            submitBtn.prop('disabled', false);
             return false;
         }
 
