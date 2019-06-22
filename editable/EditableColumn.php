@@ -10,30 +10,34 @@ use ReflectionClass;
 
 /**
  *
-        [
-            'class' => 'drodata\editable\EditableColumn',
-            'attribute' => 'urgency_level',
-            'filter' => Lookup::items('demand-urgency-level'),
-            'format' => 'raw',
-            'value' => function ($model, $key, $index, $column) {
-                return $model->lookup('urgency_level');
-            },
-            'contentOptions' => [ 'style' => 'width:80px;min-width:80px' ],
-            'editOptions' => [
-                'editable' => true,
-                'inputType' => 'dropDownList',
-                'modelClass' => '\backend\models\Demand',
-                'lookup' => 1,
-            ],
-
-        ],
-    */
+ * ```php
+ * [
+ *     'class' => 'drodata\editable\EditableColumn',
+ *     'attribute' => 'urgency_level',
+ *     'filter' => Lookup::items('demand-urgency-level'),
+ *     'format' => 'raw',
+ *     'value' => function ($model, $key, $index, $column) {
+ *         return $model->lookup('urgency_level');
+ *     },
+ *     'contentOptions' => [ 'style' => 'width:80px;min-width:80px' ],
+ *     'editOptions' => [
+ *         'editable' => function ($model, $key, $index, $column) {
+ *             return Yii::$app->user->can('purchaseDirector') && $model->isSupplier;
+ *         },
+ *         'inputType' => 'dropDownList',
+ *         'modelClass' => '\backend\models\Demand',
+ *         'lookup' => 1,
+ *     ],
+ * 
+ * ],
+ * ```
+ */
 class EditableColumn extends DataColumn
 {
     /**
      * @var array 存储所有相关配置选项
      *
-     * - `editable` bool 是否支持编辑
+     * - `editable` bool|Closure 是否支持编辑，当值是 closure 时， signature 格式同 DataColumn $value
      * - `inputType` string (default `textInput`) 参考 Editable::$inputType
      * - `modelClass` string fully qualified model class
      * - `column` string column name
@@ -73,6 +77,9 @@ class EditableColumn extends DataColumn
         }
 
         $editable = ArrayHelper::getValue($this->editOptions, 'editable', true);
+        if (is_callable($editable)) {
+            $editable = call_user_func($editable, $model, $key, $index, $this);
+        }
 
         return $editable ? $this->renderEditableColumn($model, $key, $index, $rawValue) : $rawValue;
     }
