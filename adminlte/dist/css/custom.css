@@ -129,3 +129,13 @@
  ** ====================== */
 .pointer {cursor: pointer}
 
+.tag {
+    display: inline-block;
+    padding: .4em .5em;
+    margin: 3px;
+}
+/* stackoverflow style */
+.tag-primary {
+    background-color:#E1ECF4;
+    color: #39739d;
+}
