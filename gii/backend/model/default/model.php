@@ -220,6 +220,9 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
                     'icon' => 'eye',
                     // disable modal view feature by commenting the following line.
                     'class' => 'modal-view',
+                    'data' => [
+                        'modal' => '<?= Inflector::camel2id($generator->modelClass) ?>-view-modal',
+                    ],
                 ];
                 break;
             case 'update':

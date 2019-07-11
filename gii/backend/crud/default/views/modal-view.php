@@ -24,7 +24,7 @@ use drodata\widgets\Box;
 use backend\models\Lookup;
 
 Modal::begin([
-    'id' => 'view-modal',
+    'id' => '<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-view-modal',
     'header' => '<?= $modelNameCn ?>详情',
     'headerOptions' => [
         'class' => 'h3 text-center',
