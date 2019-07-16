@@ -50,8 +50,9 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     public function init()
     {
         parent::init();
-        // custom code follows
+
 <?php if ($generator->hasItems): ?>
+        //$this->on(self::EVENT_AFTER_INSERT, [$this, 'insertItems']);
         $this->on(self::EVENT_BEFORE_DELETE, [$this, 'deleteItems']);
 <?php endif; ?>
 <?php if ($generator->isJunction): ?>
@@ -173,6 +174,31 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     /**
      * @inheritdoc
      */
+    public function fields()
+    {
+        $fields = parent::fields();
+
+        // remove fields that contain sensitive information
+        //unset($fields['stock'], $fields['threshold'], $fields['status'], $fields['visible']);
+
+        return ArrayHelper::merge($fields, [
+            /*
+            'name' => 'display_name',
+            'uprice' => function ($model) {
+                return $model->price->value;
+            }
+            */
+        ]);
+    }
+    public function extraFields()
+    {
+        // fill relation names if needed. e.g. ['spu', 'price']
+        return [];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels()
     {
         return [
@@ -183,7 +209,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     }
 
     /**
-     * 反回操作链接
+     * 返回操作链接
      *
      * @param string $action action name
      * @param array $configs 参考 Html::actionLink()
