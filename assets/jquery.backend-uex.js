@@ -5,9 +5,8 @@ $(function(){
      *
      * 使用：在所需的表单上增加 .prevent-duplicate-submission 类名
      */
-    jQuery('form.prevent-duplicate-submission').on('beforeSubmit', function(event){
+    $(document).on('beforeSubmit', 'form.prevent-duplicate-submission', function () {
         if(jQuery(this).data('submitting')) {
-            event.preventDefault();
             return false
         }
     
