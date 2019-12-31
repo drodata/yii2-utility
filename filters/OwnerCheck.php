@@ -20,6 +20,7 @@ use yii\web\ForbiddenHttpException;
  *     'only' => [
  *         'view', 'update', 'delete',
  *     ],
+ *     'whitelist' => ['admin'],
  * ],
  * ```
  *
@@ -42,6 +43,11 @@ class OwnerCheck extends ActionFilter
     public $errorMessage = '只有负责人才能操作';
 
     /**
+     * @var array 可以跳过验证的角色白名单 e.g. ['admin', 'root']
+     */
+    public $whitelist = [];
+
+    /**
      * {@inheritdoc}
      */
     public function init()
@@ -58,6 +64,10 @@ class OwnerCheck extends ActionFilter
      */
     public function beforeAction($action)
     {
+        if ($this->checkWhiteList()) {
+            return true;
+        }
+
         $model = $this->findModel($action);
 
         $ownerValue = $this->findOwnerValue($model);
@@ -115,5 +125,24 @@ class OwnerCheck extends ActionFilter
         }
 
         return $modelClass::findOne($map);
+    }
+
+    /**
+     * 检查白名单，决定是否允许跳过验证
+     *
+     * @return bool 
+     */
+    protected function checkWhiteList()
+    {
+        if (empty($this->whitelist)) {
+            return false;
+        }
+
+        $enable = false;
+        foreach ($this->whitelist as $roleName) {
+            $enable = $enable || Yii::$app->user->can($roleName);
+        }
+
+        return $enable;
     }
 }
