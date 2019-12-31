@@ -23,7 +23,7 @@ namespace <?= $generator->ns ?>;
 use Yii;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
-use yii\base\InvalidParamException;
+use yii\base\InvalidArgumentException;
 use yii\data\ActiveDataProvider;
 use yii\db\Exception;
 use drodata\helpers\Html;
@@ -364,11 +364,11 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
 
         $sum = 0;
         foreach ($this->getDataProvider('items')->models as $item) {
-            if ($key == 'quantity') {
-                $sum += $item->quantity;
-            } elseif ($key == 'charge') {
-                $sum += $item->price * $item->quantity;
+            if (!isset($item->$key)) {
+                throw new InvalidArgumentException($key . 'is not defined.');
             }
+
+            $sum += $item->quantity;
         }
 
         if (!$format) {
