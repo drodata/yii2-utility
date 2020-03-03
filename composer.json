@@ -21,8 +21,7 @@
         "yiisoft/yii2": "*",
         "fortawesome/font-awesome": "4.7.0",
         "bower-asset/bootstrap": "3.3.* | 3.2.* | 3.1.*",
-        "npm-asset/bootstrap-tagsinput": "0.7.1",
-        "npm-asset/yaireo--tagify": "2.22.3"
+        "npm-asset/bootstrap-tagsinput": "0.7.1"
     },
 
     "autoload": {

@@ -1,19 +1,19 @@
 <?php
 /**
- * Asset for 
+ * Asset for https://github.com/yairEO/tagify
  */
 namespace drodata\tagify;
 
-use yii\web\AssetBundle;
+use drodata\web\AssetBundle;
 
 class TagifyAsset extends AssetBundle
 {
-    public $sourcePath = '@npm/yaireo--tagify/dist';
-    public $css = [
-        'tagify.css'
-    ];
+    public $sourcePath = '@drodata/tagify';
     public $js = [
         'jQuery.tagify.min.js'
+    ];
+    public $css = [
+        'tagify.css'
     ];
     public $depends = [
         'yii\web\JqueryAsset',
