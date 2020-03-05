@@ -29,6 +29,7 @@ use kartik\select2\Select2;
 
 <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-form">
     <?= "<?php " ?>$form = ActiveForm::begin([
+        'action' => '', // 默认。表示当前 url
         'options' => [
             'class' => 'prevent-duplicate-submission',
             // 如果表单需要上传文件，去掉下面一行的注释
