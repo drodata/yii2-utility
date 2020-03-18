@@ -48,7 +48,7 @@ Modal::begin([
         <?= "?>\n" ?>
     </div>
 <?php else: ?>
-    <div class="col-xs-12">
+    <div class="col-xs-12 table-responsive">
         <?= "<?= " ?>$this->render('@drodata/views/_alert') <?= "?>\n" ?>
         <?= "<?php\n" ?>
         echo $this->render('_detail-action', ['model' => $model]);
