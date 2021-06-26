@@ -37,6 +37,9 @@
     /* 手机上大按钮 */
 .operation-group .btn-block { margin: 10px 0; }
 
+    /* Fixed layout table */
+.table-fixed {table-layout:fixed;}
+
 
 /** ======================
  *  AdminLTE
