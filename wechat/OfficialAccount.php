@@ -30,6 +30,7 @@ class OfficialAccount extends EasyWechat
     public $token;
     public $debug = true;
     public $logOptions = [];
+    public $responseType = 'object';
 
     /**
      *  'scopes'   => ['snsapi_userinfo'],
@@ -56,6 +57,7 @@ class OfficialAccount extends EasyWechat
             'log' => $this->logOptions,
             'debug'  => $this->debug,
             'oauth' => $this->oauthOptions,
+            'response_type' => $this->responseType,
         ]);
 
         $this->_app = $app;
