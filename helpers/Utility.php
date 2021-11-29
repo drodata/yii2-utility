@@ -38,13 +38,13 @@ class Utility
      * @param float|string $a 要比较的第一个操作数. 注意：如果要比较的数字是动态获取的值，一定要考虑值为 0 的可能性，
      * 所以第一个参数最好放置静态值，即不可能是 0 的值，防止除数为 0 的情况出现
      * @param float|string $b 要比较的第一个操作数
-     * @param float $precision 精度
+     * @param float $epsilon 精度
      * @return bool
      *
      */
-    public static function isFloatEqual($a, $b, $precision = 0.0001) 
+    public static function isFloatEqual($a, $b, $epsilon = 0.00001) 
     {
-        return abs(($a - $b) / $a) < $precision ;
+        return abs($a - $b) < $precision;
     }
 
     /**
