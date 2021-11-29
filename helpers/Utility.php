@@ -44,7 +44,7 @@ class Utility
      */
     public static function isFloatEqual($a, $b, $epsilon = 0.00001) 
     {
-        return abs($a - $b) < $precision;
+        return abs($a - $b) < $epsilon;
     }
 
     /**
