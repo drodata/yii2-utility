@@ -73,11 +73,7 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
     {
         $query = <?= isset($modelAlias) ? $modelAlias : $modelClass ?>::find();
         /*
-        $query = <?= isset($modelAlias) ? $modelAlias : $modelClass ?>::find()->joinWith(['company']);
-            ->where(['{{%company}}.category' => Company::CATEGORY_LOGISTICS]);
-        if (Yii::$app->user->can('saler') && !Yii::$app->user->can('saleDirector')) {
-            $query->andWhere(['{{%interaction}}.created_by' => Yii::$app->user->id]);
-        }
+        $query = <?= isset($modelAlias) ? $modelAlias : $modelClass ?>::find()->joinWith(['company'])->permitted();
         */
 
         // add conditions that should always apply here

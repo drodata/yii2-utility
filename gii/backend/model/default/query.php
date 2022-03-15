@@ -37,6 +37,16 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->queryBaseClass, '\\
         return $this->andWhere(['{{%cash}}.created_by' => Yii::$app->user->id]);
     }
 
+    public function active()
+    {
+        return $this->andWhere(['{{%cash}}.created_by' => Yii::$app->user->id]);
+    }
+
+    public function permitted()
+    {
+        return $this->andWhere(['{{%cash}}.created_by' => Yii::$app->user->id]);
+    }
+
     /**
      * @inheritdoc
      * @return <?= $modelFullClassName ?>[]|array
