@@ -10,7 +10,7 @@ echo "<?php\n";
 ?>
 
 /**
- * 不带分页的 grid 模板，常用显示子条目，例如一个订单所有订货明细
+ * Grid that shown in parent model detail view
  * 与 _grid 的区别有: 
  * - dataProvider 直接通过模型的 getter (如 getDataProvider('items')) 获取，不使用 SearchModel
  * - 用到 `footer` 显示累加金额
@@ -28,7 +28,7 @@ use <?= ltrim($generator->modelClass, '\\') ?>;
 echo GridView::widget([
     'dataProvider' => $model->getDataProvider('items'),
     'showFooter' => !empty($model->getDataProvider('items')->models),
-    'tableOptions' => ['class' => 'table table-condenced table-striped'],
+    'tableOptions' => ['class' => 'table table-condenced table-hover'],
     'summary' => '',
     'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
@@ -42,7 +42,6 @@ foreach ($tableSchema->columns as $column) {
             echo <<<LOOKUP
         [
             'attribute' => '{$column->name}',
-            'filter' => Lookup::items($lookupType),
             'format' => 'raw',
             'value' => function (\$model, \$key, \$index, \$column) {
                 return \$model->{$column->name};
@@ -86,7 +85,6 @@ EOF;
         [
             'attribute' => '{$column->name}',
             'format' => 'datetime',
-            'filter' => Lookup::dateRangeFilter(\$searchModel, '{$column->name}'),
         ],
 
 DATETIME;
@@ -109,7 +107,7 @@ TEXT;
             },
             'headerOptions' => ['class' => 'text-right'],
             'contentOptions' => [
-                'style' => 'min-width:120px',
+                'style' => 'width:100px;min-width:100px',
             ],
         ],
     ],

@@ -33,30 +33,6 @@ $this->params = [
 ];
 <?= "?>\n" ?>
 <div class="row <?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-view">
-<?php if ($generator->enableResponsive): ?>
-    <div class="col-xs-12 visible-xs-block">
-        <?= "<?php\n" ?>
-        Box::begin([
-            'title' => $this->title,
-            'tools' => [],
-        ]);
-        echo $this->render('_detail-action-xs', ['model' => $model]);
-        echo $this->render('_detail-view-xs', ['model' => $model]);
-        Box::end();
-        <?= "?>\n" ?>
-    </div>
-    <div class="col-sm-12 col-lg-8 col-lg-offset-2 hidden-xs">
-        <?= "<?php\n" ?>
-        Box::begin([
-            'title' => $this->title,
-            'tools' => [],
-        ]);
-        echo $this->render('_detail-action', ['model' => $model]);
-        echo $this->render('_detail-view', ['model' => $model]);
-        Box::end();
-        <?= "?>\n" ?>
-    </div>
-<?php else: ?>
     <div class="col-sm-12 col-lg-8">
         <?= "<?php\n" ?>
         Box::begin([
@@ -68,5 +44,4 @@ $this->params = [
         Box::end();
         <?= "?>\n" ?>
     </div>
-<?php endif; ?>
 </div>

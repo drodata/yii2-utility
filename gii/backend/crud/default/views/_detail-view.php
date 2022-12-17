@@ -49,8 +49,8 @@ NORMAL;
         [
             'label' => '明细',
             'format' => 'raw',
-            'value' => $this->render('_grid-item', ['model' => $model]),
-            'captionOptions' => ['style' => 'width:20%'],
+            'value' => $this->render('_div-items', ['model' => $model]),
+            'captionOptions' => ['style' => 'width:25%'],
         ],
         */
     ],

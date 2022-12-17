@@ -83,7 +83,7 @@ JS;
 $this->registerJs($commonJs);
 
 $create = <<<JS
-add_row(idx);
+//add_row(idx);
 JS;
 $update = <<<JS
 JS;

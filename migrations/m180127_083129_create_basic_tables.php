@@ -44,6 +44,7 @@ class m180127_083129_create_basic_tables extends yii\db\Migration
         // 导入测试账户信息，默认密码：123456
         $this->insert('{{%user}}', [
             'username' => 'admin',
+            'auth_key' => '',
             'password_hash' => '$2y$13$qrJfT4ExDCuDclDCqDRRL.FypbYfl98ot.mgmyElho39AcPSZfQtG',
             'password_reset_token' => '$2y$13$BnT.whUJcDH9q5vMnox2We3YtYJnv9wyUQb4vZyS6.HfA2NPIzIL.',
             'created_at' => time(),
