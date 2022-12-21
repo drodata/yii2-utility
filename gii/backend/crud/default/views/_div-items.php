@@ -11,6 +11,12 @@ $camelId = Inflector::camel2id(StringHelper::basename($generator->modelClass));
 
 echo "<?php\n";
 ?>
+/**
+ * Responsive sub-items display view.
+ *
+ * It will display a grid on large screen, and an ordered list on mobile
+ */
+
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 
 use drodata\helpers\Html;
@@ -19,17 +25,15 @@ use drodata\helpers\Html;
 <div class="row <?= $camelId ?>-items">
     <div class="col-sm-12 hidden-xs">
         <?= "<?php\n" ?>
-        //echo $this->render('@backend/views/<?= $camelId ?>-item/_grid-parent', ['model' => $model]);
+        echo $this->render('@backend/views/<?= $camelId ?>-item/_grid-parent', ['model' => $model]);
         <?= "?>\n" ?>
     </div>
     <div class="col-xs-12 visible-xs-block">
         <?= "<?php\n" ?>
-        /*
         echo $this->render('@backend/views/<?= $camelId ?>-item/_list-ol', [
             'dataProvider' => $model->getDataProvider('items'),
             'itemView' => '_list-item-span',
         ]);
-        */
         <?= "?>\n" ?>
     </div>
 </div>
