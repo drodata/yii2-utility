@@ -47,6 +47,12 @@ NORMAL;
 ?>
         /*
         [
+            'attribute' => 'id',
+            'format' => 'raw',
+            'value' => $model->getId($raw = true),
+            'captionOptions' => ['style' => 'width:20%'],
+        ],
+        [
             'label' => '明细',
             'format' => 'raw',
             'value' => $this->render('_div-items', ['model' => $model]),

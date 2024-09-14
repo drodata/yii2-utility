@@ -194,13 +194,16 @@ if (count($pks) === 1) {
      */
     public function actionCreate()
     {
+        if (Yii::$app->request->isGet) {
+            Yii::$app->session->set('redirectUrl', Yii::$app->request->referrer);
+        }
+
         $model = new <?= $modelClass ?>();
 
 <?php if (!$generator->ajaxSubmit): ?>
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', '<?= $generator->modelNameCn ?>已创建');
-            return $this->redirect('index');
-            //return $this->redirect(['view', <?= $urlParams ?>]);
+            return $this->redirect(Yii::$app->session->get('redirectUrl'));
         }
 <?php endif; ?>
 
@@ -229,12 +232,15 @@ if (count($pks) === 1) {
      */
     public function actionUpdate(<?= $actionParams ?>)
     {
+        if (Yii::$app->request->isGet) {
+            Yii::$app->session->set('redirectUrl', Yii::$app->request->referrer);
+        }
         $model = $this->findModel(<?= $actionParams ?>);
 
 <?php if (!$generator->ajaxSubmit): ?>
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', '修改已保存');
-            return $this->redirect('index');
+            return $this->redirect(Yii::$app->session->get('redirectUrl'));
         }
 <?php endif; ?>
 
@@ -275,5 +281,36 @@ if (count($pks) === 1) {
         Yii::$app->session->setFlash($success ? 'success' : 'warning', $hint);
 
         return $this->redirect(Yii::$app->session->get('redirectUrl'));
+    }
+
+    /**
+     * ACTION TEMPLATE. Make changes as your need.
+     *
+     * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
+     * @return mixed
+     */
+    public function actionFillPrice(<?= $actionParams ?>)
+    {
+        if (Yii::$app->request->isGet) {
+            Yii::$app->session->set('redirectUrl', Yii::$app->request->referrer);
+        }
+
+        $model = $this->findModel(<?= $actionParams ?>);
+        $items = $model->getTabularItems('fill-price');
+
+        if (
+            Model::loadMultiple($items, Yii::$app->request->post()) 
+            && Model::validateMultiple($items)
+            && 0
+        ) {
+            Yii::$app->session->setFlash('success', '');
+            return $this->redirect(Yii::$app->session->get('redirectUrl'));
+
+        } 
+
+        return $this->render('fill-price', [
+            'model' => $model,
+            'items' => $items,
+        ]);
     }
 }

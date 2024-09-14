@@ -24,7 +24,7 @@ use yii\widgets\ListView;
 <?php endif; ?>
 use drodata\helpers\Html;
 use drodata\widgets\Box;
-use common\models\Lookup;
+use backend\models\Lookup;
 use <?= $generator->indexWidgetType === 'grid' ? "yii\\grid\\GridView" : "yii\\widgets\\ListView" ?>;
 <?= $generator->enablePjax ? "use yii\widgets\Pjax;\n" : '' ?>
 
@@ -38,12 +38,9 @@ $this->params = [
         '管理',
     ],
     'buttons' => [
-        Html::actionLink('/<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>/create', [
+        Lookup::navigationLink('home', [
             'type' => 'button',
-            'title' => '新建<?= $modelNameCn ?>',
-            'icon' => 'plus',
-            'color' => 'success',
-            'visible' => !Yii::$app->user->isGuest,
+            'visible' => false,
         ]),
         Html::actionLink('/<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>/modal-search', [
             'type' => 'button',

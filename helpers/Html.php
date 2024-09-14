@@ -297,7 +297,8 @@ class Html extends BaseHtml
             }
 
             if ($color != 'primary') {
-                $options['class'] .= " text-$color";
+                $class .= " text-$color";
+                $options['class'] = $class;
             }
 
             return static::a($text, $url, $options);

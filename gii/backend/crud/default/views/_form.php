@@ -55,9 +55,9 @@ use kartik\select2\Select2;
     <?= "<?php\n" ?>
 
     // uncomment next line when using ajax submiting
-    // echo $form->field($model, 'id')->label(false)->hiddenInput();
 
     /**
+    <?= "<?=" ?> $form->field($model, 'id')->label(false)->hiddenInput() <?= "?>\n" ?>
     if ($model->isNewRecord) {
         echo $form->field($common, 'images[]')->fileInput(['multiple' => true]);
     }
@@ -78,6 +78,7 @@ use kartik\select2\Select2;
         <?= "<?= " ?>Html::submitButton($model->isNewRecord ? <?= $generator->generateString('新建') ?> : <?= $generator->generateString('保存') ?>, [
             'class' => ($model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'),
         ]) ?>
+        <?= "<?= " ?>Html::a('返回', '', ['class' => 'btn btn-default']) ?>
     </div>
 
     <?= "<?php " ?>ActiveForm::end(); ?>

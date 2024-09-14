@@ -102,13 +102,10 @@ class <?= $className ?> extends yii\db\Migration
         $this->dropTable('{{%TABLE}}');
         $this->dropColumn('{{%TABLE}}', 'stock_status');
 
-        $this->delete('{{%lookup}}', ['type' => ['Status']]);
+        $this->delete('{{%lookup}}', ['type' => ['status']]);
         */
-
         echo "<?= $className ?> cannot be reverted.\n";
 
         return false;
-
     }
-
 }

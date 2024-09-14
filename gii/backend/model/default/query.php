@@ -44,7 +44,15 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->queryBaseClass, '\\
 
     public function permitted()
     {
-        return $this->andWhere(['{{%cash}}.created_by' => Yii::$app->user->id]);
+        return $this;
+    }
+    public function asc()
+    {
+        return $this->orderBy(['{{%cash}}.id' => SORT_ASC]);
+    }
+    public function desc()
+    {
+        return $this->orderBy(['{{%cash}}.id' => SORT_DESC]);
     }
 
     /**

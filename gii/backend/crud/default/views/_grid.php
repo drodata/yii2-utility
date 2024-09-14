@@ -36,7 +36,19 @@ echo GridView::widget([
     'dataProvider' => $dataProvider,
     // 'caption' => $caption,
 <?= !empty($generator->searchModelClass) ? "    'filterModel' => \$searchModel,\n    'columns' => [\n" : "    'columns' => [\n"; ?>
-        // ['class' => 'yii\grid\SerialColumn'],
+        /*
+        ['class' => 'yii\grid\SerialColumn'],
+        [
+            'attribute' => 'id',
+            'format' => 'raw',
+            'value' => function ($model, $key, $index, $column) {
+                return $model->getId();
+            },
+            'contentOptions' => [
+                'style' => 'width:100px;min-width:100px;',
+            ],
+        ],
+        */
 <?php
 $count = 0;
 if (($tableSchema = $generator->getTableSchema()) === false) {

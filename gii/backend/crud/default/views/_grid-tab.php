@@ -26,6 +26,7 @@ use backend\models\Lookup;
 
 echo GridView::widget([
     'dataProvider' => $dataProvider,
+    'showOnEmpty' => false,
     'summary' => '',
     'columns' => [
 <?php
@@ -114,6 +115,19 @@ TEXT;
     }
 }
 ?>
+        /*
+        'created_at:relativeTime',
+        [
+            'attribute' => 'id',
+            'format' => 'raw',
+            'value' => function ($model, $key, $index, $column) {
+                return $model->getId();
+            },
+            'contentOptions' => [
+                'style' => 'width:100px;min-width:100px;',
+            ],
+        ],
+        */
         [
             'class' => 'drodata\grid\ActionColumn',
             'template' => '{view} {update} {delete}',

@@ -85,9 +85,9 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
         $dataProvider->setSort([
             'attributes' => [
                 /*
-                'company.x' => [
-                    'asc'  => ['{{%company}}.x USING gbk)' => SORT_ASC],
-                    'desc' => ['{{%company}}.x USING gbk)' => SORT_DESC],
+                'type' => [
+                    'asc'  => ['{{%}}.type' => SORT_ASC],
+                    'desc' => ['{{%}}.type' => SORT_DESC],
                 ],
                 'company.name' => [
                     'asc'  => ['CONVERT({{%company}}.full_name USING gbk)' => SORT_ASC],

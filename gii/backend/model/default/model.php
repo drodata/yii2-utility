@@ -47,9 +47,14 @@ use drodata\behaviors\LookupBehavior;
  */
 class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
 {
+    const STATUS_CREATED = 1;
+    const STATUS_COMPLETED = 9;
+
     public function init()
     {
         parent::init();
+
+        //$this->on(self::EVENT_BEFORE_DELETE, [$this, 'deleteSingleton']);
 
 <?php if ($generator->hasItems): ?>
         //$this->on(self::EVENT_AFTER_INSERT, [$this, 'insertItems']);
@@ -112,7 +117,10 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
             'lookup' => [
                 'class' => LookupBehavior::className(),
                 'labelMap' => [
-                    'visible' => ['boolean', []],
+                    'status' => ['requisition-status', [
+                        //self::STATUS_CREATED => 'default',
+                        //self::STATUS_COMPLETED => 'success',
+                    ]],
                 ],
             ],
 <?php if (in_array('created_at', $tableSchema->columnNames)): ?>
@@ -144,7 +152,13 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         /**
          * CODE TEMPLATE
          *
-            ['passwordOld', 'inlineV'],
+            ['status', 'default', 'value' => self::STATUS_CREATED],
+            ['quantity', 'validateQuantity'],
+            [
+                'people_id', 'unique',
+                'targetAttribute' => ['name', 'people_id'],
+                'message' => '{value} ...',
+            ],
             [
                 'billing_period', 'required', 
                 'when' => function ($model, $attribute) {
@@ -159,9 +173,8 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     }
 
     /**
-     * CODE TEMPLATE inline validator
-     *
-    public function inlineV($attribute, $params, $validator)
+     * validate quantity
+    public function validateQuantity($attribute, $params, $validator)
     {
         if ($this->$attribute != 'a') {
             $this->addError($attribute, 'error message');
@@ -302,6 +315,29 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         <?= $relation[0] . "\n" ?>
     }
 <?php endforeach; ?>
+    /**
+     * Creator
+     *
+    public function getCreator()
+    {
+        return $this->hasOne(User::classname(), ['id' => 'created_by']);
+    }
+     */
+    /**
+     * Return clickable ID
+     *
+     * @return string
+     */
+    public function getId($raw = false)
+    {
+        $prefix = Lookup::modelPrefix($this);
+        $link = $this->actionLink('view', [
+            'title' => $this->id,
+            'icon' => false,
+        ]);
+
+        return $raw ? $prefix . $this->id : $prefix . $link;
+    }
 
     /**
      * 通用的、无需 sort 和 pagination 的 data provider
@@ -315,6 +351,9 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
                 $query = $this->getItems();
                 break;
 <?php endif; ?>
+            case 'editions':
+                //$query = $this->getEditions()->desc();
+                break;
             default:
                 $query = null;
                 break;
@@ -325,6 +364,22 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
             'pagination' => false,
             'sort' => false,
         ]);
+    }
+
+    /**
+     * Used in fixed tabular submission
+     */
+    public function getTabularItems($key = 'fill')
+    {
+        $items = [];
+
+        switch ($key) {
+            case 'fill':
+                // ...
+                break;
+        }
+
+        return $items;
     }
 
 <?php if ($generator->hasItems): ?>
@@ -386,6 +441,26 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     }
 <?php endif; ?>
 
+    /**
+     * Judge status
+     *
+     * @return bool
+     */
+    public function getIsCreated()
+    {
+        return $this->status == self::STATUS_CREATED;
+    }
+
+    /**
+     * Judge creator
+     *
+     * @return bool
+     */
+    public function getIsCreatedByCurrentUser()
+    {
+        return $this->created_by == Yii::$app->user->id;
+    }
+
     // ==== getters end ====
 
     /**
@@ -393,9 +468,12 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
      *
     public function sign()
     {
-        $this->status = 3;
+        $this->status = 9;
+
+        $this->on(self::EVENT_AFTER_UPDATE, [$this, 'xxx']);
+
         if (!$this->save()) {
-            throw new Exception('Failed to save.');
+            throw new Exception($this->stringifyErrors());
         }
     }
      */

@@ -65,12 +65,17 @@ $this->registerJs($js);
                     //'enctype' => 'multipart/form-data',
                 ],
             ]); ?>
+                <?= "<?= " ?>$this->render('@backend/views/x-item/_field-tabular-fixed', [
+                    'items' => $items,
+                    'form' => $form,
+                ]) ?>
                 <!--
                 'inputTemplate' => '<div class="input-group"><div class="input-group-addon">$</div>{input}</div>'
                 -->
                 <?= "<?= " ?>$form->field($model, 'type')->radioList(Lookup::items('type')) ?>
                 <div class="form-group">
                     <?= "<?= " ?>Html::submitButton('保存', ['class' => 'btn btn-primary']) ?>
+                    <?= "<?= " ?>Html::a('返回', '', ['class' => 'btn btn-default']) ?>
                 </div>
             <?= "<?php " ?>ActiveForm::end(); ?>
     <?= "<?php " ?>Box::end(); ?>

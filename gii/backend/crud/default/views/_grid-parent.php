@@ -28,7 +28,7 @@ use <?= ltrim($generator->modelClass, '\\') ?>;
 echo GridView::widget([
     'dataProvider' => $model->getDataProvider('items'),
     'showFooter' => !empty($model->getDataProvider('items')->models),
-    'tableOptions' => ['class' => 'table table-condenced table-hover'],
+    'tableOptions' => ['class' => 'table table-condensed table-hover'],
     'summary' => '',
     'columns' => [
         ['class' => 'yii\grid\SerialColumn'],

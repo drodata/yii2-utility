@@ -15,7 +15,7 @@ echo "<?php\n";
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 <?= "?>\n" ?>
 
-<div class="row">
+<div class="row hidden-print">
     <div class="col-xs-12">
         <div class="operation-group text-right">
             <?= "<?php\n" ?>

@@ -12,7 +12,7 @@ echo "<?php\n";
 ?>
 
 /**
- * 表格视图模板
+ * Table
  */
 
 /* @var $this yii\web\View */
@@ -22,14 +22,32 @@ use drodata\helpers\Html;
 use backend\models\Lookup;
 <?= "?>\n" ?>
 
-<table class="table table-condensed">
+<table class="table table-bordered table-detail" style="table-layout:fixed">
+    <thead>
+        <tr>
+            <th width="20%"><?= "<?= " ?>$model->getAttributeLabel('id')<?= " ?>" ?></th>
+            <td width="30%"><?= "<?= " ?>$model->getId($raw = true)<?= " ?>" ?></td>
+            <th width="20%"><?= "<?= " ?>$model->getAttributeLabel('created_at')<?= " ?>" ?></th>
+            <td width="30%"><?= "<?= " ?>Yii::$app->formatter->asDatetime($model->created_at)<?= " ?>" ?></td>
+        </tr>
+    </thead>
     <tbody>
         <tr>
-        <?= "<?php " ?>foreach ($model->items as $item): <?= "?>\n"?>
-            <td class="text-center"><?= "<?=" ?> $item->id <?= "?>"?></td>
-        <?= "<?php " ?>endforeach; <?= "?>\n"?>
+            <th></th>
+            <td></td>
+            <th></th>
+            <td></td>
         </tr>
     </tbody>
-    <tfoot>
-    </tfoot>
+
+    <thead>
+        <tr>
+            <td colspan="4"><?= '<?= ' ?>Html::fwicon('list') <?= '?>' ?> 加工明细</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="4"></td>
+        </tr>
+    </tbody>
 </table>
