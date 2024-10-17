@@ -290,6 +290,19 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
                     $hint = 'xx';
                 }
                 break;
+            case 'toggle-visibility':
+                $options = [
+                    'title' => 'toggle',
+                    'icon' => 1 ? 'toggle-on' : 'toggle-off',
+                    'data' => [
+                        'method' => 'post',
+                    ],
+                ];
+                //$visible = Yii::$app->user->can('x');
+                if (0) {
+                    $hint = 'xx';
+                }
+                break;
 
             default:
                 break;

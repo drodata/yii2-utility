@@ -62,7 +62,11 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     public function actions()
     {
         return [
-            // put standalone actions configuration here
+             'toggle-visibility' => [
+                'class' => 'drodata\web\ToggleAction',
+                'modelClass' => 'backend\models\Recipe',
+                'toggleAttributes' => 'visible',
+            ],
         ];
     }
 
@@ -76,7 +80,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['create', 'update', 'delete'],
+                        'actions' => ['create', 'update', 'delete', 'toggle-visibility'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -91,6 +95,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                    'toggle-visibility' => ['POST'],
                 ],
             ],
         ];
