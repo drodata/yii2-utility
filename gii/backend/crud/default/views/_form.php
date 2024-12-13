@@ -78,7 +78,7 @@ use kartik\select2\Select2;
         <?= "<?= " ?>Html::submitButton($model->isNewRecord ? <?= $generator->generateString('新建') ?> : <?= $generator->generateString('保存') ?>, [
             'class' => ($model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'),
         ]) ?>
-        <?= "<?= " ?>Html::a('返回', '', ['class' => 'btn btn-default']) ?>
+        <?= "<?= " ?>Lookup::navigationLink('back', ['type' => 'button']) ?>
     </div>
 
     <?= "<?php " ?>ActiveForm::end(); ?>

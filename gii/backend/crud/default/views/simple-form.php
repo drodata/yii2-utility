@@ -75,7 +75,7 @@ $this->registerJs($js);
                 <?= "<?= " ?>$form->field($model, 'type')->radioList(Lookup::items('type')) ?>
                 <div class="form-group">
                     <?= "<?= " ?>Html::submitButton('保存', ['class' => 'btn btn-primary']) ?>
-                    <?= "<?= " ?>Html::a('返回', '', ['class' => 'btn btn-default']) ?>
+                    <?= "<?= " ?>Html::a('返回', Yii::$app->request->referrer, ['class' => 'btn btn-default']) ?>
                 </div>
             <?= "<?php " ?>ActiveForm::end(); ?>
     <?= "<?php " ?>Box::end(); ?>

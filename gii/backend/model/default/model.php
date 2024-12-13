@@ -105,6 +105,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     {
         return [
             'default' => self::OP_ALL,
+            //self::SCENARIO_FILL => self::OP_ALL,
         ];
     }
 
@@ -474,12 +475,23 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         return $this->created_by == Yii::$app->user->id;
     }
 
+    /**
+     * Get readable note
+     *
+     * @return string
+     *
+    public function getNote()
+    {
+        return $this->note ? Yii::$app->formatter->asNtext($this->note) : '';
+    }
+     */
+
     // ==== getters end ====
 
     /**
      * CODE TEMPLATE
      *
-    public function sign()
+    public function apply()
     {
         $this->status = 9;
 
@@ -488,6 +500,8 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         if (!$this->save()) {
             throw new Exception($this->stringifyErrors());
         }
+
+        return [true, '已保存'];
     }
      */
 
@@ -595,5 +609,22 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
          */
     }
 <?php endif; ?>
+    /**
+     * Delete items
+     *
+     * triggered by self::EVENT_BEFORE_DELETE
+     *
+    public function deleteItems($event)
+    {
+        if (empty($this->items)) {
+            return;
+        }
+        foreach ($this->items as $item) {
+            if (!$item->delete()) {
+                throw new Exception($item->stringifyErrors());
+            }
+        }
+    }
+     */
     // ==== event-handlers end ====
 }

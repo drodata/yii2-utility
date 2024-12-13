@@ -32,6 +32,9 @@ use Yii;
  */
 class <?= $className ?> extends <?= '\\' . ltrim($generator->queryBaseClass, '\\') . "\n" ?>
 {
+    /**
+     * 'competition' relation required
+     */
     public function mine()
     {
         return $this->andWhere(['{{%cash}}.created_by' => Yii::$app->user->id]);

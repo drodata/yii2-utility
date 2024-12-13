@@ -100,8 +100,14 @@ $this->params = [
 <?php else: ?>
     <div class="col-xs-12">
         <?= "<?= " ?>$this->render('@drodata/views/_button') <?= "?>\n" ?>
-        <?= "<?= " ?>$this->render('_search', ['model' => $searchModel]) <?= "?>\n" ?>
-        <?= "<?= " ?>$this->render('_list', ['dataProvider' => $dataProvider]) <?= "?>\n" ?>
+        <?= "<?= " ?>$this->render('_search', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]) <?= "?>\n" ?>
+        <?= "<?= " ?>$this->render('_list', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]) <?= "?>\n" ?>
     </div>
 <?php endif; ?>
 <?= $generator->enablePjax ? "    <?php Pjax::end(); ?>\n" : "" ?>

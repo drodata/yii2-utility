@@ -25,7 +25,7 @@ use backend\models\Lookup;
 if (empty(Yii::$app->request->get('<?= $searchModelClass ?>'))) {
     $caption = '';
 } else {
-    $sum = (int) $dataProvider->query->sum('amount');;
+    $sum = (int) $dataProvider->query->sum('amount');
     $badge = Html::tag('span', Yii::$app->formatter->asDecimal($sum), [
         'class' => 'badge',
     ]);
