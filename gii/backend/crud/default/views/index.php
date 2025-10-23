@@ -21,6 +21,7 @@ echo "<?php\n";
 
 <?php if ($generator->indexWidgetType === 'grid'): ?>
 use yii\widgets\ListView;
+use yii\helpers\Markdown;
 <?php endif; ?>
 use drodata\helpers\Html;
 use drodata\widgets\Box;

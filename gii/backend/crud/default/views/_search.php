@@ -18,17 +18,23 @@ use yii\bootstrap\ActiveForm;
 use drodata\helpers\Html;
 use kartik\select2\Select2;
 use backend\models\Lookup;
+
+$commonJs = <<<JS
+$('#warehousingsearch-container_id').focus().trigger('select');
+JS;
+$this->registerJs($commonJs);
+$sum = $dataProvider->query->count();
 <?= "?>\n" ?>
 
 <?= "<?php " ?>$form = ActiveForm::begin([
-    'action' => ['index'],
+    'action' => [$this->context->action->id],
     'method' => 'get',
 ]); ?>
 <div class="row">
-    <div class="col-xs-12 col-sm-6">
+    <div class="col-xs-12 col-sm-6 col-lg-2">
         <?= "<?php" ?> //echo $form->field($model, 'id')->input('number'); <?= "?>\n" ?>
     </div>
-    <div class="col-xs-12 col-sm-6">
+    <div class="col-xs-12 col-sm-6 col-lg-2">
         <?= "<?php" ?> //echo $form->field($model, 'status')->dropDownList(Lookup::items('Status'), ['prompt' => '']); <?= "?>\n" ?>
         <?= "<?php" ?> 
         /*
@@ -36,6 +42,8 @@ use backend\models\Lookup;
             'data' => [],
             'options' => ['placeholder' => 'All'],
         ]);
+
+        'inputTemplate' => '<div class="input-group"><div class="input-group-addon">$</div>{input}</div>'
         */
         <?= "?>" ?> 
     </div>
@@ -52,7 +60,7 @@ foreach ($generator->getColumnNames() as $attribute) {
     }
 }
 ?>
-        <div class="form-group">
+            <div class="col-lg-4 col-md-3 col-sm-6">
             <?= "<?= " ?>Html::submitButton(<?= $generator->generateString('搜索') ?>, ['class' => 'btn btn-primary']) ?>
             <?= "<?= " ?>Html::a('取消', "/<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>/index", ['class' => 'btn btn-default']) ?>
             <?= "<?= " ?>Html::tag('span', $sum . ' record(s) founded', ['class' => 'text-success']) ?>

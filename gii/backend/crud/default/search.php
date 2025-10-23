@@ -61,6 +61,13 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
+    /**
+     * Judge scenario
+     */
+    public function getIsDefault()
+    {
+        return $this->scenario == 'default';
+    }
 
     /**
      * Creates data provider instance with search query applied

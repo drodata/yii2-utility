@@ -18,6 +18,7 @@ echo "<?php\n";
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 
+use yii\helpers\Markdown;
 use drodata\helpers\Html;
 use drodata\widgets\Box;
 

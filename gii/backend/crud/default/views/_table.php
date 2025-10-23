@@ -33,10 +33,10 @@ use backend\models\Lookup;
     </thead>
     <tbody>
         <tr>
-            <th></th>
-            <td></td>
-            <th></th>
-            <td></td>
+            <th><?= "<?= " ?>$model->getAttributeLabel('created_by')<?= " ?>" ?></th>
+            <td><?= "<?= " ?>$model->creator->getName()<?= " ?>" ?></td>
+            <th><?= "<?= " ?>$model->getAttributeLabel('status')<?= " ?>" ?></th>
+            <td><?= "<?= " ?>$model->label('status')<?= " ?>" ?></td>
         </tr>
     </tbody>
 

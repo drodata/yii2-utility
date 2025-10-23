@@ -17,6 +17,7 @@ echo "<?php\n";
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 
 use drodata\helpers\Html;
+use yii\helpers\Markdown;
 use drodata\widgets\Box;
 
 $this->title = '新建<?= $modelNameCn ?>';

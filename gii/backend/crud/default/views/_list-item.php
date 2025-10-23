@@ -16,6 +16,7 @@ echo "<?php\n";
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 
 use drodata\helpers\Html;
+use drodata\widgets\Box;
 use backend\models\Lookup;
 <?= "?>\n" ?>
 

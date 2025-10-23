@@ -123,6 +123,7 @@ EOF;
         [
             'attribute' => '{$column->name}',
             'format' => 'datetime',
+            'contentOptions' => ['style' => 'width:170px'],
             'filter' => Lookup::dateRangeFilter(\$searchModel, '{$column->name}'),
         ],
 

@@ -159,6 +159,9 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
                 'people_id', 'unique',
                 'targetAttribute' => ['name', 'people_id'],
                 'message' => '{value} ...',
+                'when' => function ($model, $attribute) {
+                    return $model->isNewRecord;
+                },
             ],
             [
                 'billing_period', 'required', 
@@ -284,6 +287,24 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
                     'data' => [
                         'method' => 'post',
                         'confirm' => '确定要执行删除操作吗？',
+                    ],
+                ];
+                //$visible = Yii::$app->user->can('x');
+                if (0) {
+                    $hint = 'xx';
+                }
+                break;
+            case 'print':
+                $route = 'javascript:void(0)';
+                $options = [
+                    'title' => 'Print',
+                    'icon' => 'print',
+                    'class' => 'direct-print',
+                    'data' => [
+                        'post' => [
+                            'key' => 'xxx',
+                            'id' => $this->id,
+                        ],
                     ],
                 ];
                 //$visible = Yii::$app->user->can('x');
@@ -493,7 +514,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
      *
     public function apply()
     {
-        $this->status = 9;
+        $this->status = self::STATUS_COMPLETED;
 
         $this->on(self::EVENT_AFTER_UPDATE, [$this, 'xxx']);
 
@@ -502,6 +523,27 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         }
 
         return [true, '已保存'];
+    }
+     */
+
+    /**
+     *
+    public function star()
+    {
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            if (!$this->updateAttributes(['flag'])) {
+                throw new Exception('Failed to update.');
+            }
+            // ...other DB operations...
+            $transaction->commit();
+        } catch(\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        } catch(\Throwable $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
     }
      */
 
@@ -577,9 +619,9 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     }
 
     /**
-     * 删除子条目
+     * Delete items
      *
-     * 由 self::EVENT_BEFORE_DELETE 触发
+     * Triggerred  by self::EVENT_BEFORE_DELETE
      */
     public function deleteItems($event)
     {

@@ -62,9 +62,14 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     public function actions()
     {
         return [
+            'image' => [
+                'class' => 'dro\attachment\UploadAction',
+                'modelClass' => 'backend\models\<?= $modelClass ?>',
+                'uploadFormClass' => 'backend\models\UploadForm',
+            ],
              'toggle-visibility' => [
                 'class' => 'drodata\web\ToggleAction',
-                'modelClass' => 'backend\models\Recipe',
+                'modelClass' => 'backend\models\<?= $modelClass ?>',
                 'toggleAttributes' => 'visible',
             ],
         ];
