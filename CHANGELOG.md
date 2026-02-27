@@ -1,5 +1,9 @@
 # Change Log
 
+### 1.0.2 2026-02-27
+
+- `Html::actionLink()` 配置增加 `text` 选项，原来的 `title` 让链接的内容和 hover text 一样，在某些情况下不易区分。新配置例子： `Html::actionLink('view', ['title' => 'view detail', 'text' => 3333])`;
+
 ### 1.0.16 2016-08-30
 
 - validator: 新增身份证号码 CitizenIdValidator;
