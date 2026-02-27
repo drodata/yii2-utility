@@ -218,6 +218,8 @@ class Html extends BaseHtml
      * @param array $options link html options, the follow special attributes are available:
      *     - `type`: string, link type, 'icon' or 'button'
      *     - `title`: string, link text
+     *
+     *     - `text`: string (optional), link text, if null, use title
      *     - `visible` (optional): bool,
      *     - `disabled` (optional): bool, whether to disable button
      *     - `disabledHint` (optional): string, only meaningful when `disabled` is `true`.
@@ -271,6 +273,7 @@ class Html extends BaseHtml
 
         $class = ArrayHelper::getValue($options, 'class', '');
         $title = ArrayHelper::getValue($options, 'title');
+        $linkText = ArrayHelper::getValue($options, 'text', $title);
 
         if (!$visible) {
             return '';
@@ -278,7 +281,7 @@ class Html extends BaseHtml
 
 
         if ($type == 'icon') {
-            $text = (empty($icon) || $hideIcon) ? $title : static::icon($icon);
+            $text = (empty($icon) || $hideIcon) ? $linkText : static::icon($icon);
 
             if ($disabled) {
                 if (empty($icon) || $hideIcon) {
