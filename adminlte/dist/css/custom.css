@@ -142,3 +142,7 @@
     background-color:#E1ECF4;
     color: #39739d;
 }
+/* nested modal 解决多层 Modal 切换时 body 抖动的问题 */
+body.modal-open {
+    padding-right: 0 !important;
+}
